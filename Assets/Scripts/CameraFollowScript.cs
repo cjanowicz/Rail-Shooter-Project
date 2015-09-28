@@ -22,12 +22,11 @@ public class CameraFollowScript : MonoBehaviour {
 	private float zPlayerRotation;
 	private float zPlayerDampener = 0.3f;
 
-	// Use this for initialization
 	void Start () {
 	
 	}
-	
-	// Update is called once per frame
+
+	//NOTE: TODO: GOTTA REWRITE THIS GIVEN WHAT I NOW KNOW
 	void Update () {
 		
 		newPosition.Set(playerObject.position.x/dampenerX, playerObject.position.y/dampenerY, followDistance);
@@ -83,14 +82,8 @@ public class CameraFollowScript : MonoBehaviour {
 		                             zInterpolation );
 		this.transform.eulerAngles = storedRotation;
 
-		///this.transform.localPosition = newPosition;
-		this.transform.localPosition = transform.localPosition + (newPosition - transform.localPosition)* dampenerPos;
+		this.transform.localPosition += (newPosition - transform.localPosition)* dampenerPos * Time.deltaTime;
 
-		//This system itself is kinda broken and not what we want.
-		//I want a system that will 
-
-
-		//Level Management test:
 		if(Input.GetKeyDown("h"))
 		{
 			int level = Application.loadedLevel +1;
@@ -104,5 +97,9 @@ public class CameraFollowScript : MonoBehaviour {
 			Application.LoadLevel(Application.loadedLevel);
 		}
 
+	}
+
+	void OnDrawGizmos() {
+		transform.position = new Vector3 (playerObject.position.x / dampenerX, playerObject.position.y / dampenerY, followDistance);
 	}
 }
