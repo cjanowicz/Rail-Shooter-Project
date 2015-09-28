@@ -29,29 +29,9 @@ public class CameraFollowScript : MonoBehaviour {
 	//NOTE: TODO: GOTTA REWRITE THIS GIVEN WHAT I NOW KNOW
 	void Update () {
 		
-		newPosition.Set(playerObject.position.x/dampenerX, playerObject.position.y/dampenerY, followDistance);
+		//newPosition.Set(playerObject.position.x * dampenerX, playerObject.position.y * dampenerY, followDistance);
+		newPosition.Set(0,0, followDistance);
 
-		//(xRotation, yRotation, zRotation)
-		//(yDistance, xDistance,none)
-
-		//Note to self: make this reliant on delta time so that it does not jump if a frame drops.
-
-		/*old and broken, even with delta time it does not work. */
-		/*
-	newRotation.Set(transform.localPosition.y - newPosition.y,
-		                newPosition.x - transform.localPosition.x,
-		                transform.localPosition.x - newPosition.x);
-		newRotation *= rotationMultiplier * Time.deltaTime;
-		this.transform.eulerAngles = newRotation;
-		*/
-		//Ok, I have the player transform. The camera angle
-
-		/*
-		this.transform.eulerAngles = playerObject.eulerAngles/4;
-		Debug.Log("rotation = " + this.transform.eulerAngles);
-		//This does not work because 355 degrees/4 = 90;
-		*/
-		//
 		newRotation.x = playerObject.localEulerAngles.x;
 		newRotation.y = playerObject.localEulerAngles.y;
 
@@ -61,12 +41,6 @@ public class CameraFollowScript : MonoBehaviour {
 			newRotation.y -= 360;
 		newRotation/=dampenerNewRotation;
 
-		//Solve this by having another vector store what the angle would be in negative numbrs
-		//because every frame, unity switches the local euler angles back to postives, which makes my
-		//lerp function try to interpolate between 355 and -5 every frame.
-
-		//this.transform.eulerAngles = newRotation;
-
 		//ZInterpolation;
 		zPlayerRotation = playerObject.rotation.eulerAngles.z;
 		if(zPlayerRotation > 180)
@@ -74,9 +48,6 @@ public class CameraFollowScript : MonoBehaviour {
 		zPlayerRotation *= zPlayerDampener;
 		zInterpolation = Mathf.Lerp(zInterpolation, zPlayerRotation, zLerpT);
 
-		//The reason I must store the rotation I want into a vector is because
-		//every frame, unity re-sets the euler angles to be in positive numbers only
-		//making my conversion from positives to negatives counter-active against itself.
 		storedRotation = new Vector3(Mathf.Lerp(storedRotation.x, newRotation.x, dampenerAngleX),
 		                             Mathf.Lerp(storedRotation.y, newRotation.y, dampenerAngleY),
 		                             zInterpolation );

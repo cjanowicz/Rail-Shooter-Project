@@ -5,7 +5,8 @@ public class PlayerMovement_Controls : MonoBehaviour {
 
 	//---=== GameLogic Variables ===---//
 	public int health = 10;
-
+	private GameObject myGameManager;
+	private ScrollGridScript managerScrollScript;
 
 	//---=== Movement Variables ===---//
 	private float horizontal;
@@ -31,6 +32,11 @@ public class PlayerMovement_Controls : MonoBehaviour {
 	public float steerT = 0.1f;
 	//How far into the z axis the current steering is placed;
 	public float steerZOffset = 2.0f;
+
+	void Awake(){
+		myGameManager = GameObject.Find ("GameManager");
+		managerScrollScript = myGameManager.GetComponent<ScrollGridScript> ();
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -62,6 +68,8 @@ public class PlayerMovement_Controls : MonoBehaviour {
 		transform.localEulerAngles = new Vector3(transform.localEulerAngles.x,
 		                                         transform.localEulerAngles.y,
 		                                         steerCurrent.x * -30);
+
+		managerScrollScript.xSpeed = horizontal *2;
 
 		/*////-----======= Movement Code 2nd Try =======--------------
 		steerInput = new Vector3(
