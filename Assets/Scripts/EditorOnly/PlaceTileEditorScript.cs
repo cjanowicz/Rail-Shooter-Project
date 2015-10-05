@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
+//using UnityEditor;
 
-[CustomEditor(typeof(PlaceTileScript))]
-public class PlaceTileEditorScript : Editor {
+//[CustomEditor(typeof(PlaceTileScript))]
+public class PlaceTileEditorScript : MonoBehaviour {
 
-	public override void OnInspectorGUI()
+	/*public override void OnInspectorGUI()
 	{
 		DrawDefaultInspector();
 		
@@ -14,5 +14,5 @@ public class PlaceTileEditorScript : Editor {
 		{
 			myScript.BuildGrid();
 		}
-	}
+	}*/
 }
