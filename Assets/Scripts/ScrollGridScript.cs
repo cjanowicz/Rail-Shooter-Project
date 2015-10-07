@@ -5,7 +5,8 @@ public class ScrollGridScript : MonoBehaviour {
 
 	public Renderer objectRenderer;
 	private float timer = 0;
-	private float xDistance = 0;
+    [HideInInspector]
+	public float xDistance = 0;
 	public float zSpeed = 1;
 	public float xSpeed = 1;
 	
