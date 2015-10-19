@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ExplosionManager : MonoBehaviour {
+public class FXManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
