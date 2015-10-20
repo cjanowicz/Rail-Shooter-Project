@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 255a862d06fc6854d93a077c7b5b5d30
+timeCreated: 1445310947
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - m_smallExplosionPrefab: {fileID: 187134, guid: ceb95985faca85b4aa3d6b1362863314,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

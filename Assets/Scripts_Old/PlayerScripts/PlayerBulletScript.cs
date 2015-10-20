@@ -3,9 +3,12 @@ using System.Collections;
 
 public class PlayerBulletScript : MonoBehaviour {
 
+    private static GameObject fxManager;
+
 	// Use this for initialization
 	void Start () {
-		StartCoroutine("LifeTimer");
+        fxManager = GameObject.Find("FXManager");
+        StartCoroutine("LifeTimer");
 	}
 
 	void OnTriggerEnter(Collider other)
@@ -28,6 +31,7 @@ public class PlayerBulletScript : MonoBehaviour {
 
 	void DestroySelf()
 	{
-		Destroy(this.gameObject);
+        fxManager.SendMessage("CallSmallExplosion", this.transform.position);
+           Destroy(this.gameObject);
 	}
 }

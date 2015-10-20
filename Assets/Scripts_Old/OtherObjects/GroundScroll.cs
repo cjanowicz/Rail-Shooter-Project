@@ -29,8 +29,7 @@ public class GroundScroll : MonoBehaviour {
         transform.position += new Vector3(-xSpeed * xDamper, 0, -groundSpeed * Time.deltaTime);
         if (transform.position.z <= -30) 
             transform.position = new Vector3(Random.Range(-500, 500), 0, Random.Range(1200, 2000));
-
-        Debug.Log("Xspeed = " + xSpeed);
+       
     }
     void UpdateX() {
         xSpeed = myScrollGrid.xSpeed;
