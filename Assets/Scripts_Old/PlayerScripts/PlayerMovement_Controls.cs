@@ -6,7 +6,7 @@ public class PlayerMovement_Controls : MonoBehaviour {
 	//---=== GameLogic Variables ===---//
 	public int health = 10;
 	private GameObject myGameManager;
-	private ScrollGridScript managerScrollScript;
+	private GroundScroll groundPlaneScript;
 
 	//---=== Movement Variables ===---//
 	private float horizontal;
@@ -35,7 +35,7 @@ public class PlayerMovement_Controls : MonoBehaviour {
 
 	void Awake(){
 		myGameManager = GameObject.Find ("GameManager");
-		managerScrollScript = myGameManager.GetComponent<ScrollGridScript> ();
+		groundPlaneScript = GameObject.Find("GroundPlane").GetComponent<GroundScroll> ();
 	}
 
 	// Use this for initialization
@@ -69,45 +69,8 @@ public class PlayerMovement_Controls : MonoBehaviour {
 		                                         transform.localEulerAngles.y,
 		                                         steerCurrent.x * -30);
 
-		managerScrollScript.xSpeed = horizontal *2;
+		groundPlaneScript.SetXSpeed(horizontal *2f);
 
-		/*////-----======= Movement Code 2nd Try =======--------------
-		steerInput = new Vector3(
-			Mathf.Lerp( steerCurrent.x , Mathf.Clamp((horizontal-steerCurrent.x), -steerMaxLimiter, steerMaxLimiter), steerT),
-			Mathf.Lerp( steerCurrent.y , Mathf.Clamp((-vertical-steerCurrent.y), -steerMaxLimiter, steerMaxLimiter), steerT),
-			0);
-
-		steerCurrent = new Vector3( steerInput.x, steerInput.y, steerZOffset);
-
-		transform.localPosition+= steerStored * movementSpeed * Time.deltaTime;
-
-		transform.localRotation = Quaternion.RotateTowards(
-			transform.localRotation, Quaternion.LookRotation(steerCurrent), 
-			Mathf.Deg2Rad* maxDegreesDelta);
-		*/
-
-		/* ////------====== Old Movement Code ============------------
-			horizontal = Input.GetAxis("Horizontal");
-		vertical = Input.GetAxis("Vertical");
-		steerInput = new Vector3(horizontal, -vertical, 0);
-		//transform.localPosition = Vector3.Lerp(transform.localPosition, (transform.localPosition + steerInput), 0.4f);
-		////No wonder my steering feels clunky as fuck, its practically hard coded.
-		transform.localPosition+= steerInput * movementSpeed * Time.deltaTime;
-
-		//Alrighty, 
-		////transform.localPosition = Vector3.Lerp(transform.localPosition, 
-		////(transform.localPosition + steerInput), 0.4f) * movementSpeed * Time.deltaTime;
-		//transform.localPosition+= steerInput * movementSpeed * Time.deltaTime;
-
-		////////// Note for later: Delta Angle Clamp = current steerInput that you're facing - the horizontal-- ////
-		Vector3 steerCurrent = new Vector3(horizontal, -vertical, steerZOffset);
-		transform.localRotation = Quaternion.RotateTowards(
-			transform.localRotation, Quaternion.LookRotation(steerCurrent), 
-			Mathf.Deg2Rad* maxDegreesDelta);
-		//Note to self: If you are handed a model, put the model into a prefab. This makes it so that changing
-		////the model later will avoid some dependency issues later down the line.
-/// */
-	
 	
 	///////----------============== POSITION LIMITING =================------------------
 		if(transform.localPosition.x < -maxHorizontal)

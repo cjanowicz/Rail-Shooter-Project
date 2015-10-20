@@ -5,12 +5,14 @@ public class ShootingBehavior : MonoBehaviour {
 
 	public Rigidbody bullet;
 	public float velocity = 80.0f;
-	public Transform rootTransform;
+	public Transform shotTransform;
+
+	private GameObject m_fXManager;
 
 
 	// Use this for initialization
-	void Start () {
-	
+	void Awake () {
+		m_fXManager = GameObject.Find("FXManager");
 	}
 	
 	// Update is called once per frame
@@ -18,10 +20,10 @@ public class ShootingBehavior : MonoBehaviour {
 	
 		if(Input.GetButtonDown("Fire1"))
 		{
-			Rigidbody newBullet = Instantiate(bullet, transform.position, transform.rotation) as Rigidbody;
-			newBullet.transform.parent = rootTransform;
+			Rigidbody newBullet = Instantiate(bullet, shotTransform.position, shotTransform.rotation) as Rigidbody;
 			newBullet.AddForce(transform.forward * velocity,ForceMode.VelocityChange);
 			RenderSettings.haloStrength = 0f;
+			m_fXManager.SendMessage("CallPlayerMuzzleFlash", shotTransform.position);
 		}
 	}
 
