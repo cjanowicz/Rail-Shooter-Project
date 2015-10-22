@@ -18,7 +18,7 @@ public class GroundScroll : MonoBehaviour {
 	private float m_xDistance = 0;
 	private float m_zDistance = 0;
 
-	private float m_notBullet = 1;
+	private float m_scrollOnZ = 1;
 
     void Start() {
 		if(transform.name == "GroundPlane"){
@@ -28,8 +28,8 @@ public class GroundScroll : MonoBehaviour {
 				/ m_objectRenderer.material.GetTextureScale("_MainTex").y * 10f; 
 		} else {
             myDelegate = MoveSelf;
-			if(this.gameObject.tag.Contains("Bullet")){
-				m_notBullet = 0;
+			if(this.gameObject.tag.Contains("Bullet") || this.gameObject.tag.Contains("Enemy") || this.gameObject.tag.Contains("Boss")) {
+                m_scrollOnZ = 0;
 			}
         }
     }
@@ -42,7 +42,7 @@ public class GroundScroll : MonoBehaviour {
     void MoveSelf() {
 		transform.position += new Vector3(
 			-m_xSpeed * m_groundScale * Time.deltaTime, 0, 
-			-m_zSpeed * m_groundScale * Time.deltaTime * m_notBullet);
+			-m_zSpeed * m_groundScale * Time.deltaTime * m_scrollOnZ);
 
         if (transform.position.z <= -30) 
             transform.position = new Vector3(Random.Range(-500, 500), 0, Random.Range(1200, 2000));

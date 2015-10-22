@@ -4,13 +4,17 @@ using System.Collections;
 public class FXManager : MonoBehaviour {
 
     public GameObject m_smallExplosionPrefab;
-    private const int m_numOfSmallExplosions = 10;
+    private const int m_numOfSmallExplosions = 15;
     private int m_smallExpIter = 0;
     private GameObject[] m_smallExpArray;
     //public GameObject m_largeExplosionPrefab;
 
-	
-	public GameObject m_playerMuzzleFlash;
+    public GameObject m_medExplosionPrefab;
+    private const int m_numOfMedExp = 10;
+    private int m_medExpIter = 0;
+    private GameObject[] m_medExpArray;
+
+    public GameObject m_playerMuzzleFlash;
 	private const int m_numPFlash = 3;
 	private int m_pFlashIter = 0;
 	private GameObject[] m_pFlashArray;
@@ -18,7 +22,8 @@ public class FXManager : MonoBehaviour {
     // Use this for initialization
     void Awake () {
 		InstantiateEffect(m_smallExplosionPrefab, ref m_smallExpArray, m_numOfSmallExplosions);
-		InstantiateEffect(m_playerMuzzleFlash, ref m_pFlashArray, m_numPFlash);
+        InstantiateEffect(m_medExplosionPrefab, ref m_medExpArray, m_numOfMedExp);
+        InstantiateEffect(m_playerMuzzleFlash, ref m_pFlashArray, m_numPFlash);
 
     }
 	void InstantiateEffect(GameObject prefab, ref GameObject[] newArray, int size){
@@ -28,11 +33,6 @@ public class FXManager : MonoBehaviour {
 			newArray[i].transform.SetParent(this.transform);
 			newArray[i].SetActive(false);
 		}
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
 	void StartEffect(Vector3 newPos, ref GameObject effectObject, ref int iterator, int max){
@@ -53,6 +53,11 @@ public class FXManager : MonoBehaviour {
 		StartEffect(newPos, ref m_pFlashArray[m_pFlashIter], 
 		            ref m_pFlashIter, m_pFlashArray.Length);
 	}
+
+    void CallMediumExplosion(Vector3 newPos) {
+        StartEffect(newPos, ref m_medExpArray[m_medExpIter],
+                    ref m_medExpIter, m_medExpArray.Length);
+    }
 
 
 }
