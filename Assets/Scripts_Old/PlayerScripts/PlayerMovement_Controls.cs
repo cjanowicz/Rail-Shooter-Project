@@ -68,7 +68,7 @@ public class PlayerMovement_Controls : MonoBehaviour {
 		                                         transform.localEulerAngles.y,
 		                                         steerCurrent.x * -30);
 
-		groundPlaneScript.SetXSpeed(horizontal *2f);
+		groundPlaneScript.SetXSpeed(horizontal *4f);
 
 	
 	///////----------============== POSITION LIMITING =================------------------

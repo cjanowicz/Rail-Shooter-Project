@@ -6,7 +6,6 @@ public class GroundScroll : MonoBehaviour {
 	public static float m_xSpeed = 10;
 	public static float m_zSpeed = 10;
     [Range(0.0f, 1.0f)]
-	public static float m_xDamper = 0.65f;
 
 	public static float m_groundScale;
 

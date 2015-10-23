@@ -8,12 +8,14 @@ public class PlayerHealthScript : MonoBehaviour {
     [SerializeField]
     private int m_health;
     private AudioSource m_audioSource;
-    public AudioClip hurtSound;
+    public AudioClip m_hurtSound;
+    private Animator m_animator;
 
 	// Use this for initialization
 	void Start () {
         m_health = m_maxHealth;
         m_audioSource = GetComponent<AudioSource>();
+        m_animator = GetComponent<Animator>();
     }
 
     void OnTriggerEnter(Collider other) {
@@ -31,6 +33,7 @@ public class PlayerHealthScript : MonoBehaviour {
     void ApplyDamage() {
         Debug.Log("PlayerHit");
         m_health--;
-        m_audioSource.PlayOneShot(hurtSound);
+        m_audioSource.PlayOneShot(m_hurtSound);
+        m_animator.SetTrigger("GotHurt");
     }
 }
