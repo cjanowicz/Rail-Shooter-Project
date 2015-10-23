@@ -7,7 +7,7 @@ public class ShootingBehavior : MonoBehaviour {
 	public float velocity = 80.0f;
 	public Transform shotTransform;
 
-	private GameObject m_fXManager;
+	private FXManager m_fXManagerScript;
 
     private bool bufferedShot = false;
     private bool shooting = false;
@@ -19,7 +19,7 @@ public class ShootingBehavior : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		m_fXManager = GameObject.Find("FXManager");
+        m_fXManagerScript = GameObject.Find("FXManager").GetComponent<FXManager>();
 	}
 	
 	// Update is called once per frame
@@ -45,10 +45,12 @@ public class ShootingBehavior : MonoBehaviour {
     }
 
     void FireBullet() {
+        /*
         Rigidbody newBullet = Instantiate(bullet, shotTransform.position, shotTransform.rotation) as Rigidbody;
         newBullet.AddForce(transform.forward * velocity, ForceMode.VelocityChange);
-        RenderSettings.haloStrength = 0f;
-        m_fXManager.SendMessage("CallPlayerMuzzleFlash", shotTransform.position);
+        */
+        m_fXManagerScript.CallPlayerBullet(shotTransform.position, shotTransform.rotation, velocity);
+        m_fXManagerScript.CallPlayerMuzzleFlash(shotTransform.position);
     }
 
 }

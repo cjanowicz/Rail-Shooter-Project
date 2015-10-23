@@ -4,7 +4,6 @@ using System.Collections;
 public class PlayerMovement_Controls : MonoBehaviour {
 
 	//---=== GameLogic Variables ===---//
-	public int health = 10;
 	private GameObject myGameManager;
 	private GroundScroll groundPlaneScript;
 
@@ -107,32 +106,7 @@ public class PlayerMovement_Controls : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter(Collider other)
-	{
-		if(other.tag == "World")
-		{
-			health--;
-			Debug.Log("Hit World, Health == " + health);
-			//Turn on Invuln frames.
-		}
-		else if(other.tag == "Powerup")
-		{
-			health++;
-			Debug.Log("Powerup, health == " + health);
-		}
-		else if(other.tag == "Enemy")
-		{			
-			health--;
-			Debug.Log("Hit Enemy, Health == " + health);
-			//Turn on Invuln frames.
-		}		
-		else if(other.tag == "EnemyBullet")
-		{			
-			health--;
-			Debug.Log("Hit Bullet Enemy, Health == " + health);
-			//Turn on Invuln frames.
-		}
-	}
+	
 
 	void BankingRight()
 	{

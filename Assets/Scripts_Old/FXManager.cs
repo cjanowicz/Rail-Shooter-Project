@@ -2,28 +2,35 @@
 using System.Collections;
 
 public class FXManager : MonoBehaviour {
+    
 
     public GameObject m_smallExplosionPrefab;
+    private GameObject[] m_smallExpArray;
     private const int m_numOfSmallExplosions = 15;
     private int m_smallExpIter = 0;
-    private GameObject[] m_smallExpArray;
     //public GameObject m_largeExplosionPrefab;
 
     public GameObject m_medExplosionPrefab;
+    private GameObject[] m_medExpArray;
     private const int m_numOfMedExp = 10;
     private int m_medExpIter = 0;
-    private GameObject[] m_medExpArray;
 
     public GameObject m_playerMuzzleFlash;
-	private const int m_numPFlash = 3;
+    private GameObject[] m_pFlashArray;
+    private const int m_numPFlash = 3;
 	private int m_pFlashIter = 0;
-	private GameObject[] m_pFlashArray;
+    
+    public GameObject m_playerBullet;
+    private GameObject[] m_pBulletArray;
+    private const int m_numPBullet = 30;
+    private int m_pBulletIter = 0;
 
     // Use this for initialization
     void Awake () {
 		InstantiateEffect(m_smallExplosionPrefab, ref m_smallExpArray, m_numOfSmallExplosions);
         InstantiateEffect(m_medExplosionPrefab, ref m_medExpArray, m_numOfMedExp);
         InstantiateEffect(m_playerMuzzleFlash, ref m_pFlashArray, m_numPFlash);
+        InstantiateEffect(m_playerBullet, ref m_pBulletArray, m_numPBullet);
 
     }
 	void InstantiateEffect(GameObject prefab, ref GameObject[] newArray, int size){
@@ -44,19 +51,27 @@ public class FXManager : MonoBehaviour {
 		}
 	}
 
-    void CallSmallExplosion(Vector3 newPos) {
+    public void CallSmallExplosion(Vector3 newPos) {
 		StartEffect(newPos, ref m_smallExpArray[m_smallExpIter], 
 		            ref m_smallExpIter, m_smallExpArray.Length);
     }
 
-	void CallPlayerMuzzleFlash(Vector3 newPos){
+    public void CallPlayerMuzzleFlash(Vector3 newPos){
 		StartEffect(newPos, ref m_pFlashArray[m_pFlashIter], 
 		            ref m_pFlashIter, m_pFlashArray.Length);
 	}
 
-    void CallMediumExplosion(Vector3 newPos) {
+    public void CallMediumExplosion(Vector3 newPos) {
         StartEffect(newPos, ref m_medExpArray[m_medExpIter],
                     ref m_medExpIter, m_medExpArray.Length);
+    }
+
+    public void CallPlayerBullet(Vector3 newPos, Quaternion newRotation, float bulletForce) {
+        int currentIter = m_pBulletIter;
+        StartEffect(newPos, ref m_pBulletArray[m_pBulletIter],
+                    ref m_pBulletIter, m_pBulletArray.Length);
+        m_pBulletArray[currentIter].transform.rotation = newRotation;
+        m_pBulletArray[currentIter].GetComponent<Rigidbody>().velocity = m_pBulletArray[currentIter].transform.forward * bulletForce;
     }
 
 

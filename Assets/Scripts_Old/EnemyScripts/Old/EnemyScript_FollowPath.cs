@@ -24,7 +24,7 @@ public class EnemyScript_FollowPath : MonoBehaviour {
     private bool canShoot = false;
 
     //Health
-    public int healthMax = 5;
+    public int healthMax = 3;
     private int health;
 
     private float forceFloat = 500.0f;
@@ -53,12 +53,7 @@ public class EnemyScript_FollowPath : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision collision) {
-
-        if(m_state == State.Dead) {
-            m_fXManager.SendMessage("CallMediumExplosion", this.transform.position);
-            CancelInvoke();
-            this.gameObject.SetActive(false);
-        }
+        KillObject();
     }
 
     void FireOnTarget(Transform target) {
@@ -73,7 +68,12 @@ public class EnemyScript_FollowPath : MonoBehaviour {
         //if the enemy is destroyed, I want it to explode, then spew smoke and tumble out of the sky. 
         //Then when it hits another object, I want it to explode. 
         if (health <= 0) {
-            DeathSequence();
+            if(m_state != State.Dead) {
+                DeathSequence();
+
+            } else {
+                KillObject();
+            }
 
         }
     }
@@ -90,6 +90,12 @@ public class EnemyScript_FollowPath : MonoBehaviour {
         GetComponent<Rigidbody>().AddRelativeTorque(new Vector3(Random.Range(-forceFloat, forceFloat),
                                                 Random.Range(-forceFloat, forceFloat),
                                                 Random.Range(-forceFloat, forceFloat)));
+    }
+
+    void KillObject() {
+        m_fXManager.SendMessage("CallMediumExplosion", this.transform.position);
+        CancelInvoke();
+        this.gameObject.SetActive(false);
     }
 
     void FXExplode() {

@@ -1,8 +1,13 @@
 fileFormatVersion: 2
 guid: ff67043b798d7904fae592f7cb35ea19
+timeCreated: 1445551078
+licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - hurtSound: {fileID: 8300000, guid: ec66b3b69bce20247a707564754c0625, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
+  assetBundleName: 
+  assetBundleVariant: 
