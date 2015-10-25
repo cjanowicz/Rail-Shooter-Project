@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerBulletScript : MonoBehaviour {
+public class EnemyBulletScript : MonoBehaviour {
 
     private static GameObject m_fxManager;
     public int m_damage = 1;
     public float m_lifeTime = 2f;
     private AudioSource m_audioSource;
-    private bool justInitialized = true;
 
     // Use this for initialization
     void Awake() {
@@ -16,19 +15,16 @@ public class PlayerBulletScript : MonoBehaviour {
     }
 
     void OnEnable() {
-        if(justInitialized == true) {
-            justInitialized = false;
-        } else {
-            Invoke("Deactivate", m_lifeTime);
-            m_audioSource.Play();
-        }
+        Invoke("Deactivate", m_lifeTime);
+        m_audioSource.Play();
     }
 
     void OnTriggerEnter(Collider other) {
-        if (other.tag != "Powerup" && other.tag != "Player" && other.tag != "EnemyBullet") {
-            other.SendMessage("ApplyDamage", m_damage, SendMessageOptions.DontRequireReceiver);
+        if (other.tag != "Powerup" && other.tag != "Enemy" && other.tag != "Bullet") {
+            other.SendMessage("ApplyDamage", 1.0f, SendMessageOptions.DontRequireReceiver);
             DestroySelf();
         }
+
     }
 
     void DestroySelf() {

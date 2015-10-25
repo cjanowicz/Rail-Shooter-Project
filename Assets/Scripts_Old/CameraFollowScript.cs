@@ -55,19 +55,6 @@ public class CameraFollowScript : MonoBehaviour {
 
 		this.transform.localPosition += (newPosition - transform.localPosition)* dampenerPos * Time.deltaTime;
 
-		if(Input.GetKeyDown("h"))
-		{
-			int level = Application.loadedLevel +1;
-			if(level >= Application.levelCount)
-				level = 0;
-			Physics.gravity = new Vector3(0,-9.81f,0);
-			Application.LoadLevel(level);
-		}		
-		if(Input.GetKeyDown("k"))
-		{
-			Application.LoadLevel(Application.loadedLevel);
-		}
-
 	}
 
 	void OnDrawGizmos() {

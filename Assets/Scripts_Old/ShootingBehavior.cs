@@ -2,9 +2,8 @@
 using System.Collections;
 
 public class ShootingBehavior : MonoBehaviour {
-
-	public Rigidbody bullet;
-	public float velocity = 80.0f;
+    
+	public float m_shotVelocity = 80.0f;
 	public Transform shotTransform;
 
 	private FXManager m_fXManagerScript;
@@ -12,9 +11,7 @@ public class ShootingBehavior : MonoBehaviour {
     private bool bufferedShot = false;
     private bool shooting = false;
     public int burstShots = 3;
-    private int burstIterator;
     public float burstShotDelay = 0.1f;
-    private float timer;
 
 
 	// Use this for initialization
@@ -49,7 +46,7 @@ public class ShootingBehavior : MonoBehaviour {
         Rigidbody newBullet = Instantiate(bullet, shotTransform.position, shotTransform.rotation) as Rigidbody;
         newBullet.AddForce(transform.forward * velocity, ForceMode.VelocityChange);
         */
-        m_fXManagerScript.CallPlayerBullet(shotTransform.position, shotTransform.rotation, velocity);
+        m_fXManagerScript.CallPlayerBullet(shotTransform.position, shotTransform.rotation, m_shotVelocity);
         m_fXManagerScript.CallPlayerMuzzleFlash(shotTransform.position);
     }
 

@@ -94,16 +94,7 @@ public class PlayerMovement_Controls : MonoBehaviour {
 		}
 
 
-		//////////-----================ DEMO COMMANDS ================--------------------
-		if(Input.GetKeyDown("g"))
-		{
-			this.GetComponent<Rigidbody>().useGravity = true;
-			this.GetComponent<Rigidbody>().isKinematic = false;
-		}
-		if(Input.GetKeyDown ("b"))
-		{
-			Physics.gravity = new Vector3(0,-4,0);
-		}
+		
 	}
 
 	
