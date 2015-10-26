@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GroundScroll : MonoBehaviour {
 
-	public static float m_xSpeed = 10;
+	public static float m_xSpeed = 0;
 	public static float m_zSpeed = 10;
     [Range(0.0f, 1.0f)]
 
@@ -23,8 +23,7 @@ public class GroundScroll : MonoBehaviour {
 		if(transform.name == "GroundPlane"){
 			myDelegate = MoveTexture;
 			m_objectRenderer = GetComponent<Renderer>();
-			m_groundScale = this.transform.localScale.z 
-				/ m_objectRenderer.material.GetTextureScale("_MainTex").y * 10f; 
+			m_groundScale = this.transform.localScale.z / m_objectRenderer.material.GetTextureScale("_MainTex").y * 10f; 
 		} else {
             myDelegate = MoveSelf;
 			if(this.gameObject.tag.Contains("Bullet") || this.gameObject.tag.Contains("Enemy") || this.gameObject.tag.Contains("Boss")) {

@@ -21,12 +21,6 @@ public class ShootingBehavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
-		if(Input.GetButtonDown("Fire1"))
-		{
-            bufferedShot = true;
-		}
-
         if(bufferedShot == true && shooting == false) {
             shooting = true;
             bufferedShot = false;
@@ -35,6 +29,10 @@ public class ShootingBehavior : MonoBehaviour {
             Invoke("FireBullet", burstShotDelay*3);
             Invoke("ResetShooting", burstShotDelay * 3);
         }
+    }
+
+    public void Shoot() {
+            bufferedShot = true;
     }
 
     void ResetShooting() {

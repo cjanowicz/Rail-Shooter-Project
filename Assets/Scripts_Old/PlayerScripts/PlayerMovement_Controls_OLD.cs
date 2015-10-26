@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerMovement_Controls : MonoBehaviour {
+public class PlayerMovement_Controls_OLD : MonoBehaviour {
 
 	//---=== GameLogic Variables ===---//
 	private GameObject myGameManager;
