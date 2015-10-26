@@ -58,6 +58,6 @@ public class CameraFollowScript : MonoBehaviour {
 	}
 
 	void OnDrawGizmos() {
-		transform.position = new Vector3 (playerObject.position.x / dampenerX, playerObject.position.y / dampenerY, followDistance);
+		//transform.position = new Vector3 (playerObject.position.x / dampenerX, playerObject.position.y / dampenerY, followDistance);
 	}
 }
