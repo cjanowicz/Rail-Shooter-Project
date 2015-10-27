@@ -122,7 +122,6 @@ public class EnemyMovementScript : MonoBehaviour {
 
     void KillObject() {
         m_fXManager.SendMessage("CallMediumExplosion", this.transform.position);
-        Debug.Log("I called KillObject and my name is " + transform.name);
         transform.parent.SendMessage("EnemyDied");
         CancelInvoke();
         this.gameObject.SetActive(false);

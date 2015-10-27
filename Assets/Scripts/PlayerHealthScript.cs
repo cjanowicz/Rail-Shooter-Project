@@ -18,6 +18,13 @@ public class PlayerHealthScript : MonoBehaviour {
         m_animator = GetComponent<Animator>();
     }
 
+	void OnCollisionEnter(Collision collision) {
+		if(collision.transform.tag == "World"){
+			ApplyDamage();
+		}
+		
+	}
+
     void OnTriggerEnter(Collider other) {
         if (other.tag == "World") {
             ApplyDamage();
@@ -25,13 +32,10 @@ public class PlayerHealthScript : MonoBehaviour {
             ApplyDamage();
         } else if (other.tag == "Enemy") {
             ApplyDamage();
-        } else if (other.tag == "EnemyBullet") {
-            ApplyDamage();
         }
     }
 
     void ApplyDamage() {
-        Debug.Log("PlayerHit");
         m_health--;
         m_audioSource.PlayOneShot(m_hurtSound);
         m_animator.SetTrigger("GotHurt");

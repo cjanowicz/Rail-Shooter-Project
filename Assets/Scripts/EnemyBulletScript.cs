@@ -21,7 +21,7 @@ public class EnemyBulletScript : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
         if (other.tag != "Powerup" && other.tag != "Enemy" && other.tag != "Bullet") {
-            other.SendMessage("ApplyDamage", 1.0f, SendMessageOptions.DontRequireReceiver);
+            other.SendMessageUpwards("ApplyDamage", 1.0f, SendMessageOptions.DontRequireReceiver);
             DestroySelf();
         }
 

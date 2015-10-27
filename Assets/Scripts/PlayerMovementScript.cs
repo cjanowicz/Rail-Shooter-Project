@@ -78,44 +78,13 @@ public class PlayerMovementScript : MonoBehaviour {
             float newXSpeed = (absX - m_limitX) * clampedX;
             m_groundScript.SetXSpeed(newXSpeed * groundMult);
         }
-            /*
-            ///////----------============== POSITION LIMITING =================------------------
-            if (transform.localPosition.x < -maxHorizontal) {
-                transform.localPosition = new Vector3
-                    (-maxHorizontal + maxAdjust, transform.localPosition.y, transform.localPosition.z);
-                m_groundScript.SetXSpeed(h * groundMult);
-            }
-            if (transform.localPosition.x > maxHorizontal) {
-                transform.localPosition = new Vector3
-                    (maxHorizontal - maxAdjust, transform.localPosition.y, transform.localPosition.z);
-                m_groundScript.SetXSpeed(h * groundMult);
-            }
-            if (transform.localPosition.y < -maxVertical) {
-                transform.localPosition = new Vector3
-                    (transform.localPosition.x, -maxVertical + maxAdjust, transform.localPosition.z);
-                m_groundScript.SetXSpeed(h * groundMult);
-            }
-            if (transform.localPosition.y > maxVertical) {
-                transform.localPosition = new Vector3
-                    (transform.localPosition.x, maxVertical - maxAdjust, transform.localPosition.z);
-                m_groundScript.SetXSpeed(h * groundMult);
-            }
-            */
-        }
 
-    /*
-    public void Move(float h, float v) {
-        transform.position += new Vector3(h, v) * m_axisDamping;
-
-        if(Mathf.Abs(transform.position.x) > m_limitX) {
-            //if(m_goingToTarget = )
-            float clampedX = Mathf.Clamp(transform.position.x, -1, 1);
-            m_groundScroll.SetXSpeed(Mathf.Abs(transform.position.x) - m_limitX * clampedX);
-            transform.position = Vector3.Lerp(transform.position, new Vector3( clampedX * m_limitX, 
-                transform.position.y, transform.position.z), 0.05f);
-
-        }
-        else
-            m_groundScroll.SetXSpeed(0);
-    }*/
+		float absY = Mathf.Abs(transform.position.y);
+		if (absY > m_limitY) {
+			transform.position = new Vector3(
+				transform.position.x, 
+				m_limitY * Mathf.Clamp(transform.position.y, -1, 1),
+				transform.position.z);        
+		}
+	}
 }
