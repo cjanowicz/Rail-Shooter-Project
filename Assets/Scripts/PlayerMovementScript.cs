@@ -51,6 +51,7 @@ public class PlayerMovementScript : MonoBehaviour {
     public void Move(float h, float v) {
         //---=== New Code ===---//
 
+		//TODO: Implement Inverted/Not inverted controls
         steerInput = new Vector3(h, -v, 0);
         Vector3 deltaInput = steerInput - steerStored;
         deltaInput = Vector3.ClampMagnitude(deltaInput, steerMaxLimiter);
@@ -72,7 +73,6 @@ public class PlayerMovementScript : MonoBehaviour {
         //Scroll the ground once you get to the edges of the screen.
         float absX = Mathf.Abs(transform.position.x);
         if (absX > m_limitX) {
-            Debug.Log("Player is outside X Limit");
 
             float clampedX = Mathf.Clamp(transform.position.x, -1, 1);
             float newXSpeed = (absX - m_limitX) * clampedX;

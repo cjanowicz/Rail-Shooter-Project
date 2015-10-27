@@ -50,22 +50,21 @@ public class EnemyManager : MonoBehaviour {
         int currentIter = m_enemy1Iter;
         StartEnemy(Vector3.back * 20 + Vector3.right * Random.Range(-20, 20) + Vector3.up * 30,
             ref m_enemy1Array[currentIter], ref m_enemy1Iter, m_enemy1Num);
-        Debug.Log("Enemy spawned, name = " + m_enemy1Array[currentIter].name + ", total = " + m_totalEnemiesActive);
-    }
+     }
 
     void EnemyDied() {
         m_enemiesDestroyed++;
         m_totalEnemiesActive--;
-        Debug.Log("EnemyDied Called, destroyed = " + m_enemiesDestroyed + ", total = " + m_totalEnemiesActive);
         if (m_totalEnemiesActive == 0) {
+			/////
+		/// Note: There was a bug where the count of "Alive enemies"
+			/// was getting out of sync due to enemies being called 
+			/// back into operation just before they turned themselves off.
             Invoke("CreateEnemies", 2);
         }
     }
 
     void Update() {
-        if (Input.GetKeyDown("k")) {
-            Debug.Log("LOG: destroyed = " + m_enemiesDestroyed + ", total = " + m_totalEnemiesActive);
-        }
     }
 
 
