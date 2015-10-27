@@ -26,7 +26,7 @@ public class GroundScroll : MonoBehaviour {
 			m_groundScale = this.transform.localScale.z / m_objectRenderer.material.GetTextureScale("_MainTex").y * 10f; 
 		} else {
             myDelegate = MoveSelf;
-			if(this.gameObject.tag.Contains("Bullet") || this.gameObject.tag.Contains("Enemy") || this.gameObject.tag.Contains("Boss") || this.gameObject.tag.Contains("Camera")) {
+			if(this.gameObject.tag.Contains("Bullet") || this.gameObject.tag.Contains("Enemy") || this.gameObject.tag.Contains("Boss") || this.gameObject.tag.Contains("Player")) {
                 m_scrollOnZ = 0;
 			}
         }

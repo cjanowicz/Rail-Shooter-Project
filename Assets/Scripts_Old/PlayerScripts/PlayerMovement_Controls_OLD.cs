@@ -5,12 +5,9 @@ public class PlayerMovement_Controls_OLD : MonoBehaviour {
 
 	//---=== GameLogic Variables ===---//
 	private GameObject myGameManager;
-	private GroundScroll groundPlaneScript;
+	private GroundScroll m_groundScript;
 
 	//---=== Movement Variables ===---//
-	private float horizontal;
-	private float vertical;
-
 	public float movementSpeed = 8.0f;
 	public float maxDegreesDelta = 120.0f;
 	public float maxHorizontal = 8.5f;
@@ -34,7 +31,7 @@ public class PlayerMovement_Controls_OLD : MonoBehaviour {
 
 	void Awake(){
 		myGameManager = GameObject.Find ("GameManager");
-		groundPlaneScript = GameObject.Find("GroundPlane").GetComponent<GroundScroll> ();
+        m_groundScript = GameObject.Find("GroundPlane").GetComponent<GroundScroll> ();
 	}
 
 	// Use this for initialization
@@ -45,12 +42,10 @@ public class PlayerMovement_Controls_OLD : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void Move (float h, float v) {
 		//---=== New Code ===---//
-		horizontal = Input.GetAxis("Horizontal");
-		vertical = Input.GetAxis("Vertical");
 	
-		steerInput = new Vector3(horizontal, -vertical, 0);
+		steerInput = new Vector3(h, -v, 0);
 		Vector3 deltaInput = steerInput - steerStored;
 		deltaInput = Vector3.ClampMagnitude(deltaInput, steerMaxLimiter);
 
@@ -68,7 +63,6 @@ public class PlayerMovement_Controls_OLD : MonoBehaviour {
 		                                         transform.localEulerAngles.y,
 		                                         steerCurrent.x * -30);
 
-		groundPlaneScript.SetXSpeed(horizontal *4f);
 
 	
 	///////----------============== POSITION LIMITING =================------------------
@@ -76,25 +70,26 @@ public class PlayerMovement_Controls_OLD : MonoBehaviour {
 		{
 			transform.localPosition = new Vector3
 				(-maxHorizontal+maxAdjust,transform.localPosition.y, transform.localPosition.z);
-		}
+            m_groundScript.SetXSpeed(h * 4f);
+        }
 		if(transform.localPosition.x > maxHorizontal)
 		{
 			transform.localPosition = new Vector3
 				(maxHorizontal-maxAdjust,transform.localPosition.y, transform.localPosition.z);
-		}
+            m_groundScript.SetXSpeed(h * 4f);
+        }
 		if(transform.localPosition.y < -maxVertical)
 		{
 			transform.localPosition = new Vector3
 				(transform.localPosition.x,-maxVertical+maxAdjust, transform.localPosition.z);
-		}
+            m_groundScript.SetXSpeed(h * 4f);
+        }
 		if(transform.localPosition.y > maxVertical)
 		{
 			transform.localPosition = new Vector3
 				(transform.localPosition.x,maxVertical-maxAdjust, transform.localPosition.z);
-		}
-
-
-		
+            m_groundScript.SetXSpeed(h * 4f);
+        }
 	}
 
 	
