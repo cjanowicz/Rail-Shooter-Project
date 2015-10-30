@@ -52,7 +52,7 @@ public class PlayerMovementScript : MonoBehaviour {
         //---=== New Code ===---//
 
 		//TODO: Implement Inverted/Not inverted controls
-        steerInput = new Vector3(h, -v, 0);
+        steerInput = new Vector3(h, v, 0);
         Vector3 deltaInput = steerInput - steerStored;
         deltaInput = Vector3.ClampMagnitude(deltaInput, steerMaxLimiter);
 
@@ -63,7 +63,7 @@ public class PlayerMovementScript : MonoBehaviour {
 
         transform.localRotation = Quaternion.RotateTowards(
             transform.localRotation, Quaternion.LookRotation(steerCurrent),
-            Mathf.Deg2Rad * maxDegreesDelta);
+            Mathf.Deg2Rad * maxDegreesDelta * Time.deltaTime);
 
         //////---===== Banking ======------
         transform.localEulerAngles = new Vector3(transform.localEulerAngles.x,

@@ -25,7 +25,7 @@ public class PlayerBulletScript : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider other) {
-        if (other.tag != "Powerup" && other.tag != "Player" && other.tag != "EnemyBullet") {
+		if (other.tag != "Powerup" && other.tag != "Player" && other.tag != "EnemyBullet") {
             other.SendMessage("ApplyDamage", m_damage, SendMessageOptions.DontRequireReceiver);
             DestroySelf();
         }

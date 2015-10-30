@@ -12,16 +12,18 @@ public class EnemyMovementScript : MonoBehaviour {
     public float m_randomY = 5;
     public float m_randomZ = 5;
     public float m_speed = 10;
+	public float m_zOffset = 30;
 
     public GameObject shipModel;
     private Rigidbody m_rigidbody;
     private GameObject m_fXManager;
     private float m_shootTimer = 3;
+	public float m_shootMin = 3f;
+	public float m_shootMax = 5f;
+	public int m_scoreWorth = 1;
+	public bool isBoss = false;
 
     private EnemyShootingScript m_shootingScript;
-
-    public int healthMax = 3;
-    private int health;
 
     private float forceFloat = 500.0f;
 
@@ -31,12 +33,10 @@ public class EnemyMovementScript : MonoBehaviour {
         m_fXManager = GameObject.Find("FXManager");
         m_shootingScript = GetComponent<EnemyShootingScript>();
 
-        health = healthMax;
         m_state = State.Chasing;
     }
     void OnEnable() {
         //CancelInvoke
-        health = healthMax;
         m_state = State.Chasing;
         InvokeRepeating("SetNewOffset", 0, Random.Range(2, 6));
         ResetRigidbody();
@@ -45,7 +45,7 @@ public class EnemyMovementScript : MonoBehaviour {
     void SetNewOffset() {
         m_randomOffset = new Vector3(Random.Range(-m_randomX, m_randomX),
             Random.Range(-m_randomY, m_randomY),
-            Random.Range(-m_randomZ, m_randomZ) + 30);
+		    Random.Range(-m_randomZ, m_randomZ) + m_zOffset);
 
     }
 
@@ -55,8 +55,8 @@ public class EnemyMovementScript : MonoBehaviour {
             case State.Engaged:
                 m_shootTimer -= Time.deltaTime;
                 if (m_shootTimer <= 0) {
-                    FireAtPlayer();
-                    m_shootTimer = Random.Range(3, 5);
+                    BroadcastFire();
+                    m_shootTimer = Random.Range(m_shootMin, m_shootMax);
                 }
                 Move();
 
@@ -73,12 +73,12 @@ public class EnemyMovementScript : MonoBehaviour {
 
     void Move() {
         transform.position = Vector3.Lerp(transform.position, m_randomOffset, m_movementDamper);
-        transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation((m_randomOffset + Vector3.forward*3) - transform.position), m_movementDamper);
+        transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation((m_randomOffset + Vector3.forward*10) - transform.position), m_movementDamper);
         //m_rigidbody.AddRelativeForce(Vector3.forward * m_speed);
     }
 
-    void FireAtPlayer() {
-        m_shootingScript.FireAtPlayer();
+    void BroadcastFire() {
+		this.gameObject.BroadcastMessage("FireAtPlayer");
     }
 
     void OnCollisionEnter(Collision collision) {
@@ -86,32 +86,25 @@ public class EnemyMovementScript : MonoBehaviour {
             KillObject();
         }
     }
-
-    void ApplyDamage(int damage) {
-        health -= damage;
-        if (health <= 0) {
-            if (m_state != State.Dead) {
-                DeathSequence();
-            } else {
-                KillObject();
-            }
-
-        }
-    }
-    void DeathSequence() {
-        InvokeRepeating("FXExplode", 0, 0.5f);
-        FallDown();
-        m_state = State.Dead;
-        //This invoke is to stop the dead enemy from holding up the game if he dies but is unable to hit the ground
-        Invoke("KillObject", 3);
+    public void DeathSequence() {
+		if(m_state != State.Dead)
+		{
+			InvokeRepeating("FXExplode", 0, 0.5f);
+	        FallDown();
+	        m_state = State.Dead;
+	        //This invoke is to stop the dead enemy from holding up the game if he dies but is unable to hit the ground
+	        Invoke("KillObject", 3);
+		}else if (m_state == State.Dead ){
+			KillObject();
+		}
     }
 
     void FallDown() {
-        GetComponent<Rigidbody>().useGravity = true;
-        GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-forceFloat, forceFloat),
+		m_rigidbody.useGravity = true;
+		m_rigidbody.AddForce(new Vector3(Random.Range(-forceFloat, forceFloat),
                                                Random.Range(0, forceFloat),
                                                Random.Range(-forceFloat, forceFloat)));
-        GetComponent<Rigidbody>().AddRelativeTorque(new Vector3(Random.Range(-forceFloat, forceFloat),
+		m_rigidbody.AddRelativeTorque(new Vector3(Random.Range(-forceFloat, forceFloat),
                                                 Random.Range(-forceFloat, forceFloat),
                                                 Random.Range(-forceFloat, forceFloat)));
     }
@@ -122,7 +115,12 @@ public class EnemyMovementScript : MonoBehaviour {
 
     void KillObject() {
         m_fXManager.SendMessage("CallMediumExplosion", this.transform.position);
-        transform.parent.SendMessage("EnemyDied");
+		if(isBoss == false){
+        transform.parent.SendMessage("EnemyDied", m_scoreWorth);
+		}else{
+			
+			transform.parent.SendMessage("BossDied", m_scoreWorth);
+		}
         CancelInvoke();
         this.gameObject.SetActive(false);
     }

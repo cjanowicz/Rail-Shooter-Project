@@ -27,7 +27,7 @@ public class FXManager : MonoBehaviour {
 
     public GameObject m_enemyBulletPrefab;
     private GameObject[] m_enemyBulletArray;
-    private const int m_enemyBulletNum = 30;
+    private const int m_enemyBulletNum = 50;
     private int m_enemyBulletIter = 0;
 
     // Use this for initialization
