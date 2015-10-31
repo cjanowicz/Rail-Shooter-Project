@@ -32,9 +32,9 @@ public class PlayerHealthScript : MonoBehaviour {
         m_animator = GetComponent<Animator>();
         if (m_healthText == null) {
             m_healthText = GameObject.Find("HealthText").GetComponent<TextMesh>();
-            UpdateHealtText();
+            UpdateHealthText();
         } else {
-            UpdateHealtText();
+            UpdateHealthText();
         }
         m_playerMovement = GetComponent<PlayerMovementScript>();
         m_playerInput = GetComponent<PlayerInputScript>();
@@ -64,9 +64,11 @@ public class PlayerHealthScript : MonoBehaviour {
             m_health--;
             m_audioSource.PlayOneShot(m_hurtSound);
             m_animator.SetTrigger("GotHurt");
-            UpdateHealtText();
+            UpdateHealthText();
         } else {
-            if(m_gameOver == false) {
+            if (m_gameOver == false) {
+                m_health--;
+                UpdateHealthText();
                 m_gameOver = true;
                 m_playerMovement.enabled = false;
                 m_playerInput.enabled = false;
@@ -88,7 +90,7 @@ public class PlayerHealthScript : MonoBehaviour {
         m_fXManager.SendMessage("CallMediumExplosion", this.transform.position);
     }
 
-    void UpdateHealtText() {
+    void UpdateHealthText() {
         CancelInvoke();
         m_healthText.text = m_health.ToString();
 

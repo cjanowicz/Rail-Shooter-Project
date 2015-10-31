@@ -4,7 +4,7 @@ using System.Collections;
 public class EnemyHealthScript : MonoBehaviour {
 	
 	public int m_healthMax = 3;
-	private int m_health;
+	public int m_health;
 	private EnemyMovementScript m_enemyMov;
 
 	// Use this for initialization
@@ -36,7 +36,7 @@ public class EnemyHealthScript : MonoBehaviour {
     void ApplyDamage(int damage) {
 		if(m_health >0)
             m_health -= damage;
-		else {
+		if(m_health <=0) {
 			m_enemyMov.DeathSequence();
 		}
 	}

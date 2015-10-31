@@ -12,7 +12,7 @@ public class PlayerInputScript : MonoBehaviour {
     private ShootingBehavior m_shootingScript;
 
     private void Awake() {
-        m_movementScript = GetComponent<PlayerMovementScript>();
+        //m_movementScript = GetComponent<PlayerMovementScript>();
         m_shootingScript = GetComponent<ShootingBehavior>();
     }
 
@@ -30,7 +30,7 @@ public class PlayerInputScript : MonoBehaviour {
             m_shootingScript.Shoot();
         }
         // Pass all parameters to the character control script.
-        m_movementScript.Move(h, v);
+        //m_movementScript.Move(h, v);
 
 
     }
