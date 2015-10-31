@@ -25,6 +25,7 @@ public class PlayerHealthScript : MonoBehaviour {
     private bool m_gameOver = false;
     public float m_hurtShakeAmt = 1;
 
+    public float m_timeSlowAmt = 0.25f;
 
     // Use this for initialization
     void Awake() {
@@ -85,6 +86,12 @@ public class PlayerHealthScript : MonoBehaviour {
 
             }
         }
+        Time.timeScale = m_timeSlowAmt;
+        Invoke("ResetTimeSlow", 0.01f);
+    }
+
+    void ResetTimeSlow() {
+        Time.timeScale = 1;
     }
 
     void RestartLevel() {

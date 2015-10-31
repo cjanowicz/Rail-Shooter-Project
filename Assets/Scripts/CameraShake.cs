@@ -35,8 +35,11 @@ public class CameraShake : MonoBehaviour {
         }
     }
 
-	public void StartCameraShake(float newAmount, Vector3 origin){
+	public void StartCameraShake(float incomingAmt, Vector3 origin){
         Vector3 relativeVec = origin - m_camTransform.position;
-        m_shakeAmt += Mathf.Clamp01((m_maxDist - relativeVec.magnitude) / m_maxDist) * newAmount;
+        float newAmt = Mathf.Clamp01((m_maxDist - relativeVec.magnitude) / m_maxDist) * incomingAmt;
+        if (newAmt > m_shakeAmt) {
+            m_shakeAmt = newAmt;
+        }
 	}
 }
