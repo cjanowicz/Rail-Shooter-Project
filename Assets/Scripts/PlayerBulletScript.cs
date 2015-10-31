@@ -7,17 +7,22 @@ public class PlayerBulletScript : MonoBehaviour {
     public int m_damage = 1;
     public float m_lifeTime = 2f;
     private AudioSource m_audioSource;
-    private bool justInitialized = true;
+    private static CameraShake m_camShakeScript;
+    public float m_shakeStrength = 0.2f;
+    private bool firstActivation = true;
 
     // Use this for initialization
     void Awake() {
         m_fxManager = GameObject.Find("FXManager");
         m_audioSource = GetComponent<AudioSource>();
+        if (m_camShakeScript == null) {
+            m_camShakeScript = GameObject.Find("CameraAnchor").GetComponent<CameraShake>();
+        }
     }
 
     void OnEnable() {
-        if(justInitialized == true) {
-            justInitialized = false;
+        if(firstActivation == true) {
+            firstActivation = false;
         } else {
             Invoke("Deactivate", m_lifeTime);
             m_audioSource.Play();

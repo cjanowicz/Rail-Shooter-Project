@@ -4,6 +4,13 @@ using System.Collections;
 public class PlayerHealthScript : MonoBehaviour {
 
 
+    private PlayerMovementScript m_playerMovement;
+    private PlayerInputScript m_playerInput;
+    private CameraFollowScript m_camFollowScript;
+    private CameraShake m_camShakeScript;
+    private Rigidbody m_rigidbody;
+    private GameObject m_fXManager;
+    private GameObject m_gameManager;
 
     [SerializeField]
     private int m_maxHealth = 5;
@@ -14,15 +21,9 @@ public class PlayerHealthScript : MonoBehaviour {
     private Animator m_animator;
     public TextMesh m_healthText;
 
-    private PlayerMovementScript m_playerMovement;
-    private PlayerInputScript m_playerInput;
-    public CameraFollowScript m_cameraScript;
-    private Rigidbody m_rigidbody;
-    private GameObject m_fXManager;
-    private GameObject m_gameManager;
     private float m_forceFloat = 500.0f;
     private bool m_gameOver = false;
-
+    public float m_hurtShakeAmt = 1;
 
 
     // Use this for initialization
@@ -41,6 +42,9 @@ public class PlayerHealthScript : MonoBehaviour {
         m_rigidbody = GetComponent<Rigidbody>();
         m_fXManager = GameObject.Find("FXManager");
         m_gameManager = GameObject.Find("GameManager");
+        GameObject camReference = GameObject.Find("CameraAnchor");
+        m_camFollowScript = camReference.GetComponent<CameraFollowScript>();
+        m_camShakeScript = camReference.GetComponent<CameraShake>();
 
     }
 
@@ -65,6 +69,7 @@ public class PlayerHealthScript : MonoBehaviour {
             m_audioSource.PlayOneShot(m_hurtSound);
             m_animator.SetTrigger("GotHurt");
             UpdateHealthText();
+            m_camShakeScript.StartCameraShake(m_hurtShakeAmt, this.transform.position);
         } else {
             if (m_gameOver == false) {
                 m_health--;
@@ -72,7 +77,7 @@ public class PlayerHealthScript : MonoBehaviour {
                 m_gameOver = true;
                 m_playerMovement.enabled = false;
                 m_playerInput.enabled = false;
-                m_cameraScript.enabled = false;
+                m_camFollowScript.enabled = false;
                 GoLimp();
                 InvokeRepeating("ExplodeRepeat", 0, 0.2f);
                 Invoke("RestartLevel", 4);

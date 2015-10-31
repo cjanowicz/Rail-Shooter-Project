@@ -31,7 +31,7 @@ public class PlayerMovement_Mouse : MonoBehaviour {
         m_groundScript = GameObject.Find("GroundPlane").GetComponent<GroundScroll>();
 
         Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = false;
+        //Cursor.visible = false;
     }
 
     // Update is called once per frame
