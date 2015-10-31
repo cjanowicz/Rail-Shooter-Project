@@ -3,6 +3,10 @@ using System.Collections;
 
 public class PlayerMovementScript : MonoBehaviour {
 
+
+    enum State { Alive, Dead, Cutscene };
+    State m_state;
+
     public float m_axisDamping = 0.25f;
     public float m_limitX = 6f;
     public float m_limitY = 5f;

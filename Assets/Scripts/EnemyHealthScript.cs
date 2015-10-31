@@ -20,16 +20,24 @@ public class EnemyHealthScript : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-	
-	}
 
-	
-	
-	void ApplyDamage(int damage) {
-		m_health -= damage;
-		if (m_health <= 0) {
+    }
+
+
+    void OnCollisionEnter(Collision collision) {
+        if (collision.collider.tag == "World") {
+            ApplyDamage(3);
+        } else if (collision.collider.tag == "Player") {
+            ApplyDamage(3);
+        }
+    }
+
+
+    void ApplyDamage(int damage) {
+		if(m_health >0)
+            m_health -= damage;
+		else {
 			m_enemyMov.DeathSequence();
-			
 		}
 	}
 }

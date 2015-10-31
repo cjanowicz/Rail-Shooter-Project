@@ -28,7 +28,12 @@ public class EnemyManager : MonoBehaviour {
 		InstantiateEnemy(m_enemy1Prefab, ref m_enemy1Array, m_enemy1Num);
 		InstantiateEnemy(m_skullPrefab, ref m_skullArray, m_skullNum);
 		
-		Invoke("CreateEnemies", 1);
+    }
+
+    void Start() {
+        //I'm moving the functions that start the game going until the Start function
+        //so that the game manager can turn the script on in order to 
+        Invoke("CreateEnemies", 1);
     }
     void InstantiateEnemy(GameObject prefab, ref GameObject[] newArray, int size) {
         newArray = new GameObject[size];
@@ -83,13 +88,18 @@ public class EnemyManager : MonoBehaviour {
         }
     }
 
-	void BossDied(int scoreAmount){
-		m_bossesActive--;
+	void BossDied(int scoreAmount) {
+        Debug.Log("Enemy Manager called Boss Died");
+        m_bossesActive--;
 		m_enemiesDestroyed+= scoreAmount;
 		m_gameManager.UpdateEnemiesKilled(m_enemiesDestroyed);
+        //TEMP: Increase number of bosses if total is greater than 50;
+
 		if(m_bossesActive == 0){
 			Invoke("SpawnSkullBoss", 6);
-		}
+            if (m_enemiesDestroyed > 50)
+                Invoke("SpawnSkullBoss", 6);
+        }
 	}
 
     void Update() {
