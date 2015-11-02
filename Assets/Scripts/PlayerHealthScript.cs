@@ -24,8 +24,9 @@ public class PlayerHealthScript : MonoBehaviour {
     private float m_forceFloat = 500.0f;
     private bool m_gameOver = false;
     public float m_hurtShakeAmt = 1;
-
     public float m_timeSlowAmt = 0.25f;
+    public float m_invulnLength = 2;
+    public int m_invulnFlashes = 3;
 
     // Use this for initialization
     void Awake() {

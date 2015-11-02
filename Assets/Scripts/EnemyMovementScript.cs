@@ -6,7 +6,7 @@ public class EnemyMovementScript : MonoBehaviour {
     enum State { Chasing, Engaged, Dodging, Dead };
     State m_state;
 
-    private float m_movementDamper = 0.02f;
+    private float m_movResponsive = 8f;
     private Vector3 m_randomOffset;
     public float m_randomX = 10;
     public float m_randomY = 5;
@@ -81,8 +81,8 @@ public class EnemyMovementScript : MonoBehaviour {
     }
 
     void Move() {
-        transform.position = Vector3.Lerp(transform.position, m_randomOffset, m_movementDamper);
-        transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation((m_randomOffset + Vector3.forward * 10) - transform.position), m_movementDamper);
+        transform.position = Vector3.Lerp(transform.position, m_randomOffset, Mathf.Clamp01(Time.deltaTime * m_movResponsive));
+        transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation((m_randomOffset + Vector3.forward * 10) - transform.position), Mathf.Clamp01(Time.deltaTime * m_movResponsive) );
         //m_rigidbody.AddRelativeForce(Vector3.forward * m_speed);
     }
 

@@ -6,10 +6,9 @@ public class EnemyHealthScript : MonoBehaviour {
 	public int m_healthMax = 3;
 	public int m_health;
 	private EnemyMovementScript m_enemyMov;
-    public float m_timeSlowAmt = 0.75f;
 
-	// Use this for initialization
-	void Awake () {
+    // Use this for initialization
+    void Awake () {
 		m_enemyMov = GetComponent<EnemyMovementScript>();
 		m_health = m_healthMax;
 	}

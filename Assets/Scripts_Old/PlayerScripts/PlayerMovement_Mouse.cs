@@ -17,7 +17,7 @@ public class PlayerMovement_Mouse : MonoBehaviour {
     public float screenArea;
     public Vector3 turnDegrees = new Vector3(0, 0, 0);
 
-
+    private Vector2 oldPosition;
 
     //---=== GameLogic Variables ===---//
     private GameObject myGameManager;
@@ -32,6 +32,7 @@ public class PlayerMovement_Mouse : MonoBehaviour {
 
         Cursor.lockState = CursorLockMode.Confined;
         //Cursor.visible = false;
+        oldPosition = (Vector2)transform.position;
     }
 
     // Update is called once per frame
@@ -57,11 +58,18 @@ public class PlayerMovement_Mouse : MonoBehaviour {
         float mag = vec.magnitude;
         if (mag > 1f)
             vec *= 1.0f / mag;
-
+        /*
         mInput = Vector2.Lerp(mInput, vec, Mathf.Clamp01(Time.deltaTime * responsiveness));
         mTurn = Vector2.Lerp(mTurn, vec - mInput, Mathf.Clamp01(Time.deltaTime * turnSensitivity));
-
         mTrans.localPosition = new Vector3(mInput.x * movementDistance.x, mInput.y * movementDistance.y, 10);
+        */
+        Vector2 deltaPosition = (Vector2)transform.position - oldPosition;
+        mInput = Vector2.Lerp(mInput + deltaPosition, vec, Mathf.Clamp01(Time.deltaTime * responsiveness));
+        mTurn = Vector2.Lerp(mTurn, vec - mInput, Mathf.Clamp01(Time.deltaTime * turnSensitivity));
+        mTrans.localPosition = new Vector3(mInput.x * movementDistance.x, mInput.y * movementDistance.y, 10);
+
+        oldPosition = transform.position;
+
         if (!barrel) {
             mTrans.localRotation = Quaternion.Euler(-mTurn.y * turnDegrees.x, mTurn.x * turnDegrees.y, -mTurn.x * turnDegrees.z);
         } else

@@ -13,7 +13,8 @@ public class GameManager : MonoBehaviour {
 	public Transform m_dirLight;
 	public Transform m_nightOrientation;
 	private GameObject m_enemyManager;
-	// Use this for initialization
+    // Use this for initialization
+    private float m_lerpSpeed = 0.3f;
 	void Awake () {
 		if(m_scoreText == null){
 			m_scoreText = GameObject.Find("ScoreText").GetComponent<TextMesh>();
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour {
         switch (m_gameState) {
             case State.LevelTransition:
                 m_dirLight.rotation = Quaternion.Slerp(
-                m_dirLight.rotation, m_nightOrientation.rotation, 0.001f);
+                m_dirLight.rotation, m_nightOrientation.rotation, Mathf.Clamp01(Time.deltaTime * m_lerpSpeed));
                 break;
 		}
 	}
@@ -49,7 +50,6 @@ public class GameManager : MonoBehaviour {
 	public void StopNightTransition(){
 		m_enemyManager.SendMessage("SpawnSkullBoss");
         m_gameState = State.BossFight;
-        Debug.Log("Game Manager stopped night transition");
 
 	}
 

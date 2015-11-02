@@ -10,7 +10,8 @@ public class PlayerBulletScript : MonoBehaviour {
     private static CameraShake m_camShakeScript;
     public float m_shakeStrength = 0.2f;
     private bool firstActivation = true;
-    private float m_timeSlowAmt = 0.25f;
+    public float m_hitTimeSlowAmt = 0.2f;
+    public float m_hittimeSlowEnd = 0.1f;
 
     // Use this for initialization
     void Awake() {
@@ -35,8 +36,8 @@ public class PlayerBulletScript : MonoBehaviour {
             other.SendMessage("ApplyDamage", m_damage, SendMessageOptions.DontRequireReceiver);
             DestroySelf();
             if(other.tag == "Enemy" || other.tag == "Boss") {
-                Time.timeScale = m_timeSlowAmt;
-                Invoke("ResetTimeSlow", 0.01f);
+                Time.timeScale = m_hitTimeSlowAmt;
+                Invoke("ResetTimeSlow", m_hittimeSlowEnd);
             }
         }
     }
