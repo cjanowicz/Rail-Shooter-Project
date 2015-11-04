@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
 	public Transform m_dirLight;
 	public Transform m_nightOrientation;
 	private GameObject m_enemyManager;
+	public UIManager m_UIManagerScript;
     // Use this for initialization
     private float m_lerpSpeed = 0.3f;
 	void Awake () {
@@ -23,6 +24,10 @@ public class GameManager : MonoBehaviour {
         //m_dirLight = GameObject.Find("DirectionalLight
         m_gameState = State.Normal;
 	}
+
+	void Start(){
+		m_UIManagerScript.StartFadeOut ();
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -31,6 +36,13 @@ public class GameManager : MonoBehaviour {
                 m_dirLight.rotation = Quaternion.Slerp(
                 m_dirLight.rotation, m_nightOrientation.rotation, Mathf.Clamp01(Time.deltaTime * m_lerpSpeed));
                 break;
+		}
+		if (Input.GetKeyDown (KeyCode.K)) {
+			m_UIManagerScript.StartFadeIn();
+			Debug.Log("K Pressed");
+		}
+		if (Input.GetKeyDown (KeyCode.L)) {
+			m_UIManagerScript.StartFadeOut();
 		}
 	}
 
@@ -55,6 +67,7 @@ public class GameManager : MonoBehaviour {
 
     void StartGameOver() {
         m_gameState = State.GameOver;
+		m_UIManagerScript.StartFadeIn ();
 
     }
 }
