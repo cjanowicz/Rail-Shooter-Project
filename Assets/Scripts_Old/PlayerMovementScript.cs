@@ -85,8 +85,6 @@ public class PlayerMovementScript : MonoBehaviour {
                                                      transform.localEulerAngles.y,
                                                      steerCurrent.x * -30);
 
-
-
         //Scroll the ground once you get to the edges of the screen.
         float absX = Mathf.Abs(transform.position.x);
         if (absX > m_limitX) {

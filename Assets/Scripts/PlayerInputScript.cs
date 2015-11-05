@@ -8,18 +8,18 @@ using System.Collections;
 [RequireComponent(typeof(PlayerMovementScript))]
 public class PlayerInputScript : MonoBehaviour {
 
-    private PlayerMovementScript m_movementScript;
+    private PlayerAimMovement m_movementScript;
     private ShootingBehavior m_shootingScript;
 
     private void Awake() {
-        m_movementScript = GetComponent<PlayerMovementScript>();
+        m_movementScript = GetComponent<PlayerAimMovement>();
         m_shootingScript = GetComponent<ShootingBehavior>();
     }
 
     private void Update() {
         // Read the inputs.
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
         //Vector2 newMouseInput = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
         /*
         Vector2 newStickInput = new Vector2(Input.GetAxis("RightStickX"), Input.GetAxis("RightStickY"))

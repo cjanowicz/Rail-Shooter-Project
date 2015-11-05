@@ -48,6 +48,8 @@ public class UIManager : MonoBehaviour {
 	private bool m_whiteOutChange = false;
 
 
+
+
 	// Use this for initialization
 	void Awake() {
 		transitionArray = new TransitionF[3];
@@ -105,4 +107,6 @@ public class UIManager : MonoBehaviour {
 		m_whiteOutPlane.SetActive (false);
 		m_whiteOutVisible = false;
 	}
+
+	//public void 
 }
