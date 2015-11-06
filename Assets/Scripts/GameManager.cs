@@ -37,13 +37,6 @@ public class GameManager : MonoBehaviour {
                 m_dirLight.rotation, m_nightOrientation.rotation, Mathf.Clamp01(Time.deltaTime * m_lerpSpeed));
                 break;
 		}
-		if (Input.GetKeyDown (KeyCode.K)) {
-			m_UIManagerScript.StartFadeIn();
-			Debug.Log("K Pressed");
-		}
-		if (Input.GetKeyDown (KeyCode.L)) {
-			m_UIManagerScript.StartFadeOut();
-		}
 	}
 
 	public void UpdateEnemiesKilled(int amount){

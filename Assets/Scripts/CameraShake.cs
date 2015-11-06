@@ -7,6 +7,7 @@ public class CameraShake : MonoBehaviour {
     private Transform m_camTransform;
 
     // How long the object should shake for.
+	public float m_constantAmt = 0.1f;
     public float m_shakeAmt = 0f;
     public float m_decreaseFactor = 1.0f;
 
@@ -25,13 +26,12 @@ public class CameraShake : MonoBehaviour {
     }
 
     void Update() {
-        if (m_shakeAmt > 0) {
-            m_camTransform.localPosition = originalPos + Random.insideUnitSphere * m_shakeStr * m_shakeAmt;
-
+		m_camTransform.localPosition = originalPos + Random.insideUnitSphere * m_shakeStr  * (m_shakeAmt+ m_constantAmt);
+		
+		if (m_shakeAmt > 0) {
             m_shakeAmt -= Time.deltaTime * m_decreaseFactor;
         } else {
             m_shakeAmt = 0f;
-            m_camTransform.localPosition = originalPos;
         }
     }
 
