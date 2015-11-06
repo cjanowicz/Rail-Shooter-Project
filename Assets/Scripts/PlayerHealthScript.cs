@@ -72,6 +72,7 @@ public class PlayerHealthScript : MonoBehaviour {
             m_animator.SetTrigger("GotHurt");
             UpdateHealthText();
             m_camShakeScript.StartCameraShake(m_hurtShakeAmt, this.transform.position);
+            m_fXManager.SendMessage("CallEnemyHurt", this.transform.position);
         } else {
             if (m_gameOver == false) {
                 m_health--;

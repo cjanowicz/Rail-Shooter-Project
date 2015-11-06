@@ -33,6 +33,11 @@ public class PlayerBulletScript : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) {
 		if (other.tag != "Powerup" && other.tag != "Player" && other.tag != "EnemyBullet") {
+
+            if(other.tag == "Enemy" || other.tag == "Boss") 
+                m_fxManager.SendMessage("CallEnemyHurt", this.transform.position);
+            else
+                m_fxManager.SendMessage("CallSmallExplosion", this.transform.position);
             other.SendMessage("ApplyDamage", m_damage, SendMessageOptions.DontRequireReceiver);
             DestroySelf();
             if(other.tag == "Enemy" || other.tag == "Boss") {
@@ -46,7 +51,6 @@ public class PlayerBulletScript : MonoBehaviour {
     }
 
     void DestroySelf() {
-        m_fxManager.SendMessage("CallSmallExplosion", this.transform.position);
         Deactivate();
         CancelInvoke("Deactivate");
     }

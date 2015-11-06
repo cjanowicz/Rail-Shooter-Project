@@ -46,7 +46,7 @@ public class GroundScroll : MonoBehaviour {
 			-m_xSpeed * m_groundScale * Time.deltaTime * m_multiplierX, 0, 
 			-m_zSpeed * m_groundScale * Time.deltaTime * m_scrollOnZ);
 
-        if (transform.position.z <= -30) 
+        if (transform.position.z <= -30 && tag == "World") 
             transform.position = new Vector3(Random.Range(-500, 500), 0, Random.Range(1200, 2000));
        
     }

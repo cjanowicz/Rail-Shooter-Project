@@ -97,11 +97,11 @@ public class EnemyMovementScript : MonoBehaviour {
     }
     public void DeathSequence() {
         if (m_state != State.Dead) {
-            InvokeRepeating("FXExplode", 0, 0.5f);
+            Invoke("FXExplode",0.5f);
             FallDown();
             m_state = State.Dead;
             //This invoke is to stop the dead enemy from holding up the game if he dies but is unable to hit the ground
-            Invoke("KillObject", 3);
+            //Invoke("KillObject", 3);
         } else if (m_state == State.Dead) {
             KillObject();
         }
@@ -122,19 +122,22 @@ public class EnemyMovementScript : MonoBehaviour {
     }
 
     void KillObject() {
-        m_fXManager.SendMessage("CallMediumExplosion", this.transform.position);
-        if (m_isBoss == false) {
-            transform.parent.SendMessage("EnemyDied", m_scoreWorth);
-        } else {
-
-            transform.parent.SendMessage("BossDied", m_scoreWorth);
+        if (gameObject.activeSelf) { 
+            m_fXManager.SendMessage("CallMediumExplosion", this.transform.position);
+            if (m_isBoss == false) {
+                transform.parent.SendMessage("EnemyDied", m_scoreWorth);
+            } else {
+                transform.parent.SendMessage("BossDied", m_scoreWorth);
+            }
+            this.gameObject.SetActive(false);
         }
-        CancelInvoke();
-        this.gameObject.SetActive(false);
     }
 
     void FXExplode() {
-        m_fXManager.SendMessage("CallSmallExplosion", this.transform.position);
+        if (gameObject.activeSelf) {
+            m_fXManager.SendMessage("CallSmallExplosion", this.transform.position);
+            Invoke("FXExplode", 0.5f);
+        }
     }
 
 }

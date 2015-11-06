@@ -15,6 +15,11 @@ public class FXManager : MonoBehaviour {
     private const int m_medExpNum = 10;
     private int m_medExpIter = 0;
 
+    public GameObject m_enemyHurtPrefab;
+    private GameObject[] m_enemyHurtArray;
+    private const int m_enemyHurtNum = 10;
+    private int m_enemyHurtIter = 0;
+
     public GameObject m_playerMuzzleFlashPrefab;
     private GameObject[] m_playerMFlashArray;
     private const int m_pMFlashNum = 3;
@@ -34,6 +39,7 @@ public class FXManager : MonoBehaviour {
     void Awake () {
 		InstantiateEffect(m_smallExpPrefab, ref m_smallExpArray, m_smallExpNum);
         InstantiateEffect(m_medExpPrefab, ref m_medExpArray, m_medExpNum);
+        InstantiateEffect(m_enemyHurtPrefab, ref m_enemyHurtArray, m_enemyHurtNum);
         InstantiateEffect(m_playerMuzzleFlashPrefab, ref m_playerMFlashArray, m_pMFlashNum);
         InstantiateEffect(m_playerBulletPrefab, ref m_playerBulletArray, m_playerBulletNum);
         InstantiateEffect(m_enemyBulletPrefab, ref m_enemyBulletArray, m_enemyBulletNum);
@@ -70,6 +76,10 @@ public class FXManager : MonoBehaviour {
     public void CallMediumExplosion(Vector3 newPos) {
         StartEffect(newPos, ref m_medExpArray[m_medExpIter],
                     ref m_medExpIter, m_medExpArray.Length);
+    }
+    public void CallEnemyHurt(Vector3 newPos) {
+        StartEffect(newPos, ref m_enemyHurtArray[m_enemyHurtIter],
+                    ref m_enemyHurtIter, m_enemyHurtArray.Length);
     }
 
     public void CallPlayerBullet(Vector3 newPos, Quaternion newRotation, float bulletForce) {

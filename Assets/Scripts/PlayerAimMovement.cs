@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerAimMovement : MonoBehaviour {
 
 	private GroundScroll m_groundScript;
-	[SerializeField]float m_grndSpdDamp = 0.25f;
+	[SerializeField]float m_grndSpdMult = 20;
 
 	public Transform m_reticleFarTra;
 	public Transform m_reticleCloseTra;
@@ -58,7 +58,7 @@ public class PlayerAimMovement : MonoBehaviour {
 			
 			float clampedX = Mathf.Clamp(transform.position.x, -1, 1);
 			float newXSpeed = (absX - m_limitX) * clampedX;
-			m_groundScript.SetXSpeed(newXSpeed * m_grndSpdDamp * Time.deltaTime);
+			m_groundScript.SetXSpeed(newXSpeed * m_grndSpdMult);
 		}
 		
 		float absY = Mathf.Abs(transform.position.y);
