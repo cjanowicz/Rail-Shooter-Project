@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 255a862d06fc6854d93a077c7b5b5d30
-timeCreated: 1446791504
+timeCreated: 1447121251
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
@@ -9,6 +9,8 @@ MonoImporter:
   - m_medExpPrefab: {fileID: 111876, guid: 89c20536b7530f44f9fe3a0f154190cc, type: 2}
   - m_enemyHurtPrefab: {fileID: 195092, guid: 9a49df1cfa25eb749bfecc92ae17e1c1, type: 2}
   - m_playerMuzzleFlashPrefab: {fileID: 149700, guid: 6be195a30ff2bb34a845db65cbd26375,
+      type: 2}
+  - m_enemyMuzzleFlashPrefab: {fileID: 138082, guid: add1c49b8c1b6c04b8b5781082d622ac,
       type: 2}
   - m_playerBulletPrefab: {fileID: 100000, guid: 6f9f18dc5a687f043ad5f8c30a0ace07,
       type: 2}

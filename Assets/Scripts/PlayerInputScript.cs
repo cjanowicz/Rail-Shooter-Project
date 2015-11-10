@@ -19,14 +19,14 @@ public class PlayerInputScript : MonoBehaviour {
     private void Update() {
         // Read the inputs.
         float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        float v = -Input.GetAxisRaw("Vertical");
         //Vector2 newMouseInput = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
         /*
         Vector2 newStickInput = new Vector2(Input.GetAxis("RightStickX"), Input.GetAxis("RightStickY"))
             + (Vector2)transform.position;
             */
-
-        if (Input.GetButtonDown("Fire1")) {
+		//to use burst fire, use GetButtonDown
+        if (Input.GetButton("Fire1")) {
             m_shootingScript.Shoot();
         }
         // Pass all parameters to the character control script.

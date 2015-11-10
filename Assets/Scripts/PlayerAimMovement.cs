@@ -8,6 +8,8 @@ public class PlayerAimMovement : MonoBehaviour {
 
 	public Transform m_reticleFarTra;
 	public Transform m_reticleCloseTra;
+	private Material m_reticleMat;
+	private Color m_retDefColor;
 	[SerializeField]float m_inputSpd = 20;
 	[SerializeField]float m_reticleSpd = 20;
 	private Vector3 m_aimPos;
@@ -22,11 +24,23 @@ public class PlayerAimMovement : MonoBehaviour {
 	void Start () {
 		m_aimPos = m_reticleFarTra.position;
 		m_groundScript = GameObject.Find("GroundPlane").GetComponent<GroundScroll>();
+		m_reticleMat = m_reticleCloseTra.GetChild(0).GetComponent<Renderer>().materials[0];
+		m_retDefColor = m_reticleMat.color;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		m_reticleCloseTra.position = (m_reticleFarTra.position + transform.position) / 2;
+
+		RaycastHit hit;
+		
+		if (Physics.Raycast(transform.position, transform.forward, out hit)) {
+			if(hit.transform.tag == "Enemy"){
+				m_reticleMat.color = Color.red;
+			}else
+				m_reticleMat.color = m_retDefColor;
+
+		}
 	}
 
 	public void Move(float h, float v) {

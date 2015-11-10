@@ -45,7 +45,6 @@ public class ShootingBehavior : MonoBehaviour {
         newBullet.AddForce(transform.forward * velocity, ForceMode.VelocityChange);
         */
         m_fXManagerScript.CallPlayerBullet(shotTransform.position, shotTransform.rotation, m_shotVelocity);
-        m_fXManagerScript.CallPlayerMuzzleFlash(shotTransform.position);
     }
 
 }

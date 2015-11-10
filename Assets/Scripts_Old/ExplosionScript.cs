@@ -17,21 +17,38 @@ public class ExplosionScript : MonoBehaviour {
         if (m_camShakeScript == null) {
             m_camShakeScript = GameObject.Find("CameraAnchor").GetComponent<CameraShake>();
         }
+		if (this.name.Contains("PlayerMuzzle")) {
+			Debug.Log("Player muzzle flash Actvated, lifetime = " + m_objectLifetime);
+		}
     }
-
+	//NOTE: I strongly suspect that the 
     // Use this for initialization
     void OnEnable() {
         if (m_firstActivation == false) {
-            StartCoroutine(DeactivateWithTimer());
+			CancelInvoke();
+			m_particleSystem.Stop();
+			if (m_audioSource != null)
+				m_audioSource.Stop();
+			Invoke("DeactivateWithTimer",m_objectLifetime);
             if (m_audioSource != null)
                 m_audioSource.Play();
             m_camShakeScript.StartCameraShake(m_shakeStrength, this.transform.position);
+			m_particleSystem.Play();
         } else
             m_firstActivation = false;
     }
+	/*
+	void PlayEffects(){
 
-    IEnumerator DeactivateWithTimer() {
-        yield return new WaitForSeconds(m_objectLifetime);
-        this.gameObject.SetActive(false);
+	}
+*/
+
+	//TODO: Figure out why the Deactivate With Timer function is never 
+	//called on the Player Muzzle Flash.
+    void DeactivateWithTimer() {
+		m_particleSystem.Stop();
+		if (m_audioSource != null)
+			m_audioSource.Stop();
+		this.gameObject.SetActive(false);
     }
 }

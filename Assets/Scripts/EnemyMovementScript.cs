@@ -109,13 +109,21 @@ public class EnemyMovementScript : MonoBehaviour {
 
     void FallDown() {
         m_rigidbody.useGravity = true;
-        m_rigidbody.AddForce(new Vector3(Random.Range(-forceFloat, forceFloat),
-                                               Random.Range(0, forceFloat),
-                                               Random.Range(-forceFloat, forceFloat)));
-        m_rigidbody.AddRelativeTorque(new Vector3(Random.Range(-forceFloat, forceFloat),
-                                                Random.Range(-forceFloat, forceFloat),
-                                                Random.Range(-forceFloat, forceFloat)));
+		PositionPunch ();
+		RotationPunch ();
     }
+
+	public void RotationPunch(){
+		m_rigidbody.AddRelativeTorque(new Vector3(Random.Range(-forceFloat, forceFloat),
+		                                          Random.Range(-forceFloat, forceFloat),
+		                                          Random.Range(-forceFloat, forceFloat)));
+	}
+	public void PositionPunch(){
+		
+		m_rigidbody.AddForce(new Vector3(Random.Range(-forceFloat, forceFloat),
+		                                 Random.Range(0, forceFloat),
+		                                 Random.Range(-forceFloat, forceFloat)));
+	}
 
     void ResetRigidbody() {
         GetComponent<Rigidbody>().useGravity = false;

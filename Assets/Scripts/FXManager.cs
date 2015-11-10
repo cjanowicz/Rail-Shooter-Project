@@ -22,8 +22,12 @@ public class FXManager : MonoBehaviour {
 
     public GameObject m_playerMuzzleFlashPrefab;
     private GameObject[] m_playerMFlashArray;
-    private const int m_pMFlashNum = 3;
+    private const int m_pMFlashNum = 10;
 	private int m_pMFlashIter = 0;
+	public GameObject m_enemyMuzzleFlashPrefab;
+	private GameObject[] m_enemyMFlashArray;
+	private const int m_eMFlashNum = 10;
+	private int m_eMFlashIter = 0;
     
     public GameObject m_playerBulletPrefab;
     private GameObject[] m_playerBulletArray;
@@ -40,7 +44,8 @@ public class FXManager : MonoBehaviour {
 		InstantiateEffect(m_smallExpPrefab, ref m_smallExpArray, m_smallExpNum);
         InstantiateEffect(m_medExpPrefab, ref m_medExpArray, m_medExpNum);
         InstantiateEffect(m_enemyHurtPrefab, ref m_enemyHurtArray, m_enemyHurtNum);
-        InstantiateEffect(m_playerMuzzleFlashPrefab, ref m_playerMFlashArray, m_pMFlashNum);
+		InstantiateEffect(m_playerMuzzleFlashPrefab, ref m_playerMFlashArray, m_pMFlashNum);
+		InstantiateEffect(m_enemyMuzzleFlashPrefab, ref m_enemyMFlashArray, m_eMFlashNum);
         InstantiateEffect(m_playerBulletPrefab, ref m_playerBulletArray, m_playerBulletNum);
         InstantiateEffect(m_enemyBulletPrefab, ref m_enemyBulletArray, m_enemyBulletNum);
 
@@ -68,9 +73,16 @@ public class FXManager : MonoBehaviour {
 		            ref m_smallExpIter, m_smallExpArray.Length);
     }
 
-    public void CallPlayerMuzzleFlash(Vector3 newPos){
+    public void CallPlayerMuzzleFlash(Vector3 newPos, Quaternion newRotation){
 		StartEffect(newPos, ref m_playerMFlashArray[m_pMFlashIter], 
 		            ref m_pMFlashIter, m_playerMFlashArray.Length);
+		m_playerMFlashArray [m_pMFlashIter].transform.rotation = newRotation;
+	}
+	
+	public void CallEnemyMuzzleFlash(Vector3 newPos, Quaternion newRotation){
+		StartEffect(newPos, ref m_enemyMFlashArray[m_eMFlashIter], 
+		            ref m_eMFlashIter, m_enemyMFlashArray.Length);
+		m_enemyMFlashArray [m_eMFlashIter].transform.rotation = newRotation;
 	}
 
     public void CallMediumExplosion(Vector3 newPos) {
@@ -83,6 +95,7 @@ public class FXManager : MonoBehaviour {
     }
 
     public void CallPlayerBullet(Vector3 newPos, Quaternion newRotation, float bulletForce) {
+		CallPlayerMuzzleFlash (newPos, newRotation);
         int currentIter = m_playerBulletIter;
         StartEffect(newPos, ref m_playerBulletArray[m_playerBulletIter],
                     ref m_playerBulletIter, m_playerBulletArray.Length);
@@ -90,6 +103,7 @@ public class FXManager : MonoBehaviour {
         m_playerBulletArray[currentIter].GetComponent<Rigidbody>().velocity = m_playerBulletArray[currentIter].transform.forward * bulletForce;
     }
     public void CallEnemyBullet(Vector3 newPos, Quaternion newRotation, float bulletForce) {
+		CallEnemyMuzzleFlash (newPos, newRotation);
         int currentIter = m_enemyBulletIter;
         StartEffect(newPos, ref m_enemyBulletArray[m_enemyBulletIter],
                     ref m_enemyBulletIter, m_enemyBulletArray.Length);

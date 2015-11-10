@@ -19,7 +19,6 @@ public class EnemyShootingScript : MonoBehaviour {
     public void FireAtPlayer() {
         shotTransform.LookAt(m_playerTrans);
 		m_fXManagerScript.CallEnemyBullet(shotTransform.position, shotTransform.rotation, shotVelocity);
-        m_fXManagerScript.CallPlayerMuzzleFlash(shotTransform.position);
     }
 }
 
