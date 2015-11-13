@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerHealthScript : MonoBehaviour {
 
 
-    private PlayerMovementScript m_playerMovement;
+    private PlayerAimMovement m_playerMovement;
     private PlayerInputScript m_playerInput;
     private CameraFollowScript m_camFollowScript;
     private CameraShake m_camShakeScript;
@@ -39,7 +39,7 @@ public class PlayerHealthScript : MonoBehaviour {
         } else {
             UpdateHealthText();
         }
-        m_playerMovement = GetComponent<PlayerMovementScript>();
+        m_playerMovement = GetComponent<PlayerAimMovement>();
         m_playerInput = GetComponent<PlayerInputScript>();
         m_rigidbody = GetComponent<Rigidbody>();
         m_fXManager = GameObject.Find("FXManager");
@@ -85,6 +85,7 @@ public class PlayerHealthScript : MonoBehaviour {
                 InvokeRepeating("ExplodeRepeat", 0, 0.2f);
                 Invoke("RestartLevel", 4);
                 m_gameManager.SendMessage("StartGameOver");
+				Debug.Log("GameOver Started");
 
             }
         }

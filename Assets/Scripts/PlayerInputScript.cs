@@ -5,7 +5,7 @@ using System.Collections;
 /// /Not using Cross Platform Input Manager for now, will try to make it easier to add later.
 /// </summary>
 
-[RequireComponent(typeof(PlayerMovementScript))]
+[RequireComponent(typeof(PlayerAimMovement))]
 public class PlayerInputScript : MonoBehaviour {
 
     private PlayerAimMovement m_movementScript;
@@ -27,7 +27,8 @@ public class PlayerInputScript : MonoBehaviour {
             */
 		//to use burst fire, use GetButtonDown
         if (Input.GetButton("Fire1")) {
-            m_shootingScript.Shoot();
+			if(m_shootingScript.GetBufferedShot() == false)
+            	m_shootingScript.Shoot();
         }
         // Pass all parameters to the character control script.
         m_movementScript.Move(h, v);

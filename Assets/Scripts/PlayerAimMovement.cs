@@ -18,6 +18,8 @@ public class PlayerAimMovement : MonoBehaviour {
 	[SerializeField]float m_maxReticleDiff = 5;
 	[SerializeField]float m_limitX = 5;
 	[SerializeField]float m_limitY = 5;
+	[SerializeField]float m_reticleYLimit = -4;
+
 
 
 	// Use this for initialization
@@ -29,25 +31,17 @@ public class PlayerAimMovement : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () {		
 		m_reticleCloseTra.position = (m_reticleFarTra.position + transform.position) / 2;
 
-		RaycastHit hit;
-		
-		if (Physics.Raycast(transform.position, transform.forward, out hit)) {
-			if(hit.transform.tag == "Enemy"){
-				m_reticleMat.color = Color.red;
-			}else
-				m_reticleMat.color = m_retDefColor;
-
 		}
-	}
 
 	public void Move(float h, float v) {
 		m_aimPos += new Vector3(h, v, 0) * m_inputSpd * Time.deltaTime;
 		m_aimPos = new Vector3(Mathf.Clamp(m_aimPos.x, transform.position.x - m_maxReticleDiff, transform.position.x + m_maxReticleDiff),
 		                       Mathf.Clamp(m_aimPos.y, transform.position.y - m_maxReticleDiff, transform.position.y + m_maxReticleDiff),
 		                      m_aimPos.z);
+		m_aimPos.y = Mathf.Max (m_aimPos.y, m_reticleYLimit);
 		m_reticleFarTra.position = Vector3.Lerp(m_reticleFarTra.position, m_aimPos, 
 		                                     Time.deltaTime * m_reticleSpd);
 

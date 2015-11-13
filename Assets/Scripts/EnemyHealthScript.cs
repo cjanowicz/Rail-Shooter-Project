@@ -49,9 +49,11 @@ public class EnemyHealthScript : MonoBehaviour {
 	}
 
 	void PlayHitEffects(){
+		CancelInvoke ("ResetColor");	
 		m_modelRenderer.material = m_hitFlashMat;
 		m_enemyMov.RotationPunch ();
-		m_enemyMov.PositionPunch ();
+		if(m_enemyMov.m_isBoss == false)
+			m_enemyMov.PositionPunch ();
 		Invoke ("ResetColor", m_flashLength);
 	}
 	void ResetColor(){
