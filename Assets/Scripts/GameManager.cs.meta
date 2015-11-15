@@ -1,11 +1,17 @@
 fileFormatVersion: 2
 guid: 03782d26499bced49996476bf567ff0d
-timeCreated: 1443395047
+timeCreated: 1447607926
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
-  executionOrder: 0
+  defaultReferences:
+  - m_appManagerPrefab: {fileID: 172500, guid: 7c63bb0553dc073448a10f9999e9bbda, type: 2}
+  - groundObj: {instanceID: 0}
+  - m_scoreText: {instanceID: 0}
+  - m_dirLight: {instanceID: 0}
+  - m_nightOrientation: {instanceID: 0}
+  - m_UIManagerScript: {instanceID: 0}
+  executionOrder: -80
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

@@ -5,6 +5,8 @@ public class PlayerAimMovement : MonoBehaviour {
 
 	private GroundScroll m_groundScript;
 	[SerializeField]float m_grndSpdMult = 20;
+	private AppManager m_appManagerScript;
+	private int m_invert;
 
 	public Transform m_reticleFarTra;
 	public Transform m_reticleCloseTra;
@@ -24,6 +26,9 @@ public class PlayerAimMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		m_appManagerScript = GameObject.Find ("AppManager(Clone)").GetComponent<AppManager> ();
+		m_invert = m_appManagerScript.GetInvert ();
+		Debug.Log ("m_invert toPlayer = " + m_invert);
 		m_aimPos = m_reticleFarTra.position;
 		m_groundScript = GameObject.Find("GroundPlane").GetComponent<GroundScroll>();
 		m_reticleMat = m_reticleCloseTra.GetChild(0).GetComponent<Renderer>().materials[0];
@@ -37,7 +42,7 @@ public class PlayerAimMovement : MonoBehaviour {
 		}
 
 	public void Move(float h, float v) {
-		m_aimPos += new Vector3(h, v, 0) * m_inputSpd * Time.deltaTime;
+		m_aimPos += new Vector3(h, v * m_invert, 0) * m_inputSpd * Time.deltaTime;
 		m_aimPos = new Vector3(Mathf.Clamp(m_aimPos.x, transform.position.x - m_maxReticleDiff, transform.position.x + m_maxReticleDiff),
 		                       Mathf.Clamp(m_aimPos.y, transform.position.y - m_maxReticleDiff, transform.position.y + m_maxReticleDiff),
 		                      m_aimPos.z);

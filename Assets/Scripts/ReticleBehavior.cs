@@ -20,7 +20,6 @@ public class ReticleBehavior : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		m_retMats = new Material[m_farRet.childCount + m_closeRet.childCount];
-		Debug.Log ("retMats size = " + m_retMats.Length);
 		for (int i = 0; i < m_closeRet.childCount; i++) {
 
 			m_retMats[i] = m_closeRet.GetChild(i).GetComponent<Renderer>().material;

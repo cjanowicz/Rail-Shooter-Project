@@ -19,7 +19,7 @@ public class PlayerInputScript : MonoBehaviour {
     private void Update() {
         // Read the inputs.
         float h = Input.GetAxisRaw("Horizontal");
-        float v = -Input.GetAxisRaw("Vertical");
+        float v = Input.GetAxisRaw("Vertical");
         //Vector2 newMouseInput = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
         /*
         Vector2 newStickInput = new Vector2(Input.GetAxis("RightStickX"), Input.GetAxis("RightStickY"))

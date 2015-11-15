@@ -1,10 +1,16 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class StartMenuManager : MonoBehaviour {
 
+	[SerializeField]
+	GameObject m_appManagerPrefab;
+	private AppManager m_appScript;
 
 	private Transform m_selectCube;
+	private Transform m_invertCube;
+	private TextMesh m_scoreText;
 	private const int m_numUI = 2;
 	public Transform[] m_UIObj = new Transform[m_numUI];
 	private string[] m_UIMethod = new string[m_numUI];
@@ -17,14 +23,40 @@ public class StartMenuManager : MonoBehaviour {
 	private SlowlyRotate m_selectRotateScript;
 	public float m_newRotateSpeed = 20f;
 
-	// Use this for initialization
-	void OnEnable () {
+	private bool m_settingsChanged = false;
+	private int m_invert = -1;
+	private int m_highScore = 0;
+
+	void Awake(){
+		
 		m_selectCube = GameObject.Find ("SelectCube").transform;
+		m_invertCube = GameObject.Find ("InvertCube").transform;
+		m_scoreText = GameObject.Find ("ScoreText").GetComponent<TextMesh> ();
 		m_selectOffset = m_selectCube.position - m_UIObj[0].position;
 		for (int i = 0; i < m_UIObj.Length; i++) {
 			m_UIMethod[i] = m_UIObj[i].name;
 		}
 		m_selectRotateScript = m_selectCube.GetComponent<SlowlyRotate> ();
+
+		GameObject tempAppManager = GameObject.Find ("AppManager(Clone)");
+		if (tempAppManager == null) {
+			tempAppManager = Instantiate(m_appManagerPrefab);
+		}
+		m_appScript = tempAppManager.GetComponent<AppManager>();
+
+	}
+
+	// Use this for initialization
+	void OnEnable () {
+		m_invert = m_appScript.GetInvert ();
+		m_highScore = m_appScript.GetHighScore ();
+		m_scoreText.text = m_highScore.ToString ();
+		
+		if (m_invert == -1) {
+			ChangeColor (m_invertCube, Color.green);
+		} else {
+			ChangeColor (m_invertCube, Color.red);
+		}
 	}
 	
 	// Update is called once per frame
@@ -59,14 +91,34 @@ public class StartMenuManager : MonoBehaviour {
                    				Mathf.Clamp01 (Time.deltaTime * m_selectSpeed));
 	}
 
+	void ChangeColor(Transform target, Color newColor){
+		target.GetComponent<Renderer> ().material.color = newColor;
+	}
+
 	void StartText(){
 		m_selectRotateScript.SetSpeed (m_newRotateSpeed);
+		if (m_settingsChanged) {
+			m_appScript.SaveData();
+		}
 		Invoke ("DelayLoadLevel", 1f);
 	}
 	void DelayLoadLevel(){
-		Application.LoadLevel ("TestScene");
+		m_appScript.LoadScene("TestScene");
 	}
 	void InvertText(){
 		m_selectRotateScript.SetSpeed (m_newRotateSpeed);
+		m_invertCube.SendMessage ("SetSpeed", m_newRotateSpeed);
+
+		m_invert *= -1;
+		m_appScript.SetInvert(m_invert);
+		Debug.Log ("Invert button= " + m_invert);
+
+		if (m_invert == -1) {
+			ChangeColor (m_invertCube, Color.green);
+		} else {
+			ChangeColor (m_invertCube, Color.red);
+		}
+
+		m_settingsChanged = true;
 	}
 }
