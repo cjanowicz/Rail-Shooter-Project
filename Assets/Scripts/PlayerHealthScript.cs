@@ -85,7 +85,6 @@ public class PlayerHealthScript : MonoBehaviour {
                 InvokeRepeating("ExplodeRepeat", 0, 0.2f);
                 Invoke("RestartLevel", 4);
                 m_gameManager.SendMessage("StartGameOver");
-				Debug.Log("GameOver Started");
 
             }
         }

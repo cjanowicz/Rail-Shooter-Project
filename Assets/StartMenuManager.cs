@@ -47,7 +47,8 @@ public class StartMenuManager : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void OnEnable () {
+	void Start () {
+        Debug.Log("StartMenu Start()");
 		m_invert = m_appScript.GetInvert ();
 		m_highScore = m_appScript.GetHighScore ();
 		m_scoreText.text = m_highScore.ToString ();

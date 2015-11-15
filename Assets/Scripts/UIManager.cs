@@ -66,7 +66,6 @@ public class UIManager : MonoBehaviour {
 		if (m_whiteOutChange) {
 			if(m_whiteOutVisible == false){
 				m_whiteOutMat.color = (Color)Vector4.Lerp(m_whiteOutMat.color, Color.white, m_whiteOutChangeSpeed* Time.deltaTime);
-				Debug.Log("Lerp for Fade In To White Called");
 				//UpdateTransition((Vector4)m_whiteOutMat.color, m_clearWhite, m_whiteOutChangeSpeed);
 			}else{
 				m_whiteOutMat.color = (Color)Vector4.Lerp(m_whiteOutMat.color, m_clearWhite, m_whiteOutChangeSpeed* Time.deltaTime);
@@ -87,7 +86,6 @@ public class UIManager : MonoBehaviour {
 		EndFadeOut ();
 		m_whiteOutChange = true;
 		m_whiteOutPlane.SetActive (true);
-		Debug.Log ("Start Fade In Called");
 		Invoke ("EndFadeIn", m_whiteOutChangeSpeed/2);
 	}
 	public void StartFadeOut(){

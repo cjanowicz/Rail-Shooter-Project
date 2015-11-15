@@ -69,10 +69,12 @@ public class GameManager : MonoBehaviour {
 	}
 
     void StartGameOver() {
+        Debug.Log("m_Score == " + m_score);
 		if (m_score > m_appScript.GetHighScore ()) {
 			m_appScript.SetHighScore(m_score);
 			m_appScript.SaveData();
-		}
+        }
+        Debug.Log("Set score == " + m_appScript.GetHighScore() + ", playerPrefs score = " + PlayerPrefs.GetInt("HighScore"));
         m_gameState = State.GameOver;
 		m_UIManagerScript.StartFadeIn ();
 		Invoke("LoadTitle", 4);

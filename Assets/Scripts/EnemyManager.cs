@@ -89,7 +89,6 @@ public class EnemyManager : MonoBehaviour {
     }
 
 	void BossDied(int scoreAmount) {
-        Debug.Log("Enemy Manager called Boss Died");
         m_bossesActive--;
 		m_enemiesDestroyed+= scoreAmount;
 		m_gameManager.UpdateEnemiesKilled(m_enemiesDestroyed);

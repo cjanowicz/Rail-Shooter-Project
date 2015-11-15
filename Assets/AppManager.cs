@@ -11,7 +11,7 @@ public class AppManager : MonoBehaviour {
 	private float m_fxVol = 1f;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		if (Application.loadedLevelName == "InitScene") {
 			LoadScene("TitleScene");
 		}
@@ -29,9 +29,11 @@ public class AppManager : MonoBehaviour {
 		PlayerPrefs.SetFloat ("MusicVol", m_musicVol);
 		PlayerPrefs.SetFloat ("FXVol", m_fxVol);
 		PlayerPrefs.Save ();
+        Debug.Log("New High Score is set to " + PlayerPrefs.GetInt("HighScore"));
 	}
 
 	void LoadData(){
+        Debug.Log("Data Loaded");
 		m_highScore = PlayerPrefs.GetInt ("HighScore");
 		m_invert = PlayerPrefs.GetInt ("Invert");
 		m_musicVol = PlayerPrefs.GetFloat ("MusicVol");
@@ -40,7 +42,6 @@ public class AppManager : MonoBehaviour {
 
 	public int GetInvert(){
 		return m_invert;
-		Debug.Log ("Invert Got = " + m_invert);
 	}
 	public int GetHighScore(){
 		return m_highScore;
@@ -51,11 +52,9 @@ public class AppManager : MonoBehaviour {
 	
 	public void SetInvert(int newInvert){
 		m_invert = newInvert;
-		Debug.Log ("Invert  Set = " + m_invert);
 	}
 	public void LoadScene(string name){
 		Application.LoadLevel (name);
-		Debug.Log ("Invert When Loading = " + m_invert);
 	}
 	public void LoadScene(int index){
 		Application.LoadLevel(index);
