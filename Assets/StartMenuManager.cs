@@ -22,8 +22,9 @@ public class StartMenuManager : MonoBehaviour {
 
 	private SlowlyRotate m_selectRotateScript;
 	public float m_newRotateSpeed = 20f;
+    private TextMesh m_invertStateText ;
 
-	private bool m_settingsChanged = false;
+    private bool m_settingsChanged = false;
 	private int m_invert = -1;
 	private int m_highScore = 0;
 
@@ -43,7 +44,7 @@ public class StartMenuManager : MonoBehaviour {
 			tempAppManager = Instantiate(m_appManagerPrefab);
 		}
 		m_appScript = tempAppManager.GetComponent<AppManager>();
-
+        m_invertStateText = GameObject.Find("InvertState").GetComponent<TextMesh>();
 	}
 
 	// Use this for initialization
@@ -55,9 +56,11 @@ public class StartMenuManager : MonoBehaviour {
 		
 		if (m_invert == -1) {
 			ChangeColor (m_invertCube, Color.green);
-		} else {
+            m_invertStateText.text = "On";
+        } else {
 			ChangeColor (m_invertCube, Color.red);
-		}
+            m_invertStateText.text = "Off";
+        }
 	}
 	
 	// Update is called once per frame
@@ -116,9 +119,11 @@ public class StartMenuManager : MonoBehaviour {
 
 		if (m_invert == -1) {
 			ChangeColor (m_invertCube, Color.green);
-		} else {
+            m_invertStateText.text = "On";
+        } else {
 			ChangeColor (m_invertCube, Color.red);
-		}
+            m_invertStateText.text = "Off";
+        }
 
 		m_settingsChanged = true;
 	}
