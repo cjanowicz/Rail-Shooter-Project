@@ -62,4 +62,8 @@ public class GroundScroll : MonoBehaviour {
 	public void SetXSpeed(float newXSpeed){
 		m_xSpeed = newXSpeed;
 	}
+
+	public float GetXSpeed(){
+		return m_xSpeed;
+	}
 }
