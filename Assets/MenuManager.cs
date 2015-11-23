@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
-public class StartMenuManager : MonoBehaviour {
+public class MenuManager : MonoBehaviour {
 
 	[SerializeField]
 	GameObject m_appManagerPrefab;
@@ -27,44 +27,62 @@ public class StartMenuManager : MonoBehaviour {
     private bool m_settingsChanged = false;
 	private int m_invert = -1;
 	private int m_highScore = 0;
+	
+	private float m_lastRealTime = 0f;
+	private float m_realTimeDelta = 0f;
+
+	private GameManager m_gameManager;
 
 	void Awake(){
 		
 		m_selectCube = GameObject.Find ("SelectCube").transform;
-		m_invertCube = GameObject.Find ("InvertCube").transform;
-		m_scoreText = GameObject.Find ("ScoreText").GetComponent<TextMesh> ();
 		m_selectOffset = m_selectCube.position - m_UIObj[0].position;
+		m_selectRotateScript = m_selectCube.GetComponent<SlowlyRotate> ();
+
+		if (Application.loadedLevelName == "TitleScene") {
+			m_invertCube = GameObject.Find ("InvertCube").transform;
+			m_scoreText = GameObject.Find ("ScoreText").GetComponent<TextMesh> ();
+			m_invertStateText = GameObject.Find("InvertState").GetComponent<TextMesh>();
+		}
 		for (int i = 0; i < m_UIObj.Length; i++) {
 			m_UIMethod[i] = m_UIObj[i].name;
 		}
-		m_selectRotateScript = m_selectCube.GetComponent<SlowlyRotate> ();
-
 		GameObject tempAppManager = GameObject.Find ("AppManager(Clone)");
 		if (tempAppManager == null) {
 			tempAppManager = Instantiate(m_appManagerPrefab);
 		}
 		m_appScript = tempAppManager.GetComponent<AppManager>();
-        m_invertStateText = GameObject.Find("InvertState").GetComponent<TextMesh>();
+		m_gameManager = GameObject.Find ("GameManager").GetComponent<GameManager> ();
+	}
+
+	
+	void OnEnable(){
+		m_lastRealTime = Time.realtimeSinceStartup;
 	}
 
 	// Use this for initialization
 	void Start () {
-        Debug.Log("StartMenu Start()");
-		m_invert = m_appScript.GetInvert ();
-		m_highScore = m_appScript.GetHighScore ();
-		m_scoreText.text = m_highScore.ToString ();
+		if (Application.loadedLevelName == "TitleScene") {
+			m_invert = m_appScript.GetInvert ();
+			m_highScore = m_appScript.GetHighScore ();
+			m_scoreText.text = m_highScore.ToString ();
 		
-		if (m_invert == -1) {
-			ChangeColor (m_invertCube, Color.green);
-            m_invertStateText.text = "On";
-        } else {
-			ChangeColor (m_invertCube, Color.red);
-            m_invertStateText.text = "Off";
-        }
+			if (m_invert == -1) {
+				ChangeColor (m_invertCube, Color.green);
+				m_invertStateText.text = "On";
+			} else {
+				ChangeColor (m_invertCube, Color.red);
+				m_invertStateText.text = "Off";
+			}
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		m_realTimeDelta = Time.realtimeSinceStartup - m_lastRealTime;
+		m_lastRealTime = Time.realtimeSinceStartup;
+
 		if (Input.GetAxisRaw ("Vertical") <= -0.1) {
 			//Go Down
 			if(m_inputPressed == false){
@@ -92,7 +110,7 @@ public class StartMenuManager : MonoBehaviour {
 
 		m_selectCube.position = Vector3.Lerp (m_selectCube.position,
                               m_UIObj [m_UIIter].position + m_selectOffset,
-                   				Mathf.Clamp01 (Time.deltaTime * m_selectSpeed));
+		                                      Mathf.Clamp01 (m_realTimeDelta * m_selectSpeed));
 	}
 
 	void ChangeColor(Transform target, Color newColor){
@@ -127,4 +145,13 @@ public class StartMenuManager : MonoBehaviour {
 
 		m_settingsChanged = true;
 	}
+
+	void ResumeText(){
+		m_gameManager.EndPause ();
+	}
+
+	void QuitText(){
+		m_gameManager.QuitGame ();
+	}
+
 }

@@ -7,7 +7,7 @@ public class BillBoardingPlane : MonoBehaviour {
 	Transform target;
 	Vector3 rightAngle = new Vector3(90,0,0);
 	private bool flicker = true;
-	Vector3 scaleAlt = new Vector3(0.04f,0,0.04f);
+	public Vector3 scaleAlt = new Vector3(0.04f,0,0.04f);
 
 	void LateUpdate ()
 	{

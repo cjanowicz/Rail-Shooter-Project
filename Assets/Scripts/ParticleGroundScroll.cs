@@ -10,4 +10,5 @@ public class ParticleGroundScroll : MonoBehaviour {
 	void Update () {
 		transform.localRotation = Quaternion.AngleAxis(m_grndScrollRef.GetXSpeed () * m_rotationMult, Vector3.up);
 	}
+
 }

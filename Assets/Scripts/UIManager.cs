@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Text;
 
 public class UIManager : MonoBehaviour {
 
-
+	//Note: Not using this at the moment.
 	public class TransitionF{
 		float m_value;
 		float m_duration;
@@ -36,6 +37,7 @@ public class UIManager : MonoBehaviour {
 			m_value = Mathf.SmoothDamp (m_value, m_targetValue, ref m_refSpeed, m_duration);
 		}
 	}
+
 	public TransitionF[] transitionArray;
 	const int transitionArraySize = 3;
 
@@ -47,8 +49,7 @@ public class UIManager : MonoBehaviour {
 	private bool m_whiteOutVisible = true;
 	private bool m_whiteOutChange = false;
 
-
-
+	public GameObject m_gameManager;
 
 	// Use this for initialization
 	void Awake() {
@@ -60,9 +61,10 @@ public class UIManager : MonoBehaviour {
 		m_whiteOutMat = m_whiteOutPlane.GetComponent<Renderer> ().materials [0];
 		m_whiteOutMat.color = Color.white;
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
+		
 		if (m_whiteOutChange) {
 			if(m_whiteOutVisible == false){
 				m_whiteOutMat.color = (Color)Vector4.Lerp(m_whiteOutMat.color, Color.white, m_whiteOutChangeSpeed* Time.deltaTime);
@@ -71,13 +73,15 @@ public class UIManager : MonoBehaviour {
 				m_whiteOutMat.color = (Color)Vector4.Lerp(m_whiteOutMat.color, m_clearWhite, m_whiteOutChangeSpeed* Time.deltaTime);
 			}
 		}
+
+
 	}
 
-	void UpdateTransition(ref float value, float target, ref float speed, float duration){
+	/*void UpdateTransition(ref float value, float target, ref float speed, float duration){
 		value = Mathf.SmoothDamp(value, target, ref speed, duration);
-	}
+	}*/
 	void UpdateTransition(Vector4 value, Vector4 target, float duration){
-		value = Vector4.Lerp (value, target, duration * 10f * Time.deltaTime);
+		value = Vector4.Lerp (value, target, Mathf.Clamp01(duration * 10f * Time.deltaTime));
 	}
 
 	public void StartFadeIn(){
@@ -105,6 +109,8 @@ public class UIManager : MonoBehaviour {
 		m_whiteOutPlane.SetActive (false);
 		m_whiteOutVisible = false;
 	}
+
+
 
 	//public void 
 }

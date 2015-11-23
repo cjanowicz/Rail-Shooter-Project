@@ -6,11 +6,13 @@ public class GameManager : MonoBehaviour {
 	[SerializeField]
 	GameObject m_appManagerPrefab;
 	private AppManager m_appScript;
+	private bool m_gamePaused = false;
 
     enum State { Title, Normal, LevelTransition, BossFight, GameOver };
     State m_gameState;
 
     public GameObject groundObj;
+	private AudioSource m_audioSource;
 	
 	public TextMesh m_scoreText;
 	private int m_score = 0;
@@ -18,6 +20,7 @@ public class GameManager : MonoBehaviour {
 	public Transform m_nightOrientation;
 	private GameObject m_enemyManager;
 	public UIManager m_UIManagerScript;
+	public GameObject m_PauseMenuManager;
     // Use this for initialization
     private float m_lerpSpeed = 0.3f;
 	void Awake () {
@@ -33,6 +36,7 @@ public class GameManager : MonoBehaviour {
 		m_enemyManager = GameObject.Find("EnemyManager");
         //m_dirLight = GameObject.Find("DirectionalLight
         m_gameState = State.Normal;
+		m_audioSource = GetComponent<AudioSource> ();
 	}
 
 	void Start(){
@@ -46,6 +50,19 @@ public class GameManager : MonoBehaviour {
                 m_dirLight.rotation = Quaternion.Slerp(
                 m_dirLight.rotation, m_nightOrientation.rotation, Mathf.Clamp01(Time.deltaTime * m_lerpSpeed));
                 break;
+		}
+
+		if(Input.GetButtonDown("Cancel")){
+			m_gamePaused = !m_gamePaused;
+			if(m_gamePaused){
+				StartPause();
+			} else{
+				EndPause();
+			}
+		}
+		
+		if(m_gamePaused){
+			
 		}
 	}
 
@@ -85,5 +102,23 @@ public class GameManager : MonoBehaviour {
 	}
 	void RestartLevel() {
 		m_appScript.LoadScene(Application.loadedLevel);
+	}
+	public void QuitGame(){
+		m_appScript.QuitGame ();
+	}
+
+	
+	void StartPause(){
+		Time.timeScale = 0;
+		m_PauseMenuManager.SetActive (true);
+		m_audioSource.Pause ();
+
+	}
+	
+	public void EndPause(){
+		Debug.Log ("EndPause called");
+		Time.timeScale = 1;
+		m_PauseMenuManager.SetActive (false);
+		m_audioSource.Play ();
 	}
 }

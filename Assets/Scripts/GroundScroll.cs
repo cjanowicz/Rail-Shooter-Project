@@ -30,7 +30,7 @@ public class GroundScroll : MonoBehaviour {
 			if(this.gameObject.tag.Contains("Bullet") || this.gameObject.tag.Contains("Enemy") || this.gameObject.tag.Contains("Boss") || this.gameObject.tag.Contains("Player")) {
                 m_scrollOnZ = 0;
 				if(tag == "Player"){
-					m_multiplierX = 1f;
+					m_multiplierX = 0.5f;
 				}
 			}
         }
