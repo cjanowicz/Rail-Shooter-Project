@@ -60,6 +60,10 @@ public class AppManager : MonoBehaviour {
 		Application.LoadLevel(index);
 	}
 
+	public void QuitGame(){
+		Application.Quit ();
+	}
+
 
 
 }
