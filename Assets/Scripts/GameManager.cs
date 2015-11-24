@@ -53,16 +53,11 @@ public class GameManager : MonoBehaviour {
 		}
 
 		if(Input.GetButtonDown("Cancel")){
-			m_gamePaused = !m_gamePaused;
-			if(m_gamePaused){
+			if(m_gamePaused == false){
 				StartPause();
 			} else{
 				EndPause();
 			}
-		}
-		
-		if(m_gamePaused){
-			
 		}
 	}
 
@@ -97,18 +92,22 @@ public class GameManager : MonoBehaviour {
 		Invoke("LoadTitle", 4);
 
 	}
-	void LoadTitle(){
+	public void LoadTitle(){
+		EndPause ();
 		m_appScript.LoadScene("TitleScene");
 	}
 	void RestartLevel() {
+		EndPause ();
 		m_appScript.LoadScene(Application.loadedLevel);
 	}
 	public void QuitGame(){
+		EndPause ();
 		m_appScript.QuitGame ();
 	}
 
 	
 	void StartPause(){
+		m_gamePaused = true;
 		Time.timeScale = 0;
 		m_PauseMenuManager.SetActive (true);
 		m_audioSource.Pause ();
@@ -120,5 +119,6 @@ public class GameManager : MonoBehaviour {
 		Time.timeScale = 1;
 		m_PauseMenuManager.SetActive (false);
 		m_audioSource.Play ();
+		m_gamePaused = false;
 	}
 }
