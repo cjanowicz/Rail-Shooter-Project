@@ -26,7 +26,7 @@ public class CameraShake : MonoBehaviour {
     }
 
     void Update() {
-		m_camTransform.localPosition = originalPos + Random.insideUnitSphere * m_shakeStr  * (m_shakeAmt+ m_constantAmt);
+		m_camTransform.localPosition = originalPos + Random.insideUnitSphere * m_shakeStr  * (m_shakeAmt+ m_constantAmt) * Time.deltaTime;
 		
 		if (m_shakeAmt > 0) {
             m_shakeAmt -= Time.deltaTime * m_decreaseFactor;

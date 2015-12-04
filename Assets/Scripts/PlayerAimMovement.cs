@@ -43,7 +43,7 @@ public class PlayerAimMovement : MonoBehaviour {
 
 	public void Move(float h, float v) {
 		m_aimPos += new Vector3(h, v * m_invert, 0) * m_inputSpd * Time.deltaTime;
-		m_aimPos = new Vector3(Mathf.Clamp(m_aimPos.x, transform.position.x - m_maxReticleDiff, transform.position.x + m_maxReticleDiff),
+		m_aimPos = new Vector3(Mathf.Clamp(m_aimPos.x, transform.position.x - m_maxReticleDiff, transform.position.x + m_maxReticleDiff) - m_groundScript.GetXSpeed() * 5 * Time.deltaTime,
 		                       Mathf.Clamp(m_aimPos.y, transform.position.y - m_maxReticleDiff, transform.position.y + m_maxReticleDiff),
 		                      m_aimPos.z);
 		m_aimPos.y = Mathf.Max (m_aimPos.y, m_reticleYLimit);
