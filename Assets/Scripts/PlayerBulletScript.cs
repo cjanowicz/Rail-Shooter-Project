@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class PlayerBulletScript : MonoBehaviour {
-
     private static GameObject m_fxManager;
     public int m_damage = 1;
     public float m_lifeTime = 2f;
@@ -14,7 +12,7 @@ public class PlayerBulletScript : MonoBehaviour {
     public float m_hittimeSlowEnd = 0.1f;
 
     // Use this for initialization
-    void Awake() {
+    private void Awake() {
         m_fxManager = GameObject.Find("FXManager");
         m_audioSource = GetComponent<AudioSource>();
         if (m_camShakeScript == null) {
@@ -22,8 +20,8 @@ public class PlayerBulletScript : MonoBehaviour {
         }
     }
 
-    void OnEnable() {
-        if(firstActivation == true) {
+    private void OnEnable() {
+        if (firstActivation == true) {
             firstActivation = false;
         } else {
             Invoke("Deactivate", m_lifeTime);
@@ -31,31 +29,31 @@ public class PlayerBulletScript : MonoBehaviour {
         }
     }
 
-    void OnTriggerEnter(Collider other) {
-		if (other.tag != "Powerup" && other.tag != "Player" && other.tag != "EnemyBullet") {
-
-            if(other.tag == "Enemy" || other.tag == "Boss") 
+    private void OnTriggerEnter(Collider other) {
+        if (other.tag != "Powerup" && other.tag != "Player" && other.tag != "EnemyBullet") {
+            if (other.tag == "Enemy" || other.tag == "Boss")
                 m_fxManager.SendMessage("CallEnemyHurt", this.transform.position);
             else
                 m_fxManager.SendMessage("CallSmallExplosion", this.transform.position);
             other.SendMessage("ApplyDamage", m_damage, SendMessageOptions.DontRequireReceiver);
             DestroySelf();
-            if(other.tag == "Enemy" || other.tag == "Boss") {
+            if (other.tag == "Enemy" || other.tag == "Boss") {
                 Time.timeScale = m_hitTimeSlowAmt;
                 Invoke("ResetTimeSlow", m_hittimeSlowEnd);
             }
         }
     }
-    void ResetTimeSlow() {
+
+    private void ResetTimeSlow() {
         Time.timeScale = 1f;
     }
 
-    void DestroySelf() {
+    private void DestroySelf() {
         Deactivate();
         CancelInvoke("Deactivate");
     }
 
-    void Deactivate() {
+    private void Deactivate() {
         this.gameObject.SetActive(false);
     }
 }

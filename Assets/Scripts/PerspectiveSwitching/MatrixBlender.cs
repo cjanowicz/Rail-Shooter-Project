@@ -1,13 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
 public class MatrixBlender : MonoBehaviour {
-
-
     private Camera myCamera;
 
-    void Awake() {
+    private void Awake() {
         myCamera = GetComponent<Camera>();
     }
 

@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class PlayerHealthScript : MonoBehaviour {
-
-
     private PlayerAimMovement m_playerMovement;
     private PlayerInputScript m_playerInput;
     private CameraFollowScript m_camFollowScript;
@@ -14,8 +11,10 @@ public class PlayerHealthScript : MonoBehaviour {
 
     [SerializeField]
     private int m_maxHealth = 5;
+
     [SerializeField]
     private int m_health;
+
     private AudioSource m_audioSource;
     public AudioClip m_hurtSound;
     private Animator m_animator;
@@ -29,7 +28,7 @@ public class PlayerHealthScript : MonoBehaviour {
     public int m_invulnFlashes = 3;
 
     // Use this for initialization
-    void Awake() {
+    private void Awake() {
         m_health = m_maxHealth;
         m_audioSource = GetComponent<AudioSource>();
         m_animator = GetComponent<Animator>();
@@ -47,17 +46,15 @@ public class PlayerHealthScript : MonoBehaviour {
         GameObject camReference = GameObject.Find("CameraAnchor");
         m_camFollowScript = camReference.GetComponent<CameraFollowScript>();
         m_camShakeScript = camReference.GetComponent<CameraShake>();
-
     }
 
-    void OnCollisionEnter(Collision collision) {
+    private void OnCollisionEnter(Collision collision) {
         if (collision.transform.tag == "World") {
             ApplyDamage();
         }
-
     }
 
-    void OnTriggerEnter(Collider other) {
+    private void OnTriggerEnter(Collider other) {
         if (other.tag == "World") {
             ApplyDamage();
         } else if (other.tag == "Enemy") {
@@ -65,7 +62,7 @@ public class PlayerHealthScript : MonoBehaviour {
         }
     }
 
-    void ApplyDamage() {
+    private void ApplyDamage() {
         if (m_health > 1) {
             m_health--;
             m_audioSource.PlayOneShot(m_hurtSound);
@@ -85,26 +82,25 @@ public class PlayerHealthScript : MonoBehaviour {
                 InvokeRepeating("ExplodeRepeat", 0, 0.2f);
                 Invoke("RestartLevel", 4);
                 m_gameManager.SendMessage("StartGameOver");
-
             }
         }
         Time.timeScale = m_timeSlowAmt;
         Invoke("ResetTimeSlow", 0.01f);
     }
 
-    void ResetTimeSlow() {
+    private void ResetTimeSlow() {
         Time.timeScale = 1;
     }
 
-    void RestartLevel() {
+    private void RestartLevel() {
         Application.LoadLevel(Application.loadedLevel);
     }
 
-    void ExplodeRepeat() {
+    private void ExplodeRepeat() {
         m_fXManager.SendMessage("CallMediumExplosion", this.transform.position);
     }
 
-    void UpdateHealthText() {
+    private void UpdateHealthText() {
         CancelInvoke();
         m_healthText.text = m_health.ToString();
 
@@ -114,7 +110,7 @@ public class PlayerHealthScript : MonoBehaviour {
         }
     }
 
-    void GoLimp() {
+    private void GoLimp() {
         m_rigidbody.isKinematic = false;
         m_rigidbody.useGravity = true;
         m_rigidbody.AddForce(new Vector3(Random.Range(-m_forceFloat, m_forceFloat),
@@ -125,7 +121,6 @@ public class PlayerHealthScript : MonoBehaviour {
                                                   Random.Range(-m_forceFloat, m_forceFloat)));
     }
 
-    void BlinkHealth() {
-
+    private void BlinkHealth() {
     }
 }
