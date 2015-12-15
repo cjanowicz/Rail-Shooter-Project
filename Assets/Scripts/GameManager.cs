@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour {
     public Transform nightOrientation;
     public GameObject PauseMenuManager;
     public TextMesh scoreText;
-    public UIManager UIManagerScript;
+    public FadeOutManager FadeOutScript;
 
     [SerializeField]
     private GameObject appManagerPrefab;
@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private void Start() {
-        UIManagerScript.StartFadeOut();
+        FadeOutScript.StartFadeOut();
     }
 
     private void StartGameOver() {
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour {
             appScript.SaveData();
         }
         gameState = State.GameOver;
-        UIManagerScript.StartFadeIn();
+        FadeOutScript.StartFadeIn();
         Invoke("LoadTitle", 4);
     }
 

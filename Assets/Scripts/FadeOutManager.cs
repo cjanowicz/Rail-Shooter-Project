@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 
-public class UIManager : MonoBehaviour {
+/// <summary>
+/// This script handles 
+/// </summary>
 
-    //Must be set in Editor:
+public class FadeOutManager : MonoBehaviour {
+
     public GameObject whiteOutPlane;
 
     public float whiteOutChangeSpeed = 3;
@@ -10,8 +13,6 @@ public class UIManager : MonoBehaviour {
     private Vector4 clearWhite;
     private bool whiteOutVisible = true;
     private bool whiteOutChange = false;
-
-    public GameObject gameManager;
 
     private void Awake() {
         clearWhite = new Vector4(1, 1, 1, 0);

@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 
 public class ExplosionScript : MonoBehaviour {
-    private ParticleSystem particleSystem;
+    /// <summary>
+    /// This script is meant to be attached to all prefabs that are explosive one-shot effects.
+    /// </summary>
+    private ParticleSystem myParticleSystem;
     private float objectLifetime = 2f;
     private AudioSource audioSource;
     private static CameraShake camShakeScript;
@@ -9,8 +12,10 @@ public class ExplosionScript : MonoBehaviour {
     private bool firstActivation = true;
 
     private void Awake() {
-        particleSystem = GetComponent<ParticleSystem>();
-        objectLifetime = particleSystem.duration;
+        ///On awake, we set up references that are local
+        ///and also references that are static and shared by objects with this component.
+        myParticleSystem = GetComponent<ParticleSystem>();
+        objectLifetime = myParticleSystem.duration;
         audioSource = GetComponent<AudioSource>();
         if (camShakeScript == null) {
             camShakeScript = GameObject.Find("CameraAnchor").GetComponent<CameraShake>();
@@ -18,24 +23,28 @@ public class ExplosionScript : MonoBehaviour {
     }
 
     private void OnEnable() {
+        ///On Enable is called by Unity when the gameobject is set to active, 
+        ///and the FX manager component activates the game object to trigger the effect.
+        ///First we check if this is the first time the objects has been activated.
+        ///If so, we check the flag and let nothing happen.
+        ///If it is not, we play the effects that go with the object, and invoke its deactivation function for later on.
+        ///We also make sure to stop the effects in case the object has been called again before completly finishing playing.
         if (firstActivation == false) {
             CancelInvoke();
-            particleSystem.Stop();
-            if (audioSource != null)
-                audioSource.Stop();
             Invoke("DeactivateWithTimer", objectLifetime);
-            if (audioSource != null)
+            if (audioSource != null) { 
+                audioSource.Stop();
                 audioSource.Play();
+            }
+            myParticleSystem.Stop();
+            myParticleSystem.Play();
             camShakeScript.StartCameraShake(shakeStrength, this.transform.position);
-            particleSystem.Play();
         } else
             firstActivation = false;
     }
 
     private void DeactivateWithTimer() {
-        particleSystem.Stop();
-        if (audioSource != null)
-            audioSource.Stop();
+        ///Deactivate the game object, 
         this.gameObject.SetActive(false);
     }
 }
