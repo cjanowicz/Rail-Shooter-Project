@@ -1,26 +1,26 @@
 ﻿using UnityEngine;
 
 public class EnemyManager : MonoBehaviour {
-    public GameObject m_enemy1Prefab;
-    private GameObject[] m_enemy1Array;
-    private const int m_enemy1Num = 5;
-    private int m_enemy1Iter = 0;
+    public GameObject enemy1Prefab;
+    private GameObject[] enemy1Array;
+    private const int enemy1Num = 5;
+    private int enemy1Iter = 0;
 
-    public GameObject m_skullPrefab;
-    private GameObject[] m_skullArray;
-    private const int m_skullNum = 2;
-    private int m_skullIter = 0;
+    public GameObject skullPrefab;
+    private GameObject[] skullArray;
+    private const int skullNum = 2;
+    private int skullIter = 0;
 
-    private int m_totalEnemiesActive = 0;
-    private int m_enemiesDestroyed = 0;
-    private int m_bossesActive = 0;
+    private int totalEnemiesActive = 0;
+    private int enemiesDestroyed = 0;
+    private int bossesActive = 0;
 
-    private GameManager m_gameManager;
+    private GameManager gameManager;
 
     private void Awake() {
-        m_gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        InstantiateEnemy(m_enemy1Prefab, ref m_enemy1Array, m_enemy1Num);
-        InstantiateEnemy(m_skullPrefab, ref m_skullArray, m_skullNum);
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        InstantiateEnemy(enemy1Prefab, ref enemy1Array, enemy1Num);
+        InstantiateEnemy(skullPrefab, ref skullArray, skullNum);
     }
 
     private void Start() {
@@ -47,44 +47,44 @@ public class EnemyManager : MonoBehaviour {
     }
 
     private void CreateEnemies() {
-        for (int i = 0; i <= m_enemiesDestroyed; i++) {
-            if (i < m_enemy1Num) {
+        for (int i = 0; i <= enemiesDestroyed; i++) {
+            if (i < enemy1Num) {
                 SpawnEnemy1();
-                m_totalEnemiesActive++;
+                totalEnemiesActive++;
             }
         }
     }
 
     private void SpawnEnemy1() {
-        int currentIter = m_enemy1Iter;
+        int currentIter = enemy1Iter;
         StartEnemy(Vector3.back * 20 + Vector3.right * Random.Range(-20, 20) + Vector3.up * 30,
-            ref m_enemy1Array[currentIter], ref m_enemy1Iter, m_enemy1Num);
+            ref enemy1Array[currentIter], ref enemy1Iter, enemy1Num);
     }
 
     private void SpawnSkullBoss() {
-        int currentIter = m_skullIter;
-        m_bossesActive++;
+        int currentIter = skullIter;
+        bossesActive++;
         StartEnemy(Vector3.back * 20 + Vector3.right * Random.Range(-20, 20) + Vector3.up * 40,
-                   ref m_skullArray[currentIter], ref m_skullIter, m_skullNum);
+                   ref skullArray[currentIter], ref skullIter, skullNum);
     }
 
     private void EnemyDied(int scoreAmount) {
-        m_enemiesDestroyed += scoreAmount;
-        m_totalEnemiesActive--;
-        m_gameManager.UpdateEnemiesKilled(m_enemiesDestroyed);
-        if (m_totalEnemiesActive == 0) {
+        enemiesDestroyed += scoreAmount;
+        totalEnemiesActive--;
+        gameManager.UpdateEnemiesKilled(enemiesDestroyed);
+        if (totalEnemiesActive == 0) {
             Invoke("CreateEnemies", 2);
         }
     }
 
     private void BossDied(int scoreAmount) {
-        m_bossesActive--;
-        m_enemiesDestroyed += scoreAmount;
-        m_gameManager.UpdateEnemiesKilled(m_enemiesDestroyed);
+        bossesActive--;
+        enemiesDestroyed += scoreAmount;
+        gameManager.UpdateEnemiesKilled(enemiesDestroyed);
 
-        if (m_bossesActive == 0) {
+        if (bossesActive == 0) {
             Invoke("SpawnSkullBoss", 6);
-            if (m_enemiesDestroyed > 50)
+            if (enemiesDestroyed > 50)
                 Invoke("SpawnSkullBoss", 6);
         }
     }

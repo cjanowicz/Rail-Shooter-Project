@@ -2,56 +2,56 @@
 
 public class GameManager : MonoBehaviour {
     public GameObject groundObj;
-    public Transform m_dirLight;
-    public Transform m_nightOrientation;
-    public GameObject m_PauseMenuManager;
-    public TextMesh m_scoreText;
-    public UIManager m_UIManagerScript;
+    public Transform dirLight;
+    public Transform nightOrientation;
+    public GameObject PauseMenuManager;
+    public TextMesh scoreText;
+    public UIManager UIManagerScript;
 
     [SerializeField]
-    private GameObject m_appManagerPrefab;
+    private GameObject appManagerPrefab;
 
-    private AppManager m_appScript;
-    private AudioSource m_audioSource;
-    private GameObject m_enemyManager;
-    private bool m_gamePaused = false;
+    private AppManager appScript;
+    private AudioSource audioSource;
+    private GameObject enemyManager;
+    private bool gamePaused = false;
 
-    private State m_gameState;
+    private State gameState;
 
-    private float m_lerpSpeed = 0.3f;
-    private int m_score = 0;
+    private float lerpSpeed = 0.3f;
+    private int score = 0;
 
     private enum State { Title, Normal, LevelTransition, BossFight, GameOver };
 
     public void EndPause() {
         Time.timeScale = 1;
-        m_PauseMenuManager.SetActive(false);
-        m_audioSource.Play();
-        m_gamePaused = false;
+        PauseMenuManager.SetActive(false);
+        audioSource.Play();
+        gamePaused = false;
     }
 
     public void LoadTitle() {
         EndPause();
-        m_appScript.LoadScene("TitleScene");
+        appScript.LoadScene("TitleScene");
     }
 
     public void QuitGame() {
         EndPause();
-        m_appScript.QuitGame();
+        appScript.QuitGame();
     }
 
     public void StopNightTransition() {
-        m_enemyManager.SendMessage("SpawnSkullBoss");
-        m_gameState = State.BossFight;
+        enemyManager.SendMessage("SpawnSkullBoss");
+        gameState = State.BossFight;
     }
 
     public void UpdateEnemiesKilled(int amount) {
-        m_scoreText.text = amount.ToString();
-        m_score = amount;
+        scoreText.text = amount.ToString();
+        score = amount;
 
-        if (m_score > 15) {
-            if (m_gameState == State.Normal) {
-                m_gameState = State.LevelTransition;
+        if (score > 15) {
+            if (gameState == State.Normal) {
+                gameState = State.LevelTransition;
                 Invoke("StopNightTransition", 15f);
             }
         }
@@ -60,54 +60,54 @@ public class GameManager : MonoBehaviour {
     private void Awake() {
         GameObject tempAppManager = GameObject.Find("AppManager(Clone)");
         if (tempAppManager == null) {
-            tempAppManager = Instantiate(m_appManagerPrefab);
+            tempAppManager = Instantiate(appManagerPrefab);
         }
-        m_appScript = tempAppManager.GetComponent<AppManager>();
+        appScript = tempAppManager.GetComponent<AppManager>();
 
-        if (m_scoreText == null) {
-            m_scoreText = GameObject.Find("ScoreText").GetComponent<TextMesh>();
+        if (scoreText == null) {
+            scoreText = GameObject.Find("ScoreText").GetComponent<TextMesh>();
         }
-        m_enemyManager = GameObject.Find("EnemyManager");
-        m_gameState = State.Normal;
-        m_audioSource = GetComponent<AudioSource>();
+        enemyManager = GameObject.Find("EnemyManager");
+        gameState = State.Normal;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void RestartLevel() {
         EndPause();
-        m_appScript.LoadScene(Application.loadedLevel);
+        appScript.LoadScene(Application.loadedLevel);
     }
 
     private void Start() {
-        m_UIManagerScript.StartFadeOut();
+        UIManagerScript.StartFadeOut();
     }
 
     private void StartGameOver() {
-        if (m_score > m_appScript.GetHighScore()) {
-            m_appScript.SetHighScore(m_score);
-            m_appScript.SaveData();
+        if (score > appScript.GetHighScore()) {
+            appScript.SetHighScore(score);
+            appScript.SaveData();
         }
-        m_gameState = State.GameOver;
-        m_UIManagerScript.StartFadeIn();
+        gameState = State.GameOver;
+        UIManagerScript.StartFadeIn();
         Invoke("LoadTitle", 4);
     }
 
     private void StartPause() {
-        m_gamePaused = true;
+        gamePaused = true;
         Time.timeScale = 0;
-        m_PauseMenuManager.SetActive(true);
-        m_audioSource.Pause();
+        PauseMenuManager.SetActive(true);
+        audioSource.Pause();
     }
 
     private void Update() {
-        switch (m_gameState) {
+        switch (gameState) {
             case State.LevelTransition:
-                m_dirLight.rotation = Quaternion.Slerp(
-                m_dirLight.rotation, m_nightOrientation.rotation, Mathf.Clamp01(Time.deltaTime * m_lerpSpeed));
+                dirLight.rotation = Quaternion.Slerp(
+                dirLight.rotation, nightOrientation.rotation, Mathf.Clamp01(Time.deltaTime * lerpSpeed));
                 break;
         }
 
         if (Input.GetButtonDown("Cancel")) {
-            if (m_gamePaused == false) {
+            if (gamePaused == false) {
                 StartPause();
             } else {
                 EndPause();

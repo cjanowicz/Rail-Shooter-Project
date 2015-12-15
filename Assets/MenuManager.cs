@@ -4,103 +4,103 @@ public class MenuManager : MonoBehaviour {
 
     [SerializeField]
     private GameObject
-        m_appManagerPrefab;
+        appManagerPrefab;
 
-    private AppManager m_appScript;
-    private Transform m_selectCube;
-    private Transform m_invertCube;
-    private TextMesh m_scoreText;
-    private const int m_numUI = 2;
-    public Transform[] m_UIObj = new Transform[m_numUI];
-    private string[] m_UIMethod = new string[m_numUI];
-    private Vector3 m_selectOffset;
-    public float m_selectSpeed = 10;
-    private int m_UIIter = 0;
-    private bool m_inputPressed;
-    private SlowlyRotate m_selectRotateScript;
-    public float m_newRotateSpeed = 20f;
-    private TextMesh m_invertStateText;
-    private bool m_settingsChanged = false;
-    private int m_invert = -1;
-    private int m_highScore = 0;
-    private float m_lastRealTime = 0f;
-    private float m_realTimeDelta = 0f;
-    private GameManager m_gameManager;
+    private AppManager appScript;
+    private Transform selectCube;
+    private Transform invertCube;
+    private TextMesh scoreText;
+    private const int numUI = 2;
+    public Transform[] UIObj = new Transform[numUI];
+    private string[] UIMethod = new string[numUI];
+    private Vector3 selectOffset;
+    public float selectSpeed = 10;
+    private int UIIter = 0;
+    private bool inputPressed;
+    private SlowlyRotate selectRotateScript;
+    public float newRotateSpeed = 20f;
+    private TextMesh invertStateText;
+    private bool settingsChanged = false;
+    private int invert = -1;
+    private int highScore = 0;
+    private float lastRealTime = 0f;
+    private float realTimeDelta = 0f;
+    private GameManager gameManager;
 
     private void Awake() {
-        m_selectCube = GameObject.Find("SelectCube").transform;
-        m_selectOffset = m_selectCube.position - m_UIObj[0].position;
-        m_selectRotateScript = m_selectCube.GetComponent<SlowlyRotate>();
+        selectCube = GameObject.Find("SelectCube").transform;
+        selectOffset = selectCube.position - UIObj[0].position;
+        selectRotateScript = selectCube.GetComponent<SlowlyRotate>();
 
         if (Application.loadedLevelName == "TitleScene") {
-            m_invertCube = GameObject.Find("InvertCube").transform;
-            m_scoreText = GameObject.Find("ScoreText").GetComponent<TextMesh>();
-            m_invertStateText = GameObject.Find("InvertState").GetComponent<TextMesh>();
+            invertCube = GameObject.Find("InvertCube").transform;
+            scoreText = GameObject.Find("ScoreText").GetComponent<TextMesh>();
+            invertStateText = GameObject.Find("InvertState").GetComponent<TextMesh>();
         }
-        for (int i = 0; i < m_UIObj.Length; i++) {
-            m_UIMethod[i] = m_UIObj[i].name;
+        for (int i = 0; i < UIObj.Length; i++) {
+            UIMethod[i] = UIObj[i].name;
         }
         GameObject tempAppManager = GameObject.Find("AppManager(Clone)");
         if (tempAppManager == null) {
-            tempAppManager = Instantiate(m_appManagerPrefab);
+            tempAppManager = Instantiate(appManagerPrefab);
         }
-        m_appScript = tempAppManager.GetComponent<AppManager>();
+        appScript = tempAppManager.GetComponent<AppManager>();
         if (Application.loadedLevelName != "TitleScene") {
-            m_gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         }
     }
 
     private void OnEnable() {
-        m_lastRealTime = Time.realtimeSinceStartup;
+        lastRealTime = Time.realtimeSinceStartup;
     }
 
     private void Start() {
         if (Application.loadedLevelName == "TitleScene") {
-            m_invert = m_appScript.GetInvert();
-            m_highScore = m_appScript.GetHighScore();
-            m_scoreText.text = m_highScore.ToString();
+            invert = appScript.GetInvert();
+            highScore = appScript.GetHighScore();
+            scoreText.text = highScore.ToString();
 
-            if (m_invert == -1) {
-                ChangeColor(m_invertCube, Color.green);
-                m_invertStateText.text = "On";
+            if (invert == -1) {
+                ChangeColor(invertCube, Color.green);
+                invertStateText.text = "On";
             } else {
-                ChangeColor(m_invertCube, Color.red);
-                m_invertStateText.text = "Off";
+                ChangeColor(invertCube, Color.red);
+                invertStateText.text = "Off";
             }
         }
     }
 
     // Update is called once per frame
     private void Update() {
-        m_realTimeDelta = Time.realtimeSinceStartup - m_lastRealTime;
-        m_lastRealTime = Time.realtimeSinceStartup;
+        realTimeDelta = Time.realtimeSinceStartup - lastRealTime;
+        lastRealTime = Time.realtimeSinceStartup;
 
         if (Input.GetAxisRaw("Vertical") <= -0.1) {
             //Go Down
-            if (m_inputPressed == false) {
-                m_UIIter = (m_UIIter + 1) % m_UIObj.Length;
-                m_inputPressed = true;
+            if (inputPressed == false) {
+                UIIter = (UIIter + 1) % UIObj.Length;
+                inputPressed = true;
             }
         } else if (Input.GetAxisRaw("Vertical") >= 0.1) {
             //Go up
-            if (m_inputPressed == false) {
-                m_UIIter = m_UIIter - 1;
-                if (m_UIIter < 0) {
-                    m_UIIter = m_UIObj.Length - 1;
+            if (inputPressed == false) {
+                UIIter = UIIter - 1;
+                if (UIIter < 0) {
+                    UIIter = UIObj.Length - 1;
                 }
-                m_inputPressed = true;
+                inputPressed = true;
             }
         } else {
-            m_inputPressed = false;
+            inputPressed = false;
         }
 
         if (Input.GetButtonDown("Fire1")) {
-            SendMessage(m_UIMethod[m_UIIter]);
+            SendMessage(UIMethod[UIIter]);
         }
 
-        m_selectCube.position = Vector3.Lerp(m_selectCube.position,
-                              m_UIObj[m_UIIter].position + m_selectOffset,
-                                              Mathf.Clamp01(m_realTimeDelta * m_selectSpeed));
+        selectCube.position = Vector3.Lerp(selectCube.position,
+                              UIObj[UIIter].position + selectOffset,
+                                              Mathf.Clamp01(realTimeDelta * selectSpeed));
     }
 
     private void ChangeColor(Transform target, Color newColor) {
@@ -108,41 +108,41 @@ public class MenuManager : MonoBehaviour {
     }
 
     private void StartText() {
-        m_selectRotateScript.SetSpeed(m_newRotateSpeed);
-        if (m_settingsChanged) {
-            m_appScript.SaveData();
+        selectRotateScript.SetSpeed(newRotateSpeed);
+        if (settingsChanged) {
+            appScript.SaveData();
         }
         Invoke("DelayLoadLevel", 1f);
     }
 
     private void DelayLoadLevel() {
-        m_appScript.LoadScene("TestScene");
+        appScript.LoadScene("TestScene");
     }
 
     private void InvertText() {
-        m_selectRotateScript.SetSpeed(m_newRotateSpeed);
-        m_invertCube.SendMessage("SetSpeed", m_newRotateSpeed);
+        selectRotateScript.SetSpeed(newRotateSpeed);
+        invertCube.SendMessage("SetSpeed", newRotateSpeed);
 
-        m_invert *= -1;
-        m_appScript.SetInvert(m_invert);
+        invert *= -1;
+        appScript.SetInvert(invert);
 
-        if (m_invert == -1) {
-            ChangeColor(m_invertCube, Color.green);
-            m_invertStateText.text = "On";
+        if (invert == -1) {
+            ChangeColor(invertCube, Color.green);
+            invertStateText.text = "On";
         } else {
-            ChangeColor(m_invertCube, Color.red);
-            m_invertStateText.text = "Off";
+            ChangeColor(invertCube, Color.red);
+            invertStateText.text = "Off";
         }
 
-        m_settingsChanged = true;
+        settingsChanged = true;
     }
 
     private void ResumeText() {
-        m_gameManager.EndPause();
+        gameManager.EndPause();
     }
 
     private void QuitText() {
-        m_gameManager.QuitGame();
-        m_gameManager.LoadTitle();
+        gameManager.QuitGame();
+        gameManager.LoadTitle();
     }
 }

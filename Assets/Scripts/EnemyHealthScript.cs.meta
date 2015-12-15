@@ -1,11 +1,11 @@
 fileFormatVersion: 2
 guid: 2e84d3d26799a944398f83442f2eff0c
-timeCreated: 1447194691
+timeCreated: 1450201387
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
-  - m_hitFlashMat: {fileID: 2100000, guid: aca3c16b932a737498ee67542666ca4f, type: 2}
+  - hitFlashMat: {fileID: 2100000, guid: aca3c16b932a737498ee67542666ca4f, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

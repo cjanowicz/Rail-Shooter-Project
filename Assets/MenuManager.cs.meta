@@ -1,11 +1,11 @@
 fileFormatVersion: 2
 guid: d65e02d7001f5ff4fb39025d35bbeaac
-timeCreated: 1447607944
+timeCreated: 1449970034
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
-  - m_appManagerPrefab: {fileID: 172500, guid: 7c63bb0553dc073448a10f9999e9bbda, type: 2}
+  - appManagerPrefab: {fileID: 172500, guid: 7c63bb0553dc073448a10f9999e9bbda, type: 2}
   executionOrder: -100
   icon: {instanceID: 0}
   userData: 

@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
 
 public class EnemyBulletScript : MonoBehaviour {
-    private static GameObject m_fxManager;
-    public int m_damage = 1;
-    public float m_lifeTime = 2f;
-    private AudioSource m_audioSource;
+    private static GameObject fxManager;
+    public int damage = 1;
+    public float lifeTime = 3f;
+    private AudioSource audioSource;
 
     private void Awake() {
-        m_fxManager = GameObject.Find("FXManager");
-        m_audioSource = GetComponent<AudioSource>();
+        fxManager = GameObject.Find("FXManager");
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable() {
-        Invoke("Deactivate", m_lifeTime);
-        m_audioSource.Play();
+        Invoke("Deactivate", lifeTime);
+        audioSource.Play();
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -24,7 +24,7 @@ public class EnemyBulletScript : MonoBehaviour {
     }
 
     private void DestroySelf() {
-        m_fxManager.SendMessage("CallSmallExplosion", this.transform.position);
+        fxManager.SendMessage("CallSmallExplosion", this.transform.position);
         Deactivate();
         CancelInvoke("Deactivate");
     }

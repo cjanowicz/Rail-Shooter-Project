@@ -1,35 +1,35 @@
 using UnityEngine;
 
 public class GroundScroll : MonoBehaviour {
-    public static float m_xSpeed = 0;
-    public static float m_zSpeed = 10;
+    public static float xSpeed = 0;
+    public static float zSpeed = 10;
 
     [Range(0.0f, 1.0f)]
-    public static float m_groundScale;
+    public static float groundScale;
 
     private delegate void MyDelegate();
 
     private MyDelegate myDelegate;
 
-    private Renderer m_objectRenderer;
-    private float m_timer = 0;
-    private float m_xDistance = 0;
-    private float m_zDistance = 0;
+    private Renderer objectRenderer;
+    private float timer = 0;
+    private float xDistance = 0;
+    private float zDistance = 0;
 
-    private float m_scrollOnZ = 1;
-    private float m_multiplierX = 3;
+    private float scrollOnZ = 1;
+    private float multiplierX = 3;
 
     private void Start() {
         if (transform.name == "GroundPlane") {
             myDelegate = MoveTexture;
-            m_objectRenderer = GetComponent<Renderer>();
-            m_groundScale = this.transform.localScale.z / m_objectRenderer.material.GetTextureScale("_MainTex").y * 10f;
+            objectRenderer = GetComponent<Renderer>();
+            groundScale = this.transform.localScale.z / objectRenderer.material.GetTextureScale("_MainTex").y * 10f;
         } else {
             myDelegate = MoveSelf;
             if (this.gameObject.tag.Contains("Bullet") || this.gameObject.tag.Contains("Enemy") || this.gameObject.tag.Contains("Boss") || this.gameObject.tag.Contains("Player")) {
-                m_scrollOnZ = 0;
+                scrollOnZ = 0;
                 if (tag == "Player") {
-                    m_multiplierX = 0.5f;
+                    multiplierX = 0.5f;
                 }
             }
         }
@@ -42,26 +42,26 @@ public class GroundScroll : MonoBehaviour {
 
     private void MoveSelf() {
         transform.position += new Vector3(
-            -m_xSpeed * m_groundScale * Time.deltaTime * m_multiplierX, 0,
-            -m_zSpeed * m_groundScale * Time.deltaTime * m_scrollOnZ);
+            -xSpeed * groundScale * Time.deltaTime * multiplierX, 0,
+            -zSpeed * groundScale * Time.deltaTime * scrollOnZ);
 
         if (transform.position.z <= -30 && tag == "World")
             transform.position = new Vector3(Random.Range(-500, 500), 0, Random.Range(1200, 2000));
     }
 
     private void MoveTexture() {
-        m_timer = (Time.deltaTime + m_timer) % 1;
-        m_zDistance = m_timer * m_zSpeed;
-        m_xDistance += m_xSpeed * m_multiplierX * Time.deltaTime;
-        m_xDistance = m_xDistance % 1;
-        m_objectRenderer.material.SetTextureOffset("_MainTex", new Vector2(m_xDistance, m_zDistance));
+        timer = (Time.deltaTime + timer) % 1;
+        zDistance = timer * zSpeed;
+        xDistance += xSpeed * multiplierX * Time.deltaTime;
+        xDistance = xDistance % 1;
+        objectRenderer.material.SetTextureOffset("_MainTex", new Vector2(xDistance, zDistance));
     }
 
     public void SetXSpeed(float newXSpeed) {
-        m_xSpeed = newXSpeed;
+        xSpeed = newXSpeed;
     }
 
     public float GetXSpeed() {
-        return m_xSpeed;
+        return xSpeed;
     }
 }

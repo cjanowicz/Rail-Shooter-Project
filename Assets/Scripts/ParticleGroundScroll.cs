@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
 public class ParticleGroundScroll : MonoBehaviour {
-    public GroundScroll m_grndScrollRef;
-    public float m_rotationMult = 2;
+    public GroundScroll grndScrollRef;
+    public float rotationMult = 2;
 
     // Update is called once per frame
     private void Update() {
-        transform.localRotation = Quaternion.AngleAxis(m_grndScrollRef.GetXSpeed() * m_rotationMult, Vector3.up);
+        transform.localRotation = Quaternion.AngleAxis(grndScrollRef.GetXSpeed() * rotationMult, Vector3.up);
     }
 }

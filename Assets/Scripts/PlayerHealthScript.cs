@@ -1,51 +1,51 @@
 ﻿using UnityEngine;
 
 public class PlayerHealthScript : MonoBehaviour {
-    private PlayerAimMovement m_playerMovement;
-    private PlayerInputScript m_playerInput;
-    private CameraFollowScript m_camFollowScript;
-    private CameraShake m_camShakeScript;
-    private Rigidbody m_rigidbody;
-    private GameObject m_fXManager;
-    private GameObject m_gameManager;
+    private PlayerAimMovement playerMovement;
+    private PlayerInputScript playerInput;
+    private CameraFollowScript camFollowScript;
+    private CameraShake camShakeScript;
+    private Rigidbody rigidbody;
+    private GameObject fXManager;
+    private GameObject gameManager;
 
     [SerializeField]
-    private int m_maxHealth = 5;
+    private int maxHealth = 5;
 
     [SerializeField]
-    private int m_health;
+    private int health;
 
-    private AudioSource m_audioSource;
-    public AudioClip m_hurtSound;
-    private Animator m_animator;
-    public TextMesh m_healthText;
+    private AudioSource audioSource;
+    public AudioClip hurtSound;
+    private Animator animator;
+    public TextMesh healthText;
 
-    private float m_forceFloat = 500.0f;
-    private bool m_gameOver = false;
-    public float m_hurtShakeAmt = 1;
-    public float m_timeSlowAmt = 0.25f;
-    public float m_invulnLength = 2;
-    public int m_invulnFlashes = 3;
+    private float forceFloat = 500.0f;
+    private bool gameOver = false;
+    public float hurtShakeAmt = 1;
+    public float timeSlowAmt = 0.25f;
+    public float invulnLength = 2;
+    public int invulnFlashes = 3;
 
     // Use this for initialization
     private void Awake() {
-        m_health = m_maxHealth;
-        m_audioSource = GetComponent<AudioSource>();
-        m_animator = GetComponent<Animator>();
-        if (m_healthText == null) {
-            m_healthText = GameObject.Find("HealthText").GetComponent<TextMesh>();
+        health = maxHealth;
+        audioSource = GetComponent<AudioSource>();
+        animator = GetComponent<Animator>();
+        if (healthText == null) {
+            healthText = GameObject.Find("HealthText").GetComponent<TextMesh>();
             UpdateHealthText();
         } else {
             UpdateHealthText();
         }
-        m_playerMovement = GetComponent<PlayerAimMovement>();
-        m_playerInput = GetComponent<PlayerInputScript>();
-        m_rigidbody = GetComponent<Rigidbody>();
-        m_fXManager = GameObject.Find("FXManager");
-        m_gameManager = GameObject.Find("GameManager");
+        playerMovement = GetComponent<PlayerAimMovement>();
+        playerInput = GetComponent<PlayerInputScript>();
+        rigidbody = GetComponent<Rigidbody>();
+        fXManager = GameObject.Find("FXManager");
+        gameManager = GameObject.Find("GameManager");
         GameObject camReference = GameObject.Find("CameraAnchor");
-        m_camFollowScript = camReference.GetComponent<CameraFollowScript>();
-        m_camShakeScript = camReference.GetComponent<CameraShake>();
+        camFollowScript = camReference.GetComponent<CameraFollowScript>();
+        camShakeScript = camReference.GetComponent<CameraShake>();
     }
 
     private void OnCollisionEnter(Collision collision) {
@@ -63,28 +63,28 @@ public class PlayerHealthScript : MonoBehaviour {
     }
 
     private void ApplyDamage() {
-        if (m_health > 1) {
-            m_health--;
-            m_audioSource.PlayOneShot(m_hurtSound);
-            m_animator.SetTrigger("GotHurt");
+        if (health > 1) {
+            health--;
+            audioSource.PlayOneShot(hurtSound);
+            animator.SetTrigger("GotHurt");
             UpdateHealthText();
-            m_camShakeScript.StartCameraShake(m_hurtShakeAmt, this.transform.position);
-            m_fXManager.SendMessage("CallEnemyHurt", this.transform.position);
+            camShakeScript.StartCameraShake(hurtShakeAmt, this.transform.position);
+            fXManager.SendMessage("CallEnemyHurt", this.transform.position);
         } else {
-            if (m_gameOver == false) {
-                m_health--;
+            if (gameOver == false) {
+                health--;
                 UpdateHealthText();
-                m_gameOver = true;
-                m_playerMovement.enabled = false;
-                m_playerInput.enabled = false;
-                m_camFollowScript.enabled = false;
+                gameOver = true;
+                playerMovement.enabled = false;
+                playerInput.enabled = false;
+                camFollowScript.enabled = false;
                 GoLimp();
                 InvokeRepeating("ExplodeRepeat", 0, 0.2f);
                 Invoke("RestartLevel", 4);
-                m_gameManager.SendMessage("StartGameOver");
+                gameManager.SendMessage("StartGameOver");
             }
         }
-        Time.timeScale = m_timeSlowAmt;
+        Time.timeScale = timeSlowAmt;
         Invoke("ResetTimeSlow", 0.01f);
     }
 
@@ -97,12 +97,12 @@ public class PlayerHealthScript : MonoBehaviour {
     }
 
     private void ExplodeRepeat() {
-        m_fXManager.SendMessage("CallMediumExplosion", this.transform.position);
+        fXManager.SendMessage("CallMediumExplosion", this.transform.position);
     }
 
     private void UpdateHealthText() {
         CancelInvoke();
-        m_healthText.text = m_health.ToString();
+        healthText.text = health.ToString();
 
         int times = 3;
         for (int i = 0; i < times; i++) {
@@ -111,14 +111,14 @@ public class PlayerHealthScript : MonoBehaviour {
     }
 
     private void GoLimp() {
-        m_rigidbody.isKinematic = false;
-        m_rigidbody.useGravity = true;
-        m_rigidbody.AddForce(new Vector3(Random.Range(-m_forceFloat, m_forceFloat),
-                                         Random.Range(0, m_forceFloat),
-                                         Random.Range(0, m_forceFloat)));
-        m_rigidbody.AddRelativeTorque(new Vector3(Random.Range(-m_forceFloat, m_forceFloat),
-                                                  Random.Range(-m_forceFloat, m_forceFloat),
-                                                  Random.Range(-m_forceFloat, m_forceFloat)));
+        rigidbody.isKinematic = false;
+        rigidbody.useGravity = true;
+        rigidbody.AddForce(new Vector3(Random.Range(-forceFloat, forceFloat),
+                                         Random.Range(0, forceFloat),
+                                         Random.Range(0, forceFloat)));
+        rigidbody.AddRelativeTorque(new Vector3(Random.Range(-forceFloat, forceFloat),
+                                                  Random.Range(-forceFloat, forceFloat),
+                                                  Random.Range(-forceFloat, forceFloat)));
     }
 
     private void BlinkHealth() {
