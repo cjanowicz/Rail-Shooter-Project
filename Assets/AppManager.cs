@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AppManager : MonoBehaviour {
     private int highScore = 0;
@@ -7,10 +8,6 @@ public class AppManager : MonoBehaviour {
     private float fxVol = 1f;
 
     private void Awake() {
-        if (Application.loadedLevelName == "InitScene") {
-            LoadScene("TitleScene");
-        }
-
         if (PlayerPrefs.HasKey("HighScore") == false) {
             SaveData();
         } else {
@@ -50,11 +47,11 @@ public class AppManager : MonoBehaviour {
     }
 
     public void LoadScene(string name) {
-        Application.LoadLevel(name);
+        SceneManager.LoadScene(name);
     }
 
     public void LoadScene(int index) {
-        Application.LoadLevel(index);
+        SceneManager.LoadScene(index);
     }
 
     public void QuitGame() {

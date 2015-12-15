@@ -1,7 +1,14 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// This script rotates and moves the camera to look in the same direction as the player
+/// as well as rotate to tilt the camera. 
+/// </summary>
+
 public class CameraFollowScript : MonoBehaviour {
+    ///The playerObject is the transform that we track as our target.
     public Transform playerObject;
+
     private Vector3 newPosition = new Vector3();
     public float followDistance = 5f;
     private Vector3 newRotation = new Vector3();
@@ -20,12 +27,12 @@ public class CameraFollowScript : MonoBehaviour {
     private float zPlayerRotation;
     private float zPlayerDampener = 0.3f;
 
-    private void Start() {
-    }
-
     private void Update() {
+        /// In the update function we set the camera's position...
         newPosition.Set(0, 0, followDistance);
 
+        /// Set our destination rotation, which will be the player's
+        /// rotation with a damper on it.
         newRotation.x = playerObject.localEulerAngles.x;
         newRotation.y = playerObject.localEulerAngles.y;
 
@@ -41,11 +48,10 @@ public class CameraFollowScript : MonoBehaviour {
         zPlayerRotation *= zPlayerDampener;
         zInterpolation = Mathf.Lerp(zInterpolation, zPlayerRotation, zLerpT);
 
+        /// Then we set the rotation that the camera will use to be an interpolation between the old and the new rotations.
         storedRotation = new Vector3(Mathf.Lerp(storedRotation.x, newRotation.x, dampenerAngleX),
                                      Mathf.Lerp(storedRotation.y, newRotation.y, dampenerAngleY),
                                      zInterpolation);
         this.transform.eulerAngles = storedRotation;
-
-        this.transform.localPosition += (newPosition - transform.localPosition) * dampenerPos * Time.deltaTime;
     }
 }

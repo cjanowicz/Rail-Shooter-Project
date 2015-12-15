@@ -12,7 +12,6 @@ public class PlayerAimMovement : MonoBehaviour {
     public Transform reticleFarTra;
     public Transform reticleCloseTra;
     private Material reticleMat;
-    private Color retDefColor;
 
     [SerializeField]
     private float inputSpd = 50;
@@ -24,9 +23,6 @@ public class PlayerAimMovement : MonoBehaviour {
 
     [SerializeField]
     private float shipSpd = 3; 
-
-    [SerializeField]
-    private float shipRotateSpd = 100;
 
     [SerializeField]
     private float maxReticleDiff = 10;
@@ -49,7 +45,6 @@ public class PlayerAimMovement : MonoBehaviour {
         aimPos = reticleFarTra.position;
         groundScript = GameObject.Find("GroundPlane").GetComponent<GroundScroll>();
         reticleMat = reticleCloseTra.GetChild(0).GetComponent<Renderer>().materials[0];
-        retDefColor = reticleMat.color;
     }
 
     // Update is called once per frame

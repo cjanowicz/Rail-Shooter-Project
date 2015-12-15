@@ -15,7 +15,7 @@ public class EnemyMovementScript : MonoBehaviour {
     public float zOffset = 30;
 
     public GameObject shipModel;
-    private Rigidbody rigidbody;
+    private Rigidbody myRigidbody;
     private GameObject fXManager;
     private float shootTimer = 3;
     public float shootMin = 3f;
@@ -30,7 +30,7 @@ public class EnemyMovementScript : MonoBehaviour {
     private float forceFloat = 500.0f;
 
     private void Awake() {
-        rigidbody = GetComponent<Rigidbody>();
+        myRigidbody = GetComponent<Rigidbody>();
         fXManager = GameObject.Find("FXManager");
         shootingScript = GetComponent<EnemyShootingScript>();
 
@@ -81,7 +81,7 @@ public class EnemyMovementScript : MonoBehaviour {
     private void Move() {
         transform.position = Vector3.Lerp(transform.position, randomOffset, Mathf.Clamp01(Time.deltaTime * movResponsive));
         transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation((randomOffset + Vector3.forward * 10) - transform.position), Mathf.Clamp01(Time.deltaTime * movResponsive));
-        //rigidbody.AddRelativeForce(Vector3.forward * speed);
+        //myRigidbody.AddRelativeForce(Vector3.forward * speed);
     }
 
     private void BroadcastFire() {
@@ -107,19 +107,19 @@ public class EnemyMovementScript : MonoBehaviour {
     }
 
     private void FallDown() {
-        rigidbody.useGravity = true;
+        myRigidbody.useGravity = true;
         PositionPunch();
         RotationPunch();
     }
 
     public void RotationPunch() {
-        rigidbody.AddRelativeTorque(new Vector3(Random.Range(-forceFloat, forceFloat),
+        myRigidbody.AddRelativeTorque(new Vector3(Random.Range(-forceFloat, forceFloat),
                                                   Random.Range(-forceFloat, forceFloat),
                                                   Random.Range(-forceFloat, forceFloat)));
     }
 
     public void PositionPunch() {
-        rigidbody.AddForce(new Vector3(Random.Range(-forceFloat, forceFloat),
+        myRigidbody.AddForce(new Vector3(Random.Range(-forceFloat, forceFloat),
                                          Random.Range(0, forceFloat),
                                          Random.Range(-forceFloat, forceFloat)));
     }

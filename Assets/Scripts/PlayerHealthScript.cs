@@ -5,7 +5,7 @@ public class PlayerHealthScript : MonoBehaviour {
     private PlayerInputScript playerInput;
     private CameraFollowScript camFollowScript;
     private CameraShake camShakeScript;
-    private Rigidbody rigidbody;
+    private Rigidbody myRigidbody;
     private GameObject fXManager;
     private GameObject gameManager;
 
@@ -40,7 +40,7 @@ public class PlayerHealthScript : MonoBehaviour {
         }
         playerMovement = GetComponent<PlayerAimMovement>();
         playerInput = GetComponent<PlayerInputScript>();
-        rigidbody = GetComponent<Rigidbody>();
+        myRigidbody = GetComponent<Rigidbody>();
         fXManager = GameObject.Find("FXManager");
         gameManager = GameObject.Find("GameManager");
         GameObject camReference = GameObject.Find("CameraAnchor");
@@ -80,7 +80,6 @@ public class PlayerHealthScript : MonoBehaviour {
                 camFollowScript.enabled = false;
                 GoLimp();
                 InvokeRepeating("ExplodeRepeat", 0, 0.2f);
-                Invoke("RestartLevel", 4);
                 gameManager.SendMessage("StartGameOver");
             }
         }
@@ -90,10 +89,6 @@ public class PlayerHealthScript : MonoBehaviour {
 
     private void ResetTimeSlow() {
         Time.timeScale = 1;
-    }
-
-    private void RestartLevel() {
-        Application.LoadLevel(Application.loadedLevel);
     }
 
     private void ExplodeRepeat() {
@@ -111,12 +106,12 @@ public class PlayerHealthScript : MonoBehaviour {
     }
 
     private void GoLimp() {
-        rigidbody.isKinematic = false;
-        rigidbody.useGravity = true;
-        rigidbody.AddForce(new Vector3(Random.Range(-forceFloat, forceFloat),
+        myRigidbody.isKinematic = false;
+        myRigidbody.useGravity = true;
+        myRigidbody.AddForce(new Vector3(Random.Range(-forceFloat, forceFloat),
                                          Random.Range(0, forceFloat),
                                          Random.Range(0, forceFloat)));
-        rigidbody.AddRelativeTorque(new Vector3(Random.Range(-forceFloat, forceFloat),
+        myRigidbody.AddRelativeTorque(new Vector3(Random.Range(-forceFloat, forceFloat),
                                                   Random.Range(-forceFloat, forceFloat),
                                                   Random.Range(-forceFloat, forceFloat)));
     }
