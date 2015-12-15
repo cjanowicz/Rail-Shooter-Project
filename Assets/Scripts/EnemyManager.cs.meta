@@ -1,8 +1,14 @@
 fileFormatVersion: 2
 guid: a18aa0711f5edb04f839635e959cb620
+timeCreated: 1450201420
+licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - enemy1Prefab: {fileID: 199660, guid: 67a04fe71dfb84444b6cb70b006794bd, type: 2}
+  - skullPrefab: {fileID: 174950, guid: 84c86dc5a199fc9479263aed8794d81d, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
+  assetBundleName: 
+  assetBundleVariant: 

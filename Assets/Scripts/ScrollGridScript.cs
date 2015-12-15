@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
 public class ScrollGridScript : MonoBehaviour {
-    public Renderer m_objectRenderer;
-    private float m_timer = 0;
+    public Renderer objectRenderer;
+    private float timer = 0;
 
     [HideInInspector]
     public float xDistance = 0;
@@ -12,10 +12,10 @@ public class ScrollGridScript : MonoBehaviour {
 
     // Update is called once per frame
     private void Update() {
-        m_timer += Time.deltaTime * zSpeed;
-        m_timer = m_timer % 1;
+        timer += Time.deltaTime * zSpeed;
+        timer = timer % 1;
         xDistance += xSpeed * Time.deltaTime;
         xDistance = xDistance % 1;
-        m_objectRenderer.material.SetTextureOffset("_MainTex", new Vector2(xDistance, m_timer));
+        objectRenderer.material.SetTextureOffset("_MainTex", new Vector2(xDistance, timer));
     }
 }

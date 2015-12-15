@@ -1,22 +1,22 @@
 ﻿using UnityEngine;
 
 public class PlayerBulletScript : MonoBehaviour {
-    private static GameObject m_fxManager;
-    public int m_damage = 1;
-    public float m_lifeTime = 2f;
-    private AudioSource m_audioSource;
-    private static CameraShake m_camShakeScript;
-    public float m_shakeStrength = 0.2f;
+    private static GameObject fxManager;
+    public int damage = 1;
+    public float lifeTime = 2f;
+    private AudioSource audioSource;
+    private static CameraShake camShakeScript;
+    public float shakeStrength = 0.2f;
     private bool firstActivation = true;
-    public float m_hitTimeSlowAmt = 0.2f;
-    public float m_hittimeSlowEnd = 0.1f;
+    public float hitTimeSlowAmt = 0.2f;
+    public float hittimeSlowEnd = 0.1f;
 
     // Use this for initialization
     private void Awake() {
-        m_fxManager = GameObject.Find("FXManager");
-        m_audioSource = GetComponent<AudioSource>();
-        if (m_camShakeScript == null) {
-            m_camShakeScript = GameObject.Find("CameraAnchor").GetComponent<CameraShake>();
+        fxManager = GameObject.Find("FXManager");
+        audioSource = GetComponent<AudioSource>();
+        if (camShakeScript == null) {
+            camShakeScript = GameObject.Find("CameraAnchor").GetComponent<CameraShake>();
         }
     }
 
@@ -24,22 +24,22 @@ public class PlayerBulletScript : MonoBehaviour {
         if (firstActivation == true) {
             firstActivation = false;
         } else {
-            Invoke("Deactivate", m_lifeTime);
-            m_audioSource.Play();
+            Invoke("Deactivate", lifeTime);
+            audioSource.Play();
         }
     }
 
     private void OnTriggerEnter(Collider other) {
         if (other.tag != "Powerup" && other.tag != "Player" && other.tag != "EnemyBullet") {
             if (other.tag == "Enemy" || other.tag == "Boss")
-                m_fxManager.SendMessage("CallEnemyHurt", this.transform.position);
+                fxManager.SendMessage("CallEnemyHurt", this.transform.position);
             else
-                m_fxManager.SendMessage("CallSmallExplosion", this.transform.position);
-            other.SendMessage("ApplyDamage", m_damage, SendMessageOptions.DontRequireReceiver);
+                fxManager.SendMessage("CallSmallExplosion", this.transform.position);
+            other.SendMessage("ApplyDamage", damage, SendMessageOptions.DontRequireReceiver);
             DestroySelf();
             if (other.tag == "Enemy" || other.tag == "Boss") {
-                Time.timeScale = m_hitTimeSlowAmt;
-                Invoke("ResetTimeSlow", m_hittimeSlowEnd);
+                Time.timeScale = hitTimeSlowAmt;
+                Invoke("ResetTimeSlow", hittimeSlowEnd);
             }
         }
     }

@@ -1,94 +1,100 @@
 ﻿using UnityEngine;
 
 public class PlayerAimMovement : MonoBehaviour {
-    private GroundScroll m_groundScript;
+    private GroundScroll groundScript;
 
     [SerializeField]
-    private float m_grndSpdMult = 20;
+    private float grndSpdMult = 0.5f;
 
-    private AppManager m_appManagerScript;
-    private int m_invert;
+    private AppManager appManagerScript;
+    private int invert;
 
-    public Transform m_reticleFarTra;
-    public Transform m_reticleCloseTra;
-    private Material m_reticleMat;
-    private Color m_retDefColor;
-
-    [SerializeField]
-    private float m_inputSpd = 20;
+    public Transform reticleFarTra;
+    public Transform reticleCloseTra;
+    private Material reticleMat;
+    private Color retDefColor;
 
     [SerializeField]
-    private float m_reticleSpd = 20;
-
-    private Vector3 m_aimPos;
+    private float inputSpd = 50;
 
     [SerializeField]
-    private float m_shipSpd = 3;
+    private float reticleSpd = 50;
+
+    private Vector3 aimPos;
 
     [SerializeField]
-    private float m_shipRotateSpd = 100;
+    private float shipSpd = 3; 
 
     [SerializeField]
-    private float m_maxReticleDiff = 5;
+    private float shipRotateSpd = 100;
 
     [SerializeField]
-    private float m_limitX = 5;
+    private float maxReticleDiff = 10;
 
     [SerializeField]
-    private float m_limitY = 5;
+    private float limitX = 5;
 
     [SerializeField]
-    private float m_reticleYLimit = -4;
+    private float limitY = 5;
+
+    [SerializeField]
+    private float reticleYLimit = -4;
+    [SerializeField]
+    private float bankingZStr = 10;
 
     // Use this for initialization
     private void Start() {
-        m_appManagerScript = GameObject.Find("AppManager(Clone)").GetComponent<AppManager>();
-        m_invert = m_appManagerScript.GetInvert();
-        m_aimPos = m_reticleFarTra.position;
-        m_groundScript = GameObject.Find("GroundPlane").GetComponent<GroundScroll>();
-        m_reticleMat = m_reticleCloseTra.GetChild(0).GetComponent<Renderer>().materials[0];
-        m_retDefColor = m_reticleMat.color;
+        appManagerScript = GameObject.Find("AppManager(Clone)").GetComponent<AppManager>();
+        invert = appManagerScript.GetInvert();
+        aimPos = reticleFarTra.position;
+        groundScript = GameObject.Find("GroundPlane").GetComponent<GroundScroll>();
+        reticleMat = reticleCloseTra.GetChild(0).GetComponent<Renderer>().materials[0];
+        retDefColor = reticleMat.color;
     }
 
     // Update is called once per frame
     private void Update() {
-        m_reticleCloseTra.position = (m_reticleFarTra.position + transform.position) / 2;
+        reticleCloseTra.position = (reticleFarTra.position + transform.position) / 2;
     }
 
     public void Move(float h, float v) {
         // Accept Player Input
-        m_aimPos += new Vector3(h, v * m_invert, 0) * m_inputSpd * Time.deltaTime;
-        m_aimPos = new Vector3(Mathf.Clamp(m_aimPos.x, transform.position.x - m_maxReticleDiff, transform.position.x + m_maxReticleDiff) - m_groundScript.GetXSpeed() * 5 * Time.deltaTime,
-                               Mathf.Clamp(m_aimPos.y, transform.position.y - m_maxReticleDiff, transform.position.y + m_maxReticleDiff),
-                              m_aimPos.z);
-        m_aimPos.y = Mathf.Max(m_aimPos.y, m_reticleYLimit);
-        m_reticleFarTra.position = Vector3.Lerp(m_reticleFarTra.position, m_aimPos,
-                                             Time.deltaTime * m_reticleSpd);
+        aimPos += new Vector3(h, v * invert, 0) * inputSpd * Time.deltaTime;
+        aimPos = new Vector3(Mathf.Clamp(aimPos.x, transform.position.x - maxReticleDiff, transform.position.x + maxReticleDiff) - groundScript.GetXSpeed() * 5 * Time.deltaTime,
+                               Mathf.Clamp(aimPos.y, transform.position.y - maxReticleDiff, transform.position.y + maxReticleDiff),
+                              aimPos.z);
+        aimPos.y = Mathf.Max(aimPos.y, reticleYLimit);
+        reticleFarTra.position = Vector3.Lerp(reticleFarTra.position, aimPos,
+                                             Time.deltaTime * reticleSpd);
 
         this.transform.position = Vector3.Lerp(this.transform.position,
-                                   new Vector3(m_aimPos.x, m_aimPos.y, transform.position.z),
-                                   Time.deltaTime * m_shipSpd);
-        transform.LookAt(m_reticleFarTra.position);
+                                   new Vector3(aimPos.x, aimPos.y, transform.position.z),
+                                   Time.deltaTime * shipSpd);
+        transform.LookAt(reticleFarTra.position);
 
         // This line handles banking the ship
         transform.localEulerAngles = new Vector3(transform.localEulerAngles.x,
                                                  transform.localEulerAngles.y,
-                                                 (m_aimPos.x - transform.localPosition.x) * -10);
+                                                 Banking(aimPos.x, transform.position.x, bankingZStr));
 
         //Scroll the ground once you get to the edges of the screen.
         float absX = Mathf.Abs(transform.position.x);
-        if (absX > m_limitX) {
+        if (absX > limitX) {
             float clampedX = Mathf.Clamp(transform.position.x, -1, 1);
-            float newXSpeed = (absX - m_limitX) * clampedX;
-            m_groundScript.SetXSpeed(newXSpeed * m_grndSpdMult);
+            float newXSpeed = (absX - limitX) * clampedX;
+            groundScript.SetXSpeed(newXSpeed * grndSpdMult);
         }
 
         float absY = Mathf.Abs(transform.position.y);
-        if (absY > m_limitY) {
+        if (absY > limitY) {
             transform.position = new Vector3(
                 transform.position.x,
-                m_limitY * Mathf.Clamp(transform.position.y, -1, 1),
+                limitY * Mathf.Clamp(transform.position.y, -1, 1),
                 transform.position.z);
         }
+    }
+
+    public float Banking(float targetX, float currentX, float multiplier) {
+        return (targetX - currentX) * -multiplier;
     }
 }

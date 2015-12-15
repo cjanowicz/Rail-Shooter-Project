@@ -1,48 +1,49 @@
 ﻿using UnityEngine;
 
 public class FXManager : MonoBehaviour {
-    public GameObject m_smallExpPrefab;
-    private GameObject[] m_smallExpArray;
-    private const int m_smallExpNum = 15;
-    private int m_smallExpIter = 0;
+    public GameObject smallExpPrefab;
+    private GameObject[] smallExpArray;
+    private const int smallExpNum = 15;
+    private int smallExpIter = 0;
 
-    public GameObject m_medExpPrefab;
-    private GameObject[] m_medExpArray;
-    private const int m_medExpNum = 10;
-    private int m_medExpIter = 0;
+    public GameObject medExpPrefab;
+    private GameObject[] medExpArray;
+    private const int medExpNum = 10;
+    private int medExpIter = 0;
 
-    public GameObject m_enemyHurtPrefab;
-    private GameObject[] m_enemyHurtArray;
-    private const int m_enemyHurtNum = 10;
-    private int m_enemyHurtIter = 0;
+    public GameObject enemyHurtPrefab;
+    private GameObject[] enemyHurtArray;
+    private const int enemyHurtNum = 10;
+    private int enemyHurtIter = 0;
 
-    public GameObject m_playerMuzzleFlashPrefab;
-    private GameObject[] m_playerMFlashArray;
-    private const int m_pMFlashNum = 10;
-    private int m_pMFlashIter = 0;
-    public GameObject m_enemyMuzzleFlashPrefab;
-    private GameObject[] m_enemyMFlashArray;
-    private const int m_eMFlashNum = 10;
-    private int m_eMFlashIter = 0;
+    public GameObject playerMuzzleFlashPrefab;
+    private GameObject[] playerMFlashArray;
+    private const int pMFlashNum = 10;
+    private int pMFlashIter = 0;
 
-    public GameObject m_playerBulletPrefab;
-    private GameObject[] m_playerBulletArray;
-    private const int m_playerBulletNum = 30;
-    private int m_playerBulletIter = 0;
+    public GameObject enemyMuzzleFlashPrefab;
+    private GameObject[] enemyMFlashArray;
+    private const int eMFlashNum = 10;
+    private int eMFlashIter = 0;
 
-    public GameObject m_enemyBulletPrefab;
-    private GameObject[] m_enemyBulletArray;
-    private const int m_enemyBulletNum = 50;
-    private int m_enemyBulletIter = 0;
+    public GameObject playerBulletPrefab;
+    private GameObject[] playerBulletArray;
+    private const int playerBulletNum = 30;
+    private int playerBulletIter = 0;
+
+    public GameObject enemyBulletPrefab;
+    private GameObject[] enemyBulletArray;
+    private const int enemyBulletNum = 50;
+    private int enemyBulletIter = 0;
 
     private void Awake() {
-        InstantiateEffect(m_smallExpPrefab, ref m_smallExpArray, m_smallExpNum);
-        InstantiateEffect(m_medExpPrefab, ref m_medExpArray, m_medExpNum);
-        InstantiateEffect(m_enemyHurtPrefab, ref m_enemyHurtArray, m_enemyHurtNum);
-        InstantiateEffect(m_playerMuzzleFlashPrefab, ref m_playerMFlashArray, m_pMFlashNum);
-        InstantiateEffect(m_enemyMuzzleFlashPrefab, ref m_enemyMFlashArray, m_eMFlashNum);
-        InstantiateEffect(m_playerBulletPrefab, ref m_playerBulletArray, m_playerBulletNum);
-        InstantiateEffect(m_enemyBulletPrefab, ref m_enemyBulletArray, m_enemyBulletNum);
+        InstantiateEffect(smallExpPrefab, ref smallExpArray, smallExpNum);
+        InstantiateEffect(medExpPrefab, ref medExpArray, medExpNum);
+        InstantiateEffect(enemyHurtPrefab, ref enemyHurtArray, enemyHurtNum);
+        InstantiateEffect(playerMuzzleFlashPrefab, ref playerMFlashArray, pMFlashNum);
+        InstantiateEffect(enemyMuzzleFlashPrefab, ref enemyMFlashArray, eMFlashNum);
+        InstantiateEffect(playerBulletPrefab, ref playerBulletArray, playerBulletNum);
+        InstantiateEffect(enemyBulletPrefab, ref enemyBulletArray, enemyBulletNum);
     }
 
     private void InstantiateEffect(GameObject prefab, ref GameObject[] newArray, int size) {
@@ -64,47 +65,47 @@ public class FXManager : MonoBehaviour {
     }
 
     public void CallSmallExplosion(Vector3 newPos) {
-        StartEffect(newPos, ref m_smallExpArray[m_smallExpIter],
-                    ref m_smallExpIter, m_smallExpArray.Length);
+        StartEffect(newPos, ref smallExpArray[smallExpIter],
+                    ref smallExpIter, smallExpArray.Length);
     }
 
     public void CallPlayerMuzzleFlash(Vector3 newPos, Quaternion newRotation) {
-        StartEffect(newPos, ref m_playerMFlashArray[m_pMFlashIter],
-                    ref m_pMFlashIter, m_playerMFlashArray.Length);
-        m_playerMFlashArray[m_pMFlashIter].transform.rotation = newRotation;
+        StartEffect(newPos, ref playerMFlashArray[pMFlashIter],
+                    ref pMFlashIter, playerMFlashArray.Length);
+        playerMFlashArray[pMFlashIter].transform.rotation = newRotation;
     }
 
     public void CallEnemyMuzzleFlash(Vector3 newPos, Quaternion newRotation) {
-        StartEffect(newPos, ref m_enemyMFlashArray[m_eMFlashIter],
-                    ref m_eMFlashIter, m_enemyMFlashArray.Length);
-        m_enemyMFlashArray[m_eMFlashIter].transform.rotation = newRotation;
+        StartEffect(newPos, ref enemyMFlashArray[eMFlashIter],
+                    ref eMFlashIter, enemyMFlashArray.Length);
+        enemyMFlashArray[eMFlashIter].transform.rotation = newRotation;
     }
 
     public void CallMediumExplosion(Vector3 newPos) {
-        StartEffect(newPos, ref m_medExpArray[m_medExpIter],
-                    ref m_medExpIter, m_medExpArray.Length);
+        StartEffect(newPos, ref medExpArray[medExpIter],
+                    ref medExpIter, medExpArray.Length);
     }
 
     public void CallEnemyHurt(Vector3 newPos) {
-        StartEffect(newPos, ref m_enemyHurtArray[m_enemyHurtIter],
-                    ref m_enemyHurtIter, m_enemyHurtArray.Length);
+        StartEffect(newPos, ref enemyHurtArray[enemyHurtIter],
+                    ref enemyHurtIter, enemyHurtArray.Length);
     }
 
     public void CallPlayerBullet(Vector3 newPos, Quaternion newRotation, float bulletForce) {
         CallPlayerMuzzleFlash(newPos, newRotation);
-        int currentIter = m_playerBulletIter;
-        StartEffect(newPos, ref m_playerBulletArray[m_playerBulletIter],
-                    ref m_playerBulletIter, m_playerBulletArray.Length);
-        m_playerBulletArray[currentIter].transform.rotation = newRotation;
-        m_playerBulletArray[currentIter].GetComponent<Rigidbody>().velocity = m_playerBulletArray[currentIter].transform.forward * bulletForce;
+        int currentIter = playerBulletIter;
+        StartEffect(newPos, ref playerBulletArray[playerBulletIter],
+                    ref playerBulletIter, playerBulletArray.Length);
+        playerBulletArray[currentIter].transform.rotation = newRotation;
+        playerBulletArray[currentIter].GetComponent<Rigidbody>().velocity = playerBulletArray[currentIter].transform.forward * bulletForce;
     }
 
     public void CallEnemyBullet(Vector3 newPos, Quaternion newRotation, float bulletForce) {
         CallEnemyMuzzleFlash(newPos, newRotation);
-        int currentIter = m_enemyBulletIter;
-        StartEffect(newPos, ref m_enemyBulletArray[m_enemyBulletIter],
-                    ref m_enemyBulletIter, m_enemyBulletArray.Length);
-        m_enemyBulletArray[currentIter].transform.rotation = newRotation;
-        m_enemyBulletArray[currentIter].GetComponent<Rigidbody>().velocity = m_enemyBulletArray[currentIter].transform.forward * bulletForce;
+        int currentIter = enemyBulletIter;
+        StartEffect(newPos, ref enemyBulletArray[enemyBulletIter],
+                    ref enemyBulletIter, enemyBulletArray.Length);
+        enemyBulletArray[currentIter].transform.rotation = newRotation;
+        enemyBulletArray[currentIter].GetComponent<Rigidbody>().velocity = enemyBulletArray[currentIter].transform.forward * bulletForce;
     }
 }

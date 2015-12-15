@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
 public class AppManager : MonoBehaviour {
-    private int m_highScore = 0;
-    private int m_invert = -1;
-    private float m_musicVol = 1f;
-    private float m_fxVol = 1f;
+    private int highScore = 0;
+    private int invert = -1;
+    private float musicVol = 1f;
+    private float fxVol = 1f;
 
     private void Awake() {
         if (Application.loadedLevelName == "InitScene") {
@@ -19,34 +19,34 @@ public class AppManager : MonoBehaviour {
     }
 
     public void SaveData() {
-        PlayerPrefs.SetInt("HighScore", m_highScore);
-        PlayerPrefs.SetInt("Invert", m_invert);
-        PlayerPrefs.SetFloat("MusicVol", m_musicVol);
-        PlayerPrefs.SetFloat("FXVol", m_fxVol);
+        PlayerPrefs.SetInt("HighScore", highScore);
+        PlayerPrefs.SetInt("Invert", invert);
+        PlayerPrefs.SetFloat("MusicVol", musicVol);
+        PlayerPrefs.SetFloat("FXVol", fxVol);
         PlayerPrefs.Save();
     }
 
     private void LoadData() {
-        m_highScore = PlayerPrefs.GetInt("HighScore");
-        m_invert = PlayerPrefs.GetInt("Invert");
-        m_musicVol = PlayerPrefs.GetFloat("MusicVol");
-        m_fxVol = PlayerPrefs.GetFloat("FXVol");
+        highScore = PlayerPrefs.GetInt("HighScore");
+        invert = PlayerPrefs.GetInt("Invert");
+        musicVol = PlayerPrefs.GetFloat("MusicVol");
+        fxVol = PlayerPrefs.GetFloat("FXVol");
     }
 
     public int GetInvert() {
-        return m_invert;
+        return invert;
     }
 
     public int GetHighScore() {
-        return m_highScore;
+        return highScore;
     }
 
     public void SetHighScore(int newScore) {
-        m_highScore = newScore;
+        highScore = newScore;
     }
 
     public void SetInvert(int newInvert) {
-        m_invert = newInvert;
+        invert = newInvert;
     }
 
     public void LoadScene(string name) {

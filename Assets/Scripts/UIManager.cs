@@ -3,31 +3,31 @@
 public class UIManager : MonoBehaviour {
 
     //Must be set in Editor:
-    public GameObject m_whiteOutPlane;
+    public GameObject whiteOutPlane;
 
-    public float m_whiteOutChangeSpeed = 3;
-    private Material m_whiteOutMat;
-    private Vector4 m_clearWhite;
-    private bool m_whiteOutVisible = true;
-    private bool m_whiteOutChange = false;
+    public float whiteOutChangeSpeed = 3;
+    private Material whiteOutMat;
+    private Vector4 clearWhite;
+    private bool whiteOutVisible = true;
+    private bool whiteOutChange = false;
 
-    public GameObject m_gameManager;
+    public GameObject gameManager;
 
     private void Awake() {
-        m_clearWhite = new Vector4(1, 1, 1, 0);
+        clearWhite = new Vector4(1, 1, 1, 0);
 
-        m_whiteOutPlane.SetActive(m_whiteOutVisible);
+        whiteOutPlane.SetActive(whiteOutVisible);
 
-        m_whiteOutMat = m_whiteOutPlane.GetComponent<Renderer>().materials[0];
-        m_whiteOutMat.color = Color.white;
+        whiteOutMat = whiteOutPlane.GetComponent<Renderer>().materials[0];
+        whiteOutMat.color = Color.white;
     }
 
     private void Update() {
-        if (m_whiteOutChange) {
-            if (m_whiteOutVisible == false) {
-                m_whiteOutMat.color = (Color)Vector4.Lerp(m_whiteOutMat.color, Color.white, m_whiteOutChangeSpeed * Time.deltaTime);
+        if (whiteOutChange) {
+            if (whiteOutVisible == false) {
+                whiteOutMat.color = (Color)Vector4.Lerp(whiteOutMat.color, Color.white, whiteOutChangeSpeed * Time.deltaTime);
             } else {
-                m_whiteOutMat.color = (Color)Vector4.Lerp(m_whiteOutMat.color, m_clearWhite, m_whiteOutChangeSpeed * Time.deltaTime);
+                whiteOutMat.color = (Color)Vector4.Lerp(whiteOutMat.color, clearWhite, whiteOutChangeSpeed * Time.deltaTime);
             }
         }
     }
@@ -40,27 +40,27 @@ public class UIManager : MonoBehaviour {
         CancelInvoke("EndFadeIn");
         CancelInvoke("EndFadeOut");
         EndFadeOut();
-        m_whiteOutChange = true;
-        m_whiteOutPlane.SetActive(true);
-        Invoke("EndFadeIn", m_whiteOutChangeSpeed / 2);
+        whiteOutChange = true;
+        whiteOutPlane.SetActive(true);
+        Invoke("EndFadeIn", whiteOutChangeSpeed / 2);
     }
 
     public void StartFadeOut() {
         CancelInvoke("EndFadeIn");
         CancelInvoke("EndFadeOut");
         EndFadeIn();
-        m_whiteOutChange = true;
-        Invoke("EndFadeOut", m_whiteOutChangeSpeed / 2);
+        whiteOutChange = true;
+        Invoke("EndFadeOut", whiteOutChangeSpeed / 2);
     }
 
     private void EndFadeIn() {
-        m_whiteOutChange = false;
-        m_whiteOutVisible = true;
+        whiteOutChange = false;
+        whiteOutVisible = true;
     }
 
     private void EndFadeOut() {
-        m_whiteOutChange = false;
-        m_whiteOutPlane.SetActive(false);
-        m_whiteOutVisible = false;
+        whiteOutChange = false;
+        whiteOutPlane.SetActive(false);
+        whiteOutVisible = false;
     }
 }
