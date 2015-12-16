@@ -4,6 +4,11 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// This script is for managing events relevant to the game state in the main gameplay scene,
 /// and for communicating with the AppManager.
+/// Methods to call:
+///     EndPause(): End the pause and resume the game, called by the MenuManager
+///     StartGameOver(): Called by the PlayerHealthScript.
+///     QuitGame(): Called by the MenuManager.
+///     UpdateEnemiesKilled(int amount): called by the EnemyManager, used for score and state changing.
 /// </summary>
 
 public class GameManager : MonoBehaviour {
@@ -127,13 +132,6 @@ public class GameManager : MonoBehaviour {
             }
         }
     }
-
-    private void RestartLevel() {
-        /// Here we tell the app manager to restart the game at the current scene.
-        EndPause();
-        appScript.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
 
     private void StartGameOver() {
         /// Here we check if the highscore needs to be overwritten, then do so if needed.

@@ -1,5 +1,11 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// This script has variable groups for all different kinds of objects that need to be spawned and 
+/// re-used quickly, such as explosions and bullets. The functions calls are unique to what is being called,
+/// and the functions that instantiate and spawn the objects are all re-usable.
+/// </summary>
+
 public class FXManager : MonoBehaviour {
     public GameObject smallExpPrefab;
     private GameObject[] smallExpArray;
@@ -37,6 +43,7 @@ public class FXManager : MonoBehaviour {
     private int enemyBulletIter = 0;
 
     private void Awake() {
+        /// Instantiate all the prefabs and related variables.
         InstantiateEffect(smallExpPrefab, ref smallExpArray, smallExpNum);
         InstantiateEffect(medExpPrefab, ref medExpArray, medExpNum);
         InstantiateEffect(enemyHurtPrefab, ref enemyHurtArray, enemyHurtNum);
@@ -47,6 +54,8 @@ public class FXManager : MonoBehaviour {
     }
 
     private void InstantiateEffect(GameObject prefab, ref GameObject[] newArray, int size) {
+        /// Similar to the enemy manager, this instantiates an array of game objects
+        /// and sets their parent transforms to this object.
         newArray = new GameObject[size];
         for (int i = 0; i < size; i++) {
             newArray[i] = GameObject.Instantiate(prefab);
@@ -56,6 +65,7 @@ public class FXManager : MonoBehaviour {
     }
 
     private void StartEffect(Vector3 newPos, ref GameObject effectObject, ref int iterator, int max) {
+        /// this function is re-usable, and places a game object while incrementing the array iterator.
         effectObject.transform.position = newPos;
         effectObject.SetActive(true);
         iterator++;

@@ -3,6 +3,8 @@ using UnityEngine;
 /// <summary>
 /// This script handles enemy movement with a state machine.
 /// It communicates with the enemy manager, the enemy shooting behavior, and the FX manager.
+/// Methods to call:
+///     DeathSequence(): Called by the EnemyHealthScript, to begin the deathsequence effects.
 /// </summary>
 
 public class EnemyMovementScript : MonoBehaviour {

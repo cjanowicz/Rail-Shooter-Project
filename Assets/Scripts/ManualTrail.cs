@@ -1,5 +1,12 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// This behavior is not written by me, I found it on http://answers.unity3d.com/questions/1032656/trail-renderer-on-a-non-moving-object.html
+/// I used it to quickly solve the problem of creating a visible trail for the player's wingtips,
+/// when the conventional trail renderer does not easily work with stationary objects.
+/// To solve this I found an easy solution for free on the internet, and studied their implementation.
+/// </summary>
+
 public class ManualTrail : MonoBehaviour {
     public int trailResolution;
     private LineRenderer lineRenderer;
