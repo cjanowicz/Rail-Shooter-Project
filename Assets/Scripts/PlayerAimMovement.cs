@@ -80,7 +80,11 @@ public class PlayerAimMovement : MonoBehaviour {
         /// This works because the player is affected by the ground scroll script, so it is dragged back to the center of the screen.
         float absX = Mathf.Abs(transform.position.x);
         if (absX > limitX) {
+            /// This clamped X variable acts as a multiplier.
+            /// Since this function will only ever be called when X absolute position
+            /// is greater than the limit we decided, it will only ever be -1 or 1.
             float clampedX = Mathf.Clamp(transform.position.x, -1, 1);
+            /// Thhen it is multiplied with the newXSpeed to make the speed negative when it needs to be.
             float newXSpeed = (absX - limitX) * clampedX;
             groundScript.SetXSpeed(newXSpeed * grndSpdMult);
         }
