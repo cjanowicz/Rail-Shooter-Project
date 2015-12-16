@@ -19,9 +19,10 @@ public class PlayerInputScript : MonoBehaviour {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetButton("Fire1")) {
-            if (shootingScript.GetBufferedShot() == false)
-                shootingScript.Shoot();
+        if (Input.GetButtonDown("Fire1")) {
+            shootingScript.Shoot();
+        } else if (Input.GetButtonUp("Fire1")) {
+            shootingScript.StopShooting();
         }
         /// Pass all parameters to the character control script.
         movementScript.Move(h, v);
