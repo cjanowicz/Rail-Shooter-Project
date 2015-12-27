@@ -1,0 +1,8 @@
+Types are: Surface, Fragment/Vertex, Hardware
+Languages are: Shaderlab and CG (ComputerGraphics),
+Properties: Defines the properties like colour textures etc
+subshaders:
+	Most code goes here, shaderBody, code our shader type here, and you can have more than one sub-shader. 
+	Good use of sub-shader is to specify code by platform, such as xbox or PS4. Default is called FallBack.
+	
+	

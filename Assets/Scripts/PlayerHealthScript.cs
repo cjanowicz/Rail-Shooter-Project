@@ -1,5 +1,10 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// This script handles player health and functions for the death sequence.
+/// It also handles communication with the UI for health information.
+/// </summary>
+
 public class PlayerHealthScript : MonoBehaviour {
     private PlayerAimMovement playerMovement;
     private PlayerInputScript playerInput;
@@ -27,8 +32,8 @@ public class PlayerHealthScript : MonoBehaviour {
     public float invulnLength = 2;
     public int invulnFlashes = 3;
 
-    // Use this for initialization
     private void Awake() {
+        /// Set up references, but still work even if the desired object cannot be found.
         health = maxHealth;
         audioSource = GetComponent<AudioSource>();
         animator = GetComponent<Animator>();
@@ -48,13 +53,9 @@ public class PlayerHealthScript : MonoBehaviour {
         camShakeScript = camReference.GetComponent<CameraShake>();
     }
 
-    private void OnCollisionEnter(Collision collision) {
-        if (collision.transform.tag == "World") {
-            ApplyDamage();
-        }
-    }
-
     private void OnTriggerEnter(Collider other) {
+        /// If we collide with an object in the world, we send the apply damage to ourselves.
+        Debug.Log("HealthScript On Trigger Enter.");
         if (other.tag == "World") {
             ApplyDamage();
         } else if (other.tag == "Enemy") {
