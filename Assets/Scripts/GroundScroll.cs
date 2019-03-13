@@ -12,11 +12,11 @@ using UnityEngine;
 /// </summary>
 
 public class GroundScroll : MonoBehaviour {
-    public static float xSpeed = 0;
-    public static float zSpeed = 10;
+
+    public LevelManager levelManagerScript;
 
     [Range(0.0f, 1.0f)]
-    public static float groundScale;
+    private static float groundScale;
 
     private delegate void MyDelegate();
 
@@ -31,6 +31,10 @@ public class GroundScroll : MonoBehaviour {
     private float multiplierX = 3;
 
     private void Start() {
+
+        levelManagerScript = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+
+
         /// On start, we determine what kind of object this component is attached to,
         /// and depending on that, we set a delegate function to do different functions.
         if (transform.name == "GroundPlane") {
@@ -47,6 +51,7 @@ public class GroundScroll : MonoBehaviour {
                 if (tag == "Player") {
                     /// While the player is not affected by the X speed to the same degree as other objects.
                     multiplierX = 0.5f;
+                    multiplierX = 1.0f;
                 }
             }
         }
@@ -60,8 +65,8 @@ public class GroundScroll : MonoBehaviour {
     private void MoveSelf() {
         /// If moving ourself, we change the object position.
         transform.position += new Vector3(
-            -xSpeed * groundScale * Time.deltaTime * multiplierX, 0,
-            -zSpeed * groundScale * Time.deltaTime * scrollOnZ);
+            -levelManagerScript.xSpeed * groundScale * Time.deltaTime * multiplierX, 0,
+            -levelManagerScript.zSpeed * groundScale * Time.deltaTime * scrollOnZ);
 
         /// If we are significantly behind the camera and we are a background object, 
         /// we then move into the distance and come towards the camera again.
@@ -73,19 +78,19 @@ public class GroundScroll : MonoBehaviour {
         /// If we are the ground plane, we increment the X and Z distance variables,
         /// and use modulo to make them fit between 0 and 1, then we set the material texture offset.
         timer = (Time.deltaTime + timer) % 1;
-        zDistance = timer * zSpeed;
-        xDistance += xSpeed * multiplierX * Time.deltaTime;
+        zDistance = timer * levelManagerScript.zSpeed;
+        xDistance += levelManagerScript.xSpeed * multiplierX * Time.deltaTime;
         xDistance = xDistance % 1;
         objectRenderer.material.SetTextureOffset("_MainTex", new Vector2(xDistance, zDistance));
     }
 
     public void SetXSpeed(float newXSpeed) {
         /// Set the X speed.
-        xSpeed = newXSpeed;
+        levelManagerScript.xSpeed = newXSpeed;
     }
 
     public float GetXSpeed() {
         /// Return the X Speed.
-        return xSpeed;
+        return levelManagerScript.xSpeed;
     }
 }

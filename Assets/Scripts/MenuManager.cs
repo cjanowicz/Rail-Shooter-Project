@@ -32,6 +32,12 @@ public class MenuManager : MonoBehaviour {
     private float realTimeDelta = 0f;
     private GameManager gameManager;
 
+    public AudioClip selectionSound;
+    public AudioClip selectionNotValid;
+    public AudioClip selectionConfirm;
+    public AudioClip startSound;
+    public AudioSource myAudioSource;
+
 
     private void Awake() {
         /// Here we set up references to existing objects in scenes,
@@ -95,6 +101,8 @@ public class MenuManager : MonoBehaviour {
             if (inputPressed == false) {
                 UIIter = (UIIter + 1) % UIObj.Length;
                 inputPressed = true;
+                myAudioSource.clip = selectionSound;
+                myAudioSource.Play();
             }
         } else if (Input.GetAxisRaw("Vertical") >= 0.1) {
             //Go up
@@ -104,6 +112,8 @@ public class MenuManager : MonoBehaviour {
                     UIIter = UIObj.Length - 1;
                 }
                 inputPressed = true;
+                myAudioSource.clip = selectionSound;
+                myAudioSource.Play();
             }
         } else {
             inputPressed = false;
@@ -131,6 +141,13 @@ public class MenuManager : MonoBehaviour {
         /// This function is called when we select the "StartText" option.
         /// We make the select cube spin, save the settings if we changed anything, and load the level after a short delay.
         selectRotateScript.SetSpeed(newRotateSpeed);
+
+
+        /// Play Sound Effect:
+        myAudioSource.clip = startSound;
+        myAudioSource.Play();
+
+
         if (settingsChanged) {
             appScript.SaveData();
         }
@@ -147,6 +164,10 @@ public class MenuManager : MonoBehaviour {
         /// First we set the speed on two objects in the scene.
         selectRotateScript.SetSpeed(newRotateSpeed);
         invertCube.SendMessage("SetSpeed", newRotateSpeed);
+
+        /// Play Sound Effect:
+        myAudioSource.clip = selectionConfirm;
+        myAudioSource.Play();
 
         /// Then we change our invert settings by multiplying by -1,
         /// then set the AppManager's saved invert settings.
@@ -173,6 +194,16 @@ public class MenuManager : MonoBehaviour {
 
     private void QuitText() {
         /// Quitting the game calls that function on the Game Manager from the main game scene.
+
+        /// First we set the speed on two objects in the scene.
+        selectRotateScript.SetSpeed(newRotateSpeed);
+        invertCube.SendMessage("SetSpeed", newRotateSpeed);
+        
         gameManager.QuitGame();
+    }
+
+    private void QuitGame()
+    {
+
     }
 }
