@@ -23,6 +23,8 @@ public class EnemyManager : MonoBehaviour {
     private int enemiesDestroyed = 0;
     private int bossesActive = 0;
 
+    public LevelManager myLevelManager;
+
     private GameManager gameManager;
 
     private void Awake() {
@@ -44,11 +46,14 @@ public class EnemyManager : MonoBehaviour {
     }
 
     private void Start() {
+        /// obsoleting this line for now since the LevelManager will handle when what get spawned.
         /// On start, we call the function to start spawning the first waves of enemies.
-        Invoke("CreateEnemies", 1);
+        /// 
+        ///
+        //Invoke("CreateEnemies", 1);
     }
 
-    private void CreateEnemies() {
+    public void CreateEnemies() {
         /// According to how many enemies have been destroyed, we spawn more enemies.
         for (int i = 0; i <= enemiesDestroyed; i++) {
             if (i < enemy1Num) {
@@ -57,7 +62,7 @@ public class EnemyManager : MonoBehaviour {
         }
     }
 
-    private void SpawnEnemy1() {
+    public void SpawnEnemy1() {
         /// We call the function to spawn the enemy using the array we
         /// instantiated, and the iterator we were using.
         StartEnemy(Vector3.back * 20 + Vector3.right * Random.Range(-20, 20) + Vector3.up * 30,
@@ -92,7 +97,8 @@ public class EnemyManager : MonoBehaviour {
         totalEnemiesActive--;
         gameManager.UpdateEnemiesKilled(enemiesDestroyed);
         if (totalEnemiesActive == 0) {
-            Invoke("CreateEnemies", 2);
+            //Invoke("CreateEnemies", 2);
+            myLevelManager.DroneWaveDestroyed();
         }
     }
 

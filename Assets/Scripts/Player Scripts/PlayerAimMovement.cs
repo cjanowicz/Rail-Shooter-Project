@@ -30,8 +30,35 @@ public class PlayerAimMovement : MonoBehaviour {
     private float maxReticleDiff = 10;
     [SerializeField]
     private float limitX = 5;
+
+
+    /// <summary>
+    /// LimitY will have to be weird. I want It so be so that you are in a comfortable spot +- limitY-1. 
+    /// If you try to go above LimitY, you'll skip like a fish.
+    /// If you try to go below limitY, you'll encounter a strong ground effect that propels you back up.
+    /// But you can go up ramps and the camera will change to reflect, 
+    /// and also the camera will pan down 
+
+        /// New idea
+        /// Raycast against the ground:
+        /// check height
+        /// if height is below yLimitLow, apply a ground effect
+        /// if height is above yLimitHigh, apply a softer ground effect/gravity.
+        /// Problem, this system was designed with full control of your aim in mind. 
+    /// </summary>
     [SerializeField]
-    private float limitY = 5;
+    private float yLimitHigh = 8;
+    [SerializeField]
+    private float yLimitLow = 2;
+
+    [SerializeField]
+    private float floatLowMultiplier = 5;
+    [SerializeField]
+    private float floatHighMultiplier = 5;
+
+    private float relativeY;
+    private Rigidbody rb;
+
     [SerializeField]
     private float reticleYLimit = -4;
     [SerializeField]
@@ -45,6 +72,9 @@ public class PlayerAimMovement : MonoBehaviour {
         invert = appManagerScript.GetInvert();
         /// Then it sets a vector variable to the reticle transform.
         aimPos = reticleFarTra.position;
+
+        rb = GetComponent<Rigidbody>();
+
     }
 
     private void Update() {
@@ -90,13 +120,52 @@ public class PlayerAimMovement : MonoBehaviour {
         }
 
         /// This limits the player's Y position.
+        /// Obsolete, remaking to make a version that has an imitation of gravity.
+        /// Will need one for a lower limit too, like snowspeeders in star wars.
+        /* 
         float absY = Mathf.Abs(transform.position.y);
         if (absY > limitY) {
+            //If the player Y is higher than my limit
+            //Simply set their position to what it was before except 
             transform.position = new Vector3(
                 transform.position.x,
                 limitY * Mathf.Clamp(transform.position.y, -1, 1),
                 transform.position.z);
         }
+        */
+        relativeY = CheckHeight();
+        if(relativeY < yLimitLow)
+        {
+            float delta = relativeY - yLimitLow;
+            Vector3 force = new Vector3(0, delta, 0).normalized * floatLowMultiplier;
+            rb.AddForce(force);
+
+            Debug.Log("Beyond Low limit");
+        }
+        else if(relativeY > yLimitHigh)
+        {
+            float delta = relativeY - yLimitHigh;
+            Vector3 force = new Vector3(0, delta, 0).normalized * floatHighMultiplier;
+            rb.AddForce(force);
+            Debug.Log("Beyond high limit");
+        }
+    }
+    
+
+    public float CheckHeight()
+    {
+        float relativePlayerHeight = 5;
+
+        RaycastHit hit;
+        if(Physics.Linecast(transform.position, transform.position + Vector3.down*20, out hit))
+        {
+            relativePlayerHeight = hit.distance;
+        }
+        else
+        {
+            relativePlayerHeight = 20;
+        }
+        return relativePlayerHeight;
     }
 
     public float Banking(float targetX, float currentX, float multiplier) {

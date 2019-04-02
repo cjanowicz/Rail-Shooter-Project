@@ -110,27 +110,33 @@ public class GameManager : MonoBehaviour {
         appScript.QuitGame();
     }
 
-    public void StopNightTransition() {
-        /// At the end of the night transition, we tell the enemy manager to start spawning the skullBoss enemy.
-        enemyManager.SendMessage("SpawnSkullBoss");
-        gameState = State.BossFight;
-    }
+    /// <End Transition code>
+    /// 
+    ///public void StopNightTransition()
+    ///{
+    ///    /// At the end of the night transition, we tell the enemy manager to start spawning the skullBoss enemy.
+    ///    enemyManager.SendMessage("SpawnSkullBoss");
+    ///    gameState = State.BossFight;
+    ///}
+    /// </summary>
 
     public void UpdateEnemiesKilled(int amount) {
         /// Every time an enemy dies, it calls this function on the game manager,
         /// which increments the score counter.
         scoreText.text = amount.ToString();
         score = amount;
-
+        
+        /// Score to transition to night and spawn boss:
         /// If the score is greater than 15, we start a transition
         /// that will change the scene to night, and eventually tell the enemy manager
         /// to start spawning skull bosses.
-        if (score > scoreToSpawnBoss) {
-            if (gameState == State.Normal) {
-                gameState = State.LevelTransition;
-                Invoke("StopNightTransition", 15f);
-            }
-        }
+        ///
+        /// /*if (score > scoreToSpawnBoss) {
+        ///    if (gameState == State.Normal) {
+        ///        gameState = State.LevelTransition;
+        ///        Invoke("StopNightTransition", 15f);
+        ///    }
+        ///}
     }
 
     private void StartGameOver() {

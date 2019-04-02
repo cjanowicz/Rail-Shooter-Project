@@ -26,6 +26,12 @@ public class CameraFollowScript : MonoBehaviour {
     public float zLerpT = 0.1f;
     private float zPlayerRotation;
     private float zPlayerDampener = 0.3f;
+    private float yPosNeutral;
+
+    private void Start()
+    {
+        yPosNeutral = this.transform.position.y;
+    }
 
     private void Update() {
         /// In the update function we set the camera's position...
@@ -53,5 +59,7 @@ public class CameraFollowScript : MonoBehaviour {
                                      Mathf.Lerp(storedRotation.y, newRotation.y, dampenerAngleY),
                                      zInterpolation);
         this.transform.eulerAngles = storedRotation;
+
+
     }
 }
