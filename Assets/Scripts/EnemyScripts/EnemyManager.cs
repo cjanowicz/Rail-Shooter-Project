@@ -82,7 +82,7 @@ public class EnemyManager : MonoBehaviour {
         }
     }
 
-    private void SpawnSkullBoss() {
+    public void SpawnSkullBoss() {
         /// Same as the  SpawnEnemy1 function, but for the skull boss enemy prefab and variables.
         bossesActive++;
         StartEnemy(Vector3.back * 20 + Vector3.right * Random.Range(-20, 20) + Vector3.up * 40,
@@ -107,11 +107,11 @@ public class EnemyManager : MonoBehaviour {
         bossesActive--;
         enemiesDestroyed += scoreAmount;
         gameManager.UpdateEnemiesKilled(enemiesDestroyed);
-
-        if (bossesActive == 0) {
+        myLevelManager.BossDestroyed();
+        /*if (bossesActive == 0) {
             Invoke("SpawnSkullBoss", 6);
             if (enemiesDestroyed > 50)
                 Invoke("SpawnSkullBoss", 6);
-        }
+        }*/
     }
 }
