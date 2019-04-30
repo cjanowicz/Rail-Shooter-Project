@@ -80,6 +80,7 @@ public class AppManager : MonoBehaviour {
 
     public void QuitGame() {
         /// Function is called to quit the game.
+        Debug.Log("AppManager Asked to quit game");
         Application.Quit();
     }
 }

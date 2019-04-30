@@ -31,7 +31,6 @@ public class DroneMovement : MonoBehaviour {
     public bool isBoss = false;
     public float burstDelay = 0.1f;
     public int burstNum = 10;
-
     private EnemyShootingScript shootingScript;
 
     private float forceFloat = 500.0f;
@@ -45,9 +44,9 @@ public class DroneMovement : MonoBehaviour {
         state = State.Chasing;
     }
 
+    /// When enabled, the state and rigidbody both reset,
+    /// and it starts a repeating function that determines where it places itself
     private void OnEnable() {
-        /// When enabled, the state and rigidbody both reset,
-        /// and it starts a repeating function that determines where it places itself
         state = State.Chasing;
         InvokeRepeating("SetNewOffset", 0, Random.Range(2, 6));
         ResetRigidbody();
@@ -60,8 +59,8 @@ public class DroneMovement : MonoBehaviour {
             Random.Range(-randomZ, randomZ) + zOffset);
     }
 
+    /// According to the state machine, either...
     private void Update() {
-        /// According to the state machine, either...
         switch (state) {
             case State.Engaged:
                 /// Shoot according to a timer and move.
@@ -91,15 +90,15 @@ public class DroneMovement : MonoBehaviour {
         }
     }
 
+    /// Here we move the enemy using a Lerp and interpolate its rotation.
     private void Move() {
-        /// Here we move the enemy using a Lerp and interpolate its rotation.
         transform.position = Vector3.Lerp(transform.position, randomOffset, Mathf.Clamp01(Time.deltaTime * movResponsive));
         transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation((randomOffset + Vector3.forward * 10) - transform.position), Mathf.Clamp01(Time.deltaTime * movResponsive));
     }
 
+    /// Send the "FireAtPlayer" message to all "EnemyShootingBehavior" components on the enemy character.
+    /// This works for characters with more than one copy of the "EnemyShootingBehavior".
     private void BroadcastFire() {
-        /// Send the "FireAtPlayer" message to all "EnemyShootingBehavior" components on the enemy character.
-        /// This works for characters with more than one copy of the "EnemyShootingBehavior".
         this.gameObject.BroadcastMessage("FireAtPlayer");
     }
 

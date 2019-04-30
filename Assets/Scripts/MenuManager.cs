@@ -30,7 +30,8 @@ public class MenuManager : MonoBehaviour {
     private int highScore = 0;
     private float lastRealTime = 0f;
     private float realTimeDelta = 0f;
-    private GameManager gameManager;
+    ///private GameManager gameManager;
+    private AppManager appManager;
 
     public AudioClip selectionSound;
     public AudioClip selectionNotValid;
@@ -51,7 +52,7 @@ public class MenuManager : MonoBehaviour {
             scoreText = GameObject.Find("ScoreText").GetComponent<TextMesh>();
             invertStateText = GameObject.Find("InvertState").GetComponent<TextMesh>();
         } else {
-            gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            //gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         }
         
         /// We make a refernece to the appManager script in this sectino.
@@ -61,6 +62,7 @@ public class MenuManager : MonoBehaviour {
             tempAppManager = Instantiate(appManagerPrefab);
         }
         appScript = tempAppManager.GetComponent<AppManager>();
+        appManager = appScript;
     }
 
     private void OnEnable() {
@@ -69,6 +71,59 @@ public class MenuManager : MonoBehaviour {
         lastRealTime = Time.realtimeSinceStartup;
     }
 
+    private void Update()
+    {
+        /// Ever frame, we increment our time varaible,
+        realTimeDelta = Time.realtimeSinceStartup - lastRealTime;
+        lastRealTime = Time.realtimeSinceStartup;
+
+        /// We check for player input, and increment the UIIterator.
+        /// We also make sure that one press of the input axis 
+        /// corellates to only one button press.
+        if (Input.GetAxisRaw("Vertical") <= -0.1)
+        {
+            //Go Down
+            if (inputPressed == false)
+            {
+                UIIter = (UIIter + 1) % UIObj.Length;
+                inputPressed = true;
+                myAudioSource.clip = selectionSound;
+                myAudioSource.Play();
+            }
+        }
+        else if (Input.GetAxisRaw("Vertical") >= 0.1)
+        {
+            //Go up
+            if (inputPressed == false)
+            {
+                UIIter = UIIter - 1;
+                if (UIIter < 0)
+                {
+                    UIIter = UIObj.Length - 1;
+                }
+                inputPressed = true;
+                myAudioSource.clip = selectionSound;
+                myAudioSource.Play();
+            }
+        }
+        else
+        {
+            inputPressed = false;
+        }
+
+        /// If the player presses the fire button, we use SendMessage to call a method on this gameObject
+        /// that has the same name as the game object that is in the array.
+        if (Input.GetButtonDown("Fire1"))
+        {
+            SendMessage(UIObj[UIIter].name);
+        }
+
+        /// After we've checked for player input, we interpolate the selectCube game object's
+        /// position to the location of the UI element we are seleting, plus an offset.
+        selectCube.position = Vector3.Lerp(selectCube.position,
+                              UIObj[UIIter].position + selectOffset,
+                                              Mathf.Clamp01(realTimeDelta * selectSpeed));
+    }
     private void Start() {
         /// After the awake function, if we are in the title scene,
         /// we set the values of the settings according to existing data, 
@@ -88,49 +143,6 @@ public class MenuManager : MonoBehaviour {
         }
     }
 
-    private void Update() {
-        /// Ever frame, we increment our time varaible,
-        realTimeDelta = Time.realtimeSinceStartup - lastRealTime;
-        lastRealTime = Time.realtimeSinceStartup;
-
-        /// We check for player input, and increment the UIIterator.
-        /// We also make sure that one press of the input axis 
-        /// corellates to only one button press.
-        if (Input.GetAxisRaw("Vertical") <= -0.1) {
-            //Go Down
-            if (inputPressed == false) {
-                UIIter = (UIIter + 1) % UIObj.Length;
-                inputPressed = true;
-                myAudioSource.clip = selectionSound;
-                myAudioSource.Play();
-            }
-        } else if (Input.GetAxisRaw("Vertical") >= 0.1) {
-            //Go up
-            if (inputPressed == false) {
-                UIIter = UIIter - 1;
-                if (UIIter < 0) {
-                    UIIter = UIObj.Length - 1;
-                }
-                inputPressed = true;
-                myAudioSource.clip = selectionSound;
-                myAudioSource.Play();
-            }
-        } else {
-            inputPressed = false;
-        }
-
-        /// If the player presses the fire button, we use SendMessage to call a method on this gameObject
-        /// that has the same name as the game object that is in the array.
-        if (Input.GetButtonDown("Fire1")) {
-            SendMessage(UIObj[UIIter].name);
-        }
-
-        /// After we've checked for player input, we interpolate the selectCube game object's
-        /// position to the location of the UI element we are seleting, plus an offset.
-        selectCube.position = Vector3.Lerp(selectCube.position,
-                              UIObj[UIIter].position + selectOffset,
-                                              Mathf.Clamp01(realTimeDelta * selectSpeed));
-    }
 
     private void ChangeColor(Transform target, Color newColor) {
         /// This function changes the color of the target object to a specified color.
@@ -189,7 +201,8 @@ public class MenuManager : MonoBehaviour {
 
     private void ResumeText() {
         /// If we selected Resume as a UI option, we tell the GameManager object to unpause the game.
-        gameManager.EndPause();
+        //gameManager.EndPause();
+        //appManager.EndPause();
     }
 
     private void QuitText() {
@@ -198,8 +211,10 @@ public class MenuManager : MonoBehaviour {
         /// First we set the speed on two objects in the scene.
         selectRotateScript.SetSpeed(newRotateSpeed);
         invertCube.SendMessage("SetSpeed", newRotateSpeed);
-        
-        gameManager.QuitGame();
+
+        Debug.Log("Menu Manager Asked to quit game");
+        //gameManager.QuitGame();
+        appManager.QuitGame();
     }
 
     private void QuitGame()

@@ -106,6 +106,7 @@ public class GameManager : MonoBehaviour {
 
     public void QuitGame() {
         //We call this function to quit the game.
+        Debug.Log("GameManager Asked to quit game");
         EndPause();
         appScript.QuitGame();
     }
