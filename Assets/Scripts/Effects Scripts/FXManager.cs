@@ -42,6 +42,8 @@ public class FXManager : MonoBehaviour {
     private const int enemyBulletNum = 50;
     private int enemyBulletIter = 0;
 
+    public bool AllowedToShoot = true;
+
     private void Awake() {
         /// Instantiate all the prefabs and related variables.
         InstantiateEffect(smallExpPrefab, ref smallExpArray, smallExpNum);
@@ -102,20 +104,25 @@ public class FXManager : MonoBehaviour {
     }
 
     public void CallPlayerBullet(Vector3 newPos, Quaternion newRotation, float bulletForce) {
-        CallPlayerMuzzleFlash(newPos, newRotation);
-        int currentIter = playerBulletIter;
-        StartEffect(newPos, ref playerBulletArray[playerBulletIter],
-                    ref playerBulletIter, playerBulletArray.Length);
-        playerBulletArray[currentIter].transform.rotation = newRotation;
-        playerBulletArray[currentIter].GetComponent<Rigidbody>().velocity = playerBulletArray[currentIter].transform.forward * bulletForce;
+        if (AllowedToShoot == true) {
+            CallPlayerMuzzleFlash(newPos, newRotation);
+            int currentIter = playerBulletIter;
+            StartEffect(newPos, ref playerBulletArray[playerBulletIter],
+                        ref playerBulletIter, playerBulletArray.Length);
+            playerBulletArray[currentIter].transform.rotation = newRotation;
+            playerBulletArray[currentIter].GetComponent<Rigidbody>().velocity = playerBulletArray[currentIter].transform.forward * bulletForce;
+        }
     }
 
     public void CallEnemyBullet(Vector3 newPos, Quaternion newRotation, float bulletForce) {
-        CallEnemyMuzzleFlash(newPos, newRotation);
-        int currentIter = enemyBulletIter;
-        StartEffect(newPos, ref enemyBulletArray[enemyBulletIter],
-                    ref enemyBulletIter, enemyBulletArray.Length);
-        enemyBulletArray[currentIter].transform.rotation = newRotation;
-        enemyBulletArray[currentIter].GetComponent<Rigidbody>().velocity = enemyBulletArray[currentIter].transform.forward * bulletForce;
+        if (AllowedToShoot == true) {
+            CallEnemyMuzzleFlash(newPos, newRotation);
+            int currentIter = enemyBulletIter;
+            StartEffect(newPos, ref enemyBulletArray[enemyBulletIter],
+                        ref enemyBulletIter, enemyBulletArray.Length);
+            enemyBulletArray[currentIter].transform.rotation = newRotation;
+            enemyBulletArray[currentIter].GetComponent<Rigidbody>().velocity = enemyBulletArray[currentIter].transform.forward * bulletForce;
+        }
     }
+    
 }

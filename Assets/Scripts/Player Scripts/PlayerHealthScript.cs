@@ -23,7 +23,7 @@ public class PlayerHealthScript : MonoBehaviour {
     private AudioSource audioSource;
     public AudioClip hurtSound;
     private Animator animator;
-    public TextMesh healthText;
+    private TextMesh healthText;
 
     private float forceFloat = 500.0f;
     private bool gameOver = false;
@@ -31,6 +31,8 @@ public class PlayerHealthScript : MonoBehaviour {
     public float timeSlowAmt = 0.25f;
     public float invulnLength = 2;
     public int invulnFlashes = 3;
+
+    public float DeathExplosionRepeatTime = 0.7f;
 
     private void Awake() {
         /// Set up references, but still work even if the desired object cannot be found.
@@ -80,7 +82,7 @@ public class PlayerHealthScript : MonoBehaviour {
                 playerInput.enabled = false;
                 camFollowScript.enabled = false;
                 GoLimp();
-                InvokeRepeating("ExplodeRepeat", 0, 0.2f);
+                InvokeRepeating("ExplodeRepeat", 0, DeathExplosionRepeatTime);
                 gameManager.SendMessage("StartGameOver");
             }
         }
@@ -93,7 +95,7 @@ public class PlayerHealthScript : MonoBehaviour {
     }
 
     private void ExplodeRepeat() {
-        fXManager.SendMessage("CallMediumExplosion", this.transform.position);
+        fXManager.SendMessage("CallSmallExplosion", this.transform.position);
     }
 
     private void UpdateHealthText() {
@@ -103,6 +105,7 @@ public class PlayerHealthScript : MonoBehaviour {
         int times = 3;
         for (int i = 0; i < times; i++) {
             //Invoke("BlinkHealth");
+            ///STILL NEED TO ADD INVULN FRAMES
         }
     }
 
