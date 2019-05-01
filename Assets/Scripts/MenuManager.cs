@@ -30,7 +30,7 @@ public class MenuManager : MonoBehaviour {
     private int highScore = 0;
     private float lastRealTime = 0f;
     private float realTimeDelta = 0f;
-    ///private GameManager gameManager;
+    private GameManager gameManager;
     private AppManager appManager;
 
     public AudioClip selectionSound;
@@ -52,7 +52,7 @@ public class MenuManager : MonoBehaviour {
             scoreText = GameObject.Find("ScoreText").GetComponent<TextMesh>();
             invertStateText = GameObject.Find("InvertState").GetComponent<TextMesh>();
         } else {
-            //gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         }
         
         /// We make a refernece to the appManager script in this sectino.
@@ -201,7 +201,7 @@ public class MenuManager : MonoBehaviour {
 
     private void ResumeText() {
         /// If we selected Resume as a UI option, we tell the GameManager object to unpause the game.
-        //gameManager.EndPause();
+        gameManager.EndPause();
         //appManager.EndPause();
     }
 

@@ -9,8 +9,10 @@ using UnityEngine;
 
 public class DroneMovement : MonoBehaviour {
 
+    public enum EnemyType { Drone, Tank, Boss };
     private enum State { Chasing, Engaged, Dodging, Dead };
 
+    public EnemyType type;
     private State state;
 
     private float movResponsive = 8f;
@@ -32,6 +34,10 @@ public class DroneMovement : MonoBehaviour {
     public float burstDelay = 0.1f;
     public int burstNum = 10;
     private EnemyShootingScript shootingScript;
+
+    public float horizontalSpeed = 5;
+    public float forwardSpeed = 5;
+
 
     private float forceFloat = 500.0f;
 
@@ -61,40 +67,84 @@ public class DroneMovement : MonoBehaviour {
 
     /// According to the state machine, either...
     private void Update() {
-        switch (state) {
-            case State.Engaged:
-                /// Shoot according to a timer and move.
-                shootTimer -= Time.deltaTime;
-                if (shootTimer <= 0) {
-                    if (isBoss == true) {
-                        for (int i = 0; i < burstNum; i++) {
-                            Invoke("BroadcastFire", i * burstDelay);
+        switch (type) {
+            case EnemyType.Drone:
+                switch (state) {
+                    case State.Engaged:
+                        /// Shoot according to a timer and move.
+                        shootTimer -= Time.deltaTime;
+                        if (shootTimer <= 0) {
+                            if (isBoss == true) {
+                                for (int i = 0; i < burstNum; i++) {
+                                    Invoke("BroadcastFire", i * burstDelay);
+                                }
+                            } else {
+                                BroadcastFire();
+                            }
+                            shootTimer = Random.Range(shootMin, shootMax);
                         }
-                    } else {
-                        BroadcastFire();
-                    }
-                    shootTimer = Random.Range(shootMin, shootMax);
-                }
-                Move();
+                        Move();
 
+                        break;
+
+                    case State.Chasing:
+                        /// Or move from the start position to in front of the player,
+                        /// then transition when we are in front of the player.
+                        Move();
+                        if (transform.position.z > randomOffset.z - 3) {
+                            state = State.Engaged;
+                        }
+                        break;
+                }
                 break;
+            case EnemyType.Tank:
 
-            case State.Chasing:
-                /// Or move from the start position to in front of the player,
-                /// then transition when we are in front of the player.
-                Move();
-                if (transform.position.z > randomOffset.z - 3) {
-                    state = State.Engaged;
-                }
+                /*switch (state) {
+                    case State.Engaged:
+                        /// Shoot according to a timer and move.
+                        shootTimer -= Time.deltaTime;
+                        if (shootTimer <= 0) {
+                            if (isBoss == true) {
+                                for (int i = 0; i < burstNum; i++) {
+                                    Invoke("BroadcastFire", i * burstDelay);
+                                }
+                            } else {
+                                BroadcastFire();
+                            }
+                            shootTimer = Random.Range(shootMin, shootMax);
+                        }
+                        Move();
+
+                        break;
+
+                    case State.Chasing:
+                        /// Or move from the start position to in front of the player,
+                        /// then transition when we are in front of the player.
+                        Move();
+                        if (transform.position.z > randomOffset.z - 3) {
+                            state = State.Engaged;
+                        }
+                        break;
+                }*/
                 break;
         }
     }
 
     /// Here we move the enemy using a Lerp and interpolate its rotation.
     private void Move() {
-        transform.position = Vector3.Lerp(transform.position, randomOffset, Mathf.Clamp01(Time.deltaTime * movResponsive));
-        transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation((randomOffset + Vector3.forward * 10) - transform.position), Mathf.Clamp01(Time.deltaTime * movResponsive));
+        switch (type) {
+            case EnemyType.Drone:
+                transform.position = Vector3.Lerp(transform.position, randomOffset, Mathf.Clamp01(Time.deltaTime * movResponsive));
+                transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation((randomOffset + Vector3.forward * 10) - transform.position), Mathf.Clamp01(Time.deltaTime * movResponsive));
+                break;
+            case EnemyType.Tank:
+                transform.position = Vector3.Lerp(transform.position, randomOffset, Mathf.Clamp01(Time.deltaTime * movResponsive));
+                transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation((randomOffset + Vector3.forward * 10) - transform.position), Mathf.Clamp01(Time.deltaTime * movResponsive));
+                break;
+        }
     }
+
+   
 
     /// Send the "FireAtPlayer" message to all "EnemyShootingBehavior" components on the enemy character.
     /// This works for characters with more than one copy of the "EnemyShootingBehavior".
@@ -114,7 +164,7 @@ public class DroneMovement : MonoBehaviour {
             KillObject();
         }
     }
-    
+
     private void FXExplode() {
         /// This explosion effect continually calls a small explosion effect while the enemy is dying
         /// but stops repeating once the enemy is dead. 
