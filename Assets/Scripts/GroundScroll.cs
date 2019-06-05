@@ -30,6 +30,15 @@ public class GroundScroll : MonoBehaviour {
     private float scrollOnZ = 1;
     private float multiplierX = 3;
 
+    public float leftBound = -500;
+    public float rightBound = 500;
+    public float farMin = 1200;
+    public float farMax = 2000;
+
+    public bool restrictedRange = false;
+    public float restrictedRangeLow = -10;
+    public float restrictedRangeHigh = 10;
+
     private void Start() {
 
         levelManagerScript = GameObject.Find("LevelManager").GetComponent<LevelManager>();
@@ -71,7 +80,17 @@ public class GroundScroll : MonoBehaviour {
         /// If we are significantly behind the camera and we are a background object, 
         /// we then move into the distance and come towards the camera again.
         if (transform.position.z <= -30 && tag == "World")
-            transform.position = new Vector3(Random.Range(-500, 500), 0, Random.Range(1200, 2000));
+            RepositionObject();
+    }
+
+    private void RepositionObject() {
+        if (restrictedRange == true) {
+            if (Random.Range(0, 1) == 0)
+                transform.localPosition = new Vector3(Random.Range(leftBound, restrictedRangeLow), 0, Random.Range(farMin, farMax));
+            else
+                transform.localPosition = new Vector3(Random.Range(restrictedRangeHigh, rightBound), 0, Random.Range(farMin, farMax));
+        } else
+        transform.localPosition = new Vector3(Random.Range(leftBound, rightBound), 0, Random.Range(farMin, farMax));
     }
 
     private void MoveTexture() {

@@ -30,6 +30,8 @@ public class PlayerAimMovement : MonoBehaviour {
     private float maxReticleDiff = 10;
     [SerializeField]
     private float limitX = 5;
+    [SerializeField]
+    private float limitY = 5;
 
 
     /// <summary>
@@ -39,12 +41,12 @@ public class PlayerAimMovement : MonoBehaviour {
     /// But you can go up ramps and the camera will change to reflect, 
     /// and also the camera will pan down 
 
-        /// New idea
-        /// Raycast against the ground:
-        /// check height
-        /// if height is below yLimitLow, apply a ground effect
-        /// if height is above yLimitHigh, apply a softer ground effect/gravity.
-        /// Problem, this system was designed with full control of your aim in mind. 
+    /// New idea
+    /// Raycast against the ground:
+    /// check height
+    /// if height is below yLimitLow, apply a ground effect
+    /// if height is above yLimitHigh, apply a softer ground effect/gravity.
+    /// Problem, this system was designed with full control of your aim in mind. 
     /// </summary>
     [SerializeField]
     private float yLimitHigh = 8;
@@ -122,7 +124,7 @@ public class PlayerAimMovement : MonoBehaviour {
         /// This limits the player's Y position.
         /// Obsolete, remaking to make a version that has an imitation of gravity.
         /// Will need one for a lower limit too, like snowspeeders in star wars.
-        /* 
+        
         float absY = Mathf.Abs(transform.position.y);
         if (absY > limitY) {
             //If the player Y is higher than my limit
@@ -132,7 +134,7 @@ public class PlayerAimMovement : MonoBehaviour {
                 limitY * Mathf.Clamp(transform.position.y, -1, 1),
                 transform.position.z);
         }
-        */
+        
         relativeY = CheckHeight();
         if(relativeY < yLimitLow)
         {

@@ -15,7 +15,7 @@ public class BillBoardingPlane : MonoBehaviour {
 
     private void Awake() {
         /// here we cache our transform and make a reference to the main camera.
-        myTransform = this.transform; 
+        myTransform = this.transform;
         target = Camera.main.transform;
     }
 
@@ -25,7 +25,18 @@ public class BillBoardingPlane : MonoBehaviour {
         myTransform.LookAt(target);
         myTransform.Rotate(rightAngle);
 
+
+        /*
         /// Here we flicker the size of the object.
+        if (Time.deltaTime > 0) {
+            if (flicker == true) {
+                myTransform.localScale += scaleAlt;
+                flicker = false;
+            } else {
+                myTransform.localScale -= scaleAlt;
+                flicker = true;
+            }
+        }*/
         if (flicker == true) {
             myTransform.localScale += scaleAlt;
             flicker = false;

@@ -29,7 +29,7 @@ public class CameraShake : MonoBehaviour {
     private void Update() {
         /// On update, we set the camera's position to be the original position plus a random point inside a 1 unit radius sphere
         /// and multiply that sphere's random point by how strong we want our shake to be.
-        camTransform.localPosition = originalPos + Random.insideUnitSphere * shakeStr * (shakeAmt + constantAmt);
+        camTransform.localPosition = originalPos + Random.insideUnitSphere * shakeStr * (shakeAmt + constantAmt) * Time.timeScale;
 
         /// Shake amount is a float that is used as a timer and an amount of shaking we want.
         /// It decreases to zero with time as a function of our decreaseFactor variable.

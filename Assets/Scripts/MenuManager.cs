@@ -44,7 +44,7 @@ public class MenuManager : MonoBehaviour {
         /// Here we set up references to existing objects in scenes,
         /// and depending on the scene name, we look for different game objects.
         selectCube = GameObject.Find("SelectCube").transform;
-        selectOffset = selectCube.position - UIObj[0].position;
+        selectOffset = selectCube.localPosition - UIObj[0].localPosition;
         selectRotateScript = selectCube.GetComponent<SlowlyRotate>();
 
         if (SceneManager.GetActiveScene().name == "TitleScene") {
@@ -120,8 +120,8 @@ public class MenuManager : MonoBehaviour {
 
         /// After we've checked for player input, we interpolate the selectCube game object's
         /// position to the location of the UI element we are seleting, plus an offset.
-        selectCube.position = Vector3.Lerp(selectCube.position,
-                              UIObj[UIIter].position + selectOffset,
+        selectCube.localPosition = Vector3.Lerp(selectCube.localPosition,
+                              UIObj[UIIter].localPosition + selectOffset,
                                               Mathf.Clamp01(realTimeDelta * selectSpeed));
     }
     private void Start() {
