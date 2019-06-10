@@ -39,7 +39,7 @@ public class DroneMovement : MonoBehaviour {
     public float forwardSpeed = 5;
 
 
-    private float forceFloat = 500.0f;
+    public float forceFloat = 500.0f;
 
     private void Awake() {
         /// Set up references. 

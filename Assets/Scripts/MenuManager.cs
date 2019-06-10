@@ -39,6 +39,9 @@ public class MenuManager : MonoBehaviour {
     public AudioClip startSound;
     public AudioSource myAudioSource;
 
+    public Scene titleScene;
+    public Scene gameScene;
+
 
     private void Awake() {
         /// Here we set up references to existing objects in scenes,
@@ -168,7 +171,7 @@ public class MenuManager : MonoBehaviour {
 
     private void DelayLoadLevel() {
         /// After a short delay, we call this to tell the AppManager to load the main game scene.
-        appScript.LoadScene("TestScene");
+        appScript.LoadScene(1);
     }
 
     private void InvertText() {
@@ -210,7 +213,7 @@ public class MenuManager : MonoBehaviour {
 
         /// First we set the speed on two objects in the scene.
         selectRotateScript.SetSpeed(newRotateSpeed);
-        invertCube.SendMessage("SetSpeed", newRotateSpeed);
+        //invertCube.SendMessage("SetSpeed", newRotateSpeed);
 
         Debug.Log("Menu Manager Asked to quit game");
         //gameManager.QuitGame();

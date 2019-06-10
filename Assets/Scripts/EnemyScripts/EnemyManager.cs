@@ -11,12 +11,12 @@ public class EnemyManager : MonoBehaviour {
 
     public GameObject enemy1Prefab;
     private GameObject[] enemy1Array;
-    private const int enemy1Num = 5;
+    private const int enemy1Num = 10;
     private int enemy1Iter = 0;
 
     public GameObject skullPrefab;
     private GameObject[] skullArray;
-    private const int skullNum = 2;
+    private const int skullNum = 3;
     private int skullIter = 0;
 
     private int totalEnemiesActive = 0;

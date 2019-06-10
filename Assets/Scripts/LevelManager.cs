@@ -16,8 +16,10 @@ public class LevelManager : MonoBehaviour {
     /// <Event Array>
     /// Spawn drones,
     /// </summary>
-    public enum StoryEventType {SpawnDrones3, SpawnBombers2, SpawnBoss, StoryBlock1, TerrainChangeDesert, TerrainChangeForest };
+    public enum StoryEventType {SpawnDrones3, SpawnBombers2, SpawnBoss, StoryBlock1, StoryBlock2, TerrainChangeDesert, TerrainChangeForest, DoNothing };
     public enum ProgressCondition { AllEnemiesDestroyed, StoryBlockFinished, WaitForTime, DoNextImmediately, BossDestroyed};
+
+    public bool storyLoops = false;
 
 
     /// <Event Array>
@@ -51,7 +53,8 @@ public class LevelManager : MonoBehaviour {
 
     [SerializeField]
     private int storyIterator = 0;
-    
+
+    public bool demoStoryLoops = false;
 
     // Use this for initialization
     void Start () {
@@ -68,6 +71,14 @@ public class LevelManager : MonoBehaviour {
 
     void StartLevelEvent()
     {
+        if(storyIterator >= myStoryEventArray.Length) {
+            if(demoStoryLoops == true) {
+                storyIterator = 0;
+            } else {
+                Debug.Log("Level End Sequence goes here. About to hit a null ref unless you prevent the level event array from trying to access a null spot.");
+                //Start level complete sequence
+            }
+        }
         switch (myStoryEventArray[storyIterator].storyEvent)
         {
             case StoryEventType.SpawnDrones3:
@@ -83,6 +94,9 @@ public class LevelManager : MonoBehaviour {
                 break;
             case StoryEventType.StoryBlock1:
                 myFlowChart.ExecuteBlock("FirstStoryBlock");
+                break;
+            case StoryEventType.StoryBlock2:
+                myFlowChart.ExecuteBlock("SecondStoryBlock");
                 break;
             case StoryEventType.TerrainChangeDesert:
                 //change terrain

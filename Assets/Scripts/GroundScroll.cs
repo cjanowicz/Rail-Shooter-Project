@@ -34,6 +34,7 @@ public class GroundScroll : MonoBehaviour {
     public float rightBound = 500;
     public float farMin = 1200;
     public float farMax = 2000;
+    public float backDistance = 50;
 
     public bool restrictedRange = false;
     public float restrictedRangeLow = -10;
@@ -79,13 +80,15 @@ public class GroundScroll : MonoBehaviour {
 
         /// If we are significantly behind the camera and we are a background object, 
         /// we then move into the distance and come towards the camera again.
-        if (transform.position.z <= -30 && tag == "World")
+        if (transform.position.z <= -backDistance && tag == "World")
             RepositionObject();
     }
 
     private void RepositionObject() {
         if (restrictedRange == true) {
-            if (Random.Range(0, 1) == 0)
+            int randomRange = Random.Range(0, 2);
+            Debug.Log("Random Range = " + randomRange);
+            if (Random.Range(0, 2) ==0)
                 transform.localPosition = new Vector3(Random.Range(leftBound, restrictedRangeLow), 0, Random.Range(farMin, farMax));
             else
                 transform.localPosition = new Vector3(Random.Range(restrictedRangeHigh, rightBound), 0, Random.Range(farMin, farMax));

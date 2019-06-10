@@ -142,14 +142,14 @@ public class PlayerAimMovement : MonoBehaviour {
             Vector3 force = new Vector3(0, delta, 0).normalized * floatLowMultiplier;
             rb.AddForce(force);
 
-            Debug.Log("Beyond Low limit");
+            //Debug.Log("Beyond Low limit");
         }
         else if(relativeY > yLimitHigh)
         {
             float delta = relativeY - yLimitHigh;
             Vector3 force = new Vector3(0, delta, 0).normalized * floatHighMultiplier;
             rb.AddForce(force);
-            Debug.Log("Beyond high limit");
+            //Debug.Log("Beyond high limit");
         }
     }
     
