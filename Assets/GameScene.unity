@@ -702,7 +702,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 401372, guid: c0540af18c9aaac4bb9cc47de191aac4, type: 2}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 114330659942172770, guid: c0540af18c9aaac4bb9cc47de191aac4,
         type: 2}
@@ -1626,12 +1626,12 @@ Transform:
   m_PrefabParentObject: {fileID: 400000, guid: b20518d45890e4be59ba82946f88026c, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 245423039}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_Father: {fileID: 795424400}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &265326279
 GameObject:
@@ -2915,7 +2915,7 @@ RectTransform:
   m_Children:
   - {fileID: 1892793936}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4466,6 +4466,36 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 717187056}
+--- !u!1 &795424399
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 795424400}
+  m_Layer: 0
+  m_Name: FungusCharacters
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &795424400
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 795424399}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 245423041}
+  - {fileID: 1696838806}
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &817674888
 GameObject:
   m_ObjectHideFlags: 0
@@ -5687,7 +5717,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1083491137
 GameObject:
@@ -6131,7 +6161,7 @@ Transform:
   - {fileID: 1772020481}
   - {fileID: 817674889}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1176008986
 GameObject:
@@ -6570,7 +6600,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1303497156
 MonoBehaviour:
@@ -7381,7 +7411,7 @@ Transform:
   m_Children:
   - {fileID: 1740865361}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1376503636
 GameObject:
@@ -7410,7 +7440,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1376503638
 MonoBehaviour:
@@ -7673,7 +7703,7 @@ Transform:
   - {fileID: 1740374156}
   - {fileID: 2016202293}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1484823753
 MonoBehaviour:
@@ -8574,6 +8604,10 @@ GameObject:
   - component: {fileID: 1626392372}
   - component: {fileID: 1626392367}
   - component: {fileID: 1626392373}
+  - component: {fileID: 1626392377}
+  - component: {fileID: 1626392376}
+  - component: {fileID: 1626392375}
+  - component: {fileID: 1626392374}
   m_Layer: 0
   m_Name: Flowchart
   m_TagString: Untagged
@@ -8635,33 +8669,15 @@ MonoBehaviour:
   indentLevel: 0
   conversationText:
     stringRef: {fileID: 0}
-    stringVal: 'Cupcake Cupcake left: Oh, hi! Well, congrats! You beat the whole thing
-      so far!  {w=2}
-
-      Creamsicle Creamsicle right: I still have a chikken wing, so I am happy. {w=2}
-
-      Cupcake: Wait, you didn''t eat it? I''ve blown up like, eight hundred robots.
-      {w=2}
-
-      Creamsicle: I''ve been busy. {w=1.5}
-
-      Cupcake: Doing what? {w=1.5}
-
-      Creamsicle: ... Holding it. And growling at anybody who looked like they might
-      take it. {w=2}
-
-      Cupcake: That''s my sister! {w=1.5}
-
-      Creamsicle: So just TRY and take it! I have all the same death robots as last
-      time! {w=2}
-
-      Cupcake: Shooting for the high score? {w=1}
-
-      Creamsicle: If you''re having fun, why stop? {w=2}
-
-      Creamsicle hide:
-
-      Cupcake hide:'
+    stringVal: "Cupcake default left: Oh, hi! Well, congrats! You beat the whole thing
+      so far!  {w=2}\nCreamsicle default right: I still have a chikken wing, so I
+      am happy. {w=2}\nCupcake: Wait, you didn't eat it? I've blown up like, eight
+      hundred robots. {w=2}\nCreamsicle: I've been busy. {w=1.5}\nCupcake: Doing what?
+      {w=1.5}\nCreamsicle: ... Holding it. And growling at anybody who looked like
+      they might take it. {w=2}\nCupcake: That's my sister! {w=1.5}\nCreamsicle: So
+      just TRY and take it! I have all the same death robots as last time! {w=2}\nCupcake:
+      Shooting for the high score? {w=1}\nCreamsicle: If you're having fun, why stop?
+      {w=2}\n Creamsicle hide:\nCupcake hide:"
   clearPrevious:
     booleanRef: {fileID: 0}
     booleanVal: 1
@@ -8689,7 +8705,7 @@ MonoBehaviour:
   nodeRect:
     serializedVersion: 2
     x: 67
-    y: 70
+    y: 72
     width: 136
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
@@ -8699,6 +8715,8 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 0}
   commandList:
+  - {fileID: 1626392377}
+  - {fileID: 1626392376}
   - {fileID: 1626392370}
   - {fileID: 1626392371}
 --- !u!4 &1626392369
@@ -8729,21 +8747,23 @@ MonoBehaviour:
   indentLevel: 0
   conversationText:
     stringRef: {fileID: 0}
-    stringVal: 'Cupcake Cupcake left: Creamsicle! We shouldn''t be here! This art
+    stringVal: 'Cupcake default left: Creamsicle! We shouldn''t be here! This art
       looks bad! Unfinished!  {w=2}
 
-      Creamsicle Creamsicle right nowait: I beg to disagree. I have a chicken wing,
-      and I shall flaunt this victory as much as I please. {w=2}
+      Cupcake hide:
 
-      Cupcake: Nooo! You''re not supposed to have the hooman food!
+      Creamsicle default right nowait: I beg to disagree. I have a chicken wing, and
+      I shall flaunt this victory as much as I please. {w=2}
+
+      Cupcake default: Nooo! You''re not supposed to have the hooman food!
 
       Creamsicle: I will eat what I please! Enjoy my death robots! Bwahaha! {w=2}
 
-      Creamsicle hide:
+      hide:
 
-      Cupcake: Gosh dang it sister! {w=2}
+      Cupcake hide: Gosh dang it sister! {w=2}
 
-      Cupcake hide:'
+'
   clearPrevious:
     booleanRef: {fileID: 0}
     booleanVal: 1
@@ -8796,6 +8816,8 @@ MonoBehaviour:
   description: 
   eventHandler: {fileID: 0}
   commandList:
+  - {fileID: 1626392375}
+  - {fileID: 1626392374}
   - {fileID: 1626392367}
   - {fileID: 1626392373}
 --- !u!114 &1626392373
@@ -8814,6 +8836,122 @@ MonoBehaviour:
   targetObject: {fileID: 566439546}
   methodName: FlowchartBlockFinished
   delay: 1
+--- !u!114 &1626392374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1626392365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ac5ce55bc698fa4290939ef6e426501, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 9
+  indentLevel: 0
+  display: 1
+  stage: {fileID: 0}
+  character: {fileID: 245423040}
+  replacedCharacter: {fileID: 0}
+  portrait: {fileID: 21300000, guid: acf5f3f37b5fb154d93dabc0476d2ed8, type: 3}
+  offset: 0
+  fromPosition: {fileID: 1884353734}
+  toPosition: {fileID: 561747167}
+  facing: 0
+  useDefaultSettings: 1
+  fadeDuration: 0.5
+  moveDuration: 1
+  shiftOffset: {x: 0, y: 0}
+  move: 1
+  shiftIntoPlace: 0
+  waitUntilFinished: 0
+--- !u!114 &1626392375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1626392365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ac5ce55bc698fa4290939ef6e426501, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 8
+  indentLevel: 0
+  display: 1
+  stage: {fileID: 0}
+  character: {fileID: 1696838805}
+  replacedCharacter: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 23365b2b99dde4741b5e4ea345543243, type: 3}
+  offset: 0
+  fromPosition: {fileID: 2022861090}
+  toPosition: {fileID: 717187057}
+  facing: 0
+  useDefaultSettings: 1
+  fadeDuration: 0.5
+  moveDuration: 1
+  shiftOffset: {x: 0, y: 0}
+  move: 1
+  shiftIntoPlace: 0
+  waitUntilFinished: 0
+--- !u!114 &1626392376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1626392365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ac5ce55bc698fa4290939ef6e426501, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 7
+  indentLevel: 0
+  display: 1
+  stage: {fileID: 0}
+  character: {fileID: 245423040}
+  replacedCharacter: {fileID: 0}
+  portrait: {fileID: 21300000, guid: acf5f3f37b5fb154d93dabc0476d2ed8, type: 3}
+  offset: 0
+  fromPosition: {fileID: 1884353734}
+  toPosition: {fileID: 561747167}
+  facing: 0
+  useDefaultSettings: 1
+  fadeDuration: 0.5
+  moveDuration: 1
+  shiftOffset: {x: 0, y: 0}
+  move: 1
+  shiftIntoPlace: 0
+  waitUntilFinished: 0
+--- !u!114 &1626392377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1626392365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ac5ce55bc698fa4290939ef6e426501, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemId: 6
+  indentLevel: 0
+  display: 1
+  stage: {fileID: 0}
+  character: {fileID: 1696838805}
+  replacedCharacter: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 23365b2b99dde4741b5e4ea345543243, type: 3}
+  offset: 0
+  fromPosition: {fileID: 2022861090}
+  toPosition: {fileID: 717187057}
+  facing: 0
+  useDefaultSettings: 1
+  fadeDuration: 0.5
+  moveDuration: 1
+  shiftOffset: {x: 0, y: 0}
+  move: 1
+  shiftIntoPlace: 0
+  waitUntilFinished: 0
 --- !u!1 &1628115314
 GameObject:
   m_ObjectHideFlags: 0
@@ -9368,7 +9506,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: f6fa544c9aa87d14b9f3527771b2b10e, type: 2}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 11452126, guid: f6fa544c9aa87d14b9f3527771b2b10e, type: 2}
       propertyPath: levelManagerScript
@@ -9423,12 +9561,12 @@ Transform:
   m_PrefabParentObject: {fileID: 400000, guid: b20518d45890e4be59ba82946f88026c, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1696838804}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 795424400}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1697610909
 GameObject:
@@ -15640,7 +15778,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2016202288
 GameObject:
@@ -15853,7 +15991,27 @@ Prefab:
     - target: {fileID: 114861104539638796, guid: 9cfa11c08cbc0e54595b1727b90a158c,
         type: 2}
       propertyPath: myStoryEventArray.Array.data[0].storyEvent
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861104539638796, guid: 9cfa11c08cbc0e54595b1727b90a158c,
+        type: 2}
+      propertyPath: myStoryEventArray.Array.data[2].storyEvent
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861104539638796, guid: 9cfa11c08cbc0e54595b1727b90a158c,
+        type: 2}
+      propertyPath: myStoryEventArray.Array.data[2].progressCondition
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861104539638796, guid: 9cfa11c08cbc0e54595b1727b90a158c,
+        type: 2}
+      propertyPath: myStoryEventArray.Array.data[19].storyEvent
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861104539638796, guid: 9cfa11c08cbc0e54595b1727b90a158c,
+        type: 2}
+      propertyPath: myStoryEventArray.Array.data[19].progressCondition
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9cfa11c08cbc0e54595b1727b90a158c, type: 2}
@@ -16570,7 +16728,7 @@ RectTransform:
   m_Children:
   - {fileID: 303144074}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
