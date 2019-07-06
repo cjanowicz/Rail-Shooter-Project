@@ -52,6 +52,7 @@ public class PlayerAimMovement : MonoBehaviour {
     private float yLimitHigh = 8;
     [SerializeField]
     private float yLimitLow = 2;
+    public float heightLimitStrength = 0.2f;
 
     [SerializeField]
     private float floatLowMultiplier = 5;
@@ -59,7 +60,7 @@ public class PlayerAimMovement : MonoBehaviour {
     private float floatHighMultiplier = 5;
 
     private float relativeY;
-    private Rigidbody rb;
+    //private Rigidbody rb;
 
     [SerializeField]
     private float reticleYLimit = -4;
@@ -75,7 +76,7 @@ public class PlayerAimMovement : MonoBehaviour {
         /// Then it sets a vector variable to the reticle transform.
         aimPos = reticleFarTra.position;
 
-        rb = GetComponent<Rigidbody>();
+       // rb = GetComponent<Rigidbody>();
 
     }
 
@@ -136,20 +137,26 @@ public class PlayerAimMovement : MonoBehaviour {
         }
         
         relativeY = CheckHeight();
-        if(relativeY < yLimitLow)
+        if(aimPos.y < yLimitLow)
         {
-            float delta = relativeY - yLimitLow;
-            Vector3 force = new Vector3(0, delta, 0).normalized * floatLowMultiplier;
-            rb.AddForce(force);
+            float delta = aimPos.y - yLimitLow;
+            //Vector3 force = new Vector3(0, delta, 0).normalized * floatLowMultiplier;
+            Vector3 limitForce = new Vector3(0, delta * heightLimitStrength * Time.deltaTime, 0);
+            //rb.AddForce(force);
+            aimPos -= limitForce;
 
             //Debug.Log("Beyond Low limit");
         }
-        else if(relativeY > yLimitHigh)
+        else if(aimPos.y > yLimitHigh)
         {
-            float delta = relativeY - yLimitHigh;
-            Vector3 force = new Vector3(0, delta, 0).normalized * floatHighMultiplier;
-            rb.AddForce(force);
+            float delta = aimPos.y - yLimitHigh;
+            //Vector3 force = new Vector3(0, delta, 0).normalized * floatHighMultiplier;
+            //rb.AddForce(force);
             //Debug.Log("Beyond high limit");
+
+            Vector3 limitForce = new Vector3(0, delta * heightLimitStrength * Time.deltaTime, 0);
+            //rb.AddForce(force);
+            aimPos -= limitForce;
         }
     }
     
