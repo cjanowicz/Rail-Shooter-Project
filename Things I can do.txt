@@ -1,0 +1,8 @@
+Make animation director do an animated game start cutscene (that you can skip with a button press!)
+
+Anime title screen
+Intro with an anime pic
+
+dodge and drift move (trigger or spacebar, hold to drift)
+
+Speed meter and mechanics

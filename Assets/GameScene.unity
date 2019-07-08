@@ -288,7 +288,7 @@ GameObject:
   - component: {fileID: 66187446}
   - component: {fileID: 66187445}
   - component: {fileID: 66187444}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SelectCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4811,7 +4811,7 @@ GameObject:
   - component: {fileID: 866179933}
   - component: {fileID: 866179935}
   - component: {fileID: 866179934}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ResumeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7182,7 +7182,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1335514697}
   - component: {fileID: 1335514698}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MenuMusic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7412,6 +7412,61 @@ Transform:
   - {fileID: 1740865361}
   m_Father: {fileID: 0}
   m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1370732256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1370732258}
+  - component: {fileID: 1370732257}
+  m_Layer: 0
+  m_Name: Timeline
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!320 &1370732257
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1370732256}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 21751e7b65c3d3c43af9118e3f7a1c3c, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 0}
+    value: {fileID: 1370732256}
+  - key: {fileID: 114043217315469348, guid: 21751e7b65c3d3c43af9118e3f7a1c3c, type: 2}
+    value: {fileID: 1484823751}
+  - key: {fileID: 0}
+    value: {fileID: 0}
+  - key: {fileID: 114458216246477296, guid: 21751e7b65c3d3c43af9118e3f7a1c3c, type: 2}
+    value: {fileID: 566439546}
+  - key: {fileID: 114917666572761976, guid: 21751e7b65c3d3c43af9118e3f7a1c3c, type: 2}
+    value: {fileID: 1711239896}
+  m_ExposedReferences:
+    m_References: []
+--- !u!4 &1370732258
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1370732256}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 123.7587, y: -129.95981, z: -36.88983}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1376503636
 GameObject:
@@ -7683,6 +7738,7 @@ GameObject:
   - component: {fileID: 1484823752}
   - component: {fileID: 1484823753}
   - component: {fileID: 1484823754}
+  - component: {fileID: 1484823755}
   m_Layer: 0
   m_Name: CameraAnchor
   m_TagString: MainCamera
@@ -7742,6 +7798,24 @@ MonoBehaviour:
   decreaseFactor: 3
   shakeStr: 0.5
   maxDist: 20
+--- !u!95 &1484823755
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1484823751}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1500957046
 GameObject:
   m_ObjectHideFlags: 0
@@ -8838,7 +8912,7 @@ MonoBehaviour:
   delay: 1
 --- !u!114 &1626392374
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1626392365}
@@ -8867,7 +8941,7 @@ MonoBehaviour:
   waitUntilFinished: 0
 --- !u!114 &1626392375
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1626392365}
@@ -8896,7 +8970,7 @@ MonoBehaviour:
   waitUntilFinished: 0
 --- !u!114 &1626392376
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1626392365}
@@ -8925,7 +8999,7 @@ MonoBehaviour:
   waitUntilFinished: 0
 --- !u!114 &1626392377
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1626392365}
@@ -9516,6 +9590,10 @@ Prefab:
       propertyPath: m_Name
       value: PlayerAnchor
       objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: f6fa544c9aa87d14b9f3527771b2b10e, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f6fa544c9aa87d14b9f3527771b2b10e, type: 2}
   m_IsPrefabParent: 0
@@ -9578,7 +9656,7 @@ GameObject:
   - component: {fileID: 1697610910}
   - component: {fileID: 1697610912}
   - component: {fileID: 1697610911}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: QuitText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9748,7 +9826,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1739453281
 Transform:
   m_ObjectHideFlags: 0
@@ -15981,7 +16059,7 @@ Prefab:
     - target: {fileID: 114861104539638796, guid: 9cfa11c08cbc0e54595b1727b90a158c,
         type: 2}
       propertyPath: myStoryEventArray.Array.data[1].storyEvent
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114861104539638796, guid: 9cfa11c08cbc0e54595b1727b90a158c,
         type: 2}
@@ -16011,6 +16089,10 @@ Prefab:
     - target: {fileID: 114861104539638796, guid: 9cfa11c08cbc0e54595b1727b90a158c,
         type: 2}
       propertyPath: myStoryEventArray.Array.data[19].progressCondition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1754806941978412, guid: 9cfa11c08cbc0e54595b1727b90a158c, type: 2}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
