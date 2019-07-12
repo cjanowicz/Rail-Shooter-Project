@@ -37,9 +37,12 @@ public class DroneMovement : MonoBehaviour {
 
     public float horizontalSpeed = 5;
     public float forwardSpeed = 5;
+    public float deathEffectRepeatTime = 0.1f;
+    public GameObject smokeEmitterObject;
 
 
     public float forceFloat = 500.0f;
+    //public float deathRotationForce = 50.0f;
 
     private void Awake() {
         /// Set up references. 
@@ -157,7 +160,7 @@ public class DroneMovement : MonoBehaviour {
         /// by making it play effects and call a function, then set the state. If this function is called
         /// while the state is dead, it immediately kills the object.
         if (state != State.Dead) {
-            Invoke("FXExplode", 0.5f);
+            Invoke("FXExplode", deathEffectRepeatTime);
             FallDown();
             state = State.Dead;
         } else if (state == State.Dead) {
@@ -170,15 +173,16 @@ public class DroneMovement : MonoBehaviour {
         /// but stops repeating once the enemy is dead. 
         if (gameObject.activeSelf) {
             fXManager.SendMessage("CallSmallExplosion", this.transform.position);
-            Invoke("FXExplode", 0.5f);
+            Invoke("FXExplode", deathEffectRepeatTime);
         }
     }
 
     private void FallDown() {
         /// This sets the character to go limp like a ragdoll and fly through the air. 
         myRigidbody.useGravity = true;
-        PositionPunch();
+        //PositionPunch();
         RotationPunch();
+        smokeEmitterObject.SetActive(true);
     }
 
     private void OnCollisionEnter(Collision collision) {
@@ -217,6 +221,7 @@ public class DroneMovement : MonoBehaviour {
             } else {
                 transform.parent.SendMessage("BossDied", scoreWorth);
             }
+            smokeEmitterObject.SetActive(false);
             this.gameObject.SetActive(false);
         }
     }
